@@ -1,3 +1,0 @@
-files:
-  - source: /po/app-manager.pot
-    translation: /po/%osx_locale%.po
