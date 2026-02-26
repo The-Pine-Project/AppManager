@@ -41,6 +41,7 @@ namespace AppManager {
         private string current_search_query = "";
         private bool has_installations = true;
         private StagedUpdatesManager staged_updates;
+        private bool shift_held = false;
 
         // Grid view fields
         private Gtk.FlowBox? grid_flow_box;
@@ -72,6 +73,7 @@ namespace AppManager {
             this.set_default_size(settings.get_int("window-width"), settings.get_int("window-height"));
             build_ui();
             setup_window_actions();
+            setup_shift_key_controller();
             setup_drag_drop();
             load_staged_updates();
             refresh_installations();
@@ -609,11 +611,44 @@ namespace AppManager {
 
         private void on_grid_child_activated(Gtk.FlowBoxChild child) {
             var cell_box = child.get_child();
-            if (cell_box != null) {
-                var record = cell_box.get_data<InstallationRecord>("record");
-                if (record != null) {
-                    show_detail_page(record);
+            if (cell_box == null) return;
+
+            var record = cell_box.get_data<InstallationRecord>("record");
+            if (record == null) return;
+
+            // Shift+click launches the app directly
+            var display = Gdk.Display.get_default();
+            var seat = display.get_default_seat();
+            var keyboard = seat.get_keyboard();
+            if (keyboard != null) {
+                var mask = keyboard.get_modifier_state();
+                if (Gdk.ModifierType.SHIFT_MASK in mask) {
+                    // Animate the icon before launching
+                    var icon_overlay = cell_box.get_first_child();
+                    if (icon_overlay != null) {
+                        var icon_widget = icon_overlay.get_first_child();
+                        if (icon_widget != null) {
+                            UiUtils.spin_launch_icon(icon_widget);
+                        }
+                    }
+                    launch_app(record);
+                    return;
                 }
+            }
+
+            show_detail_page(record);
+        }
+
+        private void launch_app(InstallationRecord record) {
+            try {
+                if (record.desktop_file != null && record.desktop_file.strip() != "") {
+                    var app_info = new DesktopAppInfo.from_filename(record.desktop_file);
+                    if (app_info != null) {
+                        app_info.launch(null, null);
+                    }
+                }
+            } catch (Error e) {
+                warning("Failed to launch %s: %s", record.name, e.message);
             }
         }
 
@@ -979,6 +1014,32 @@ namespace AppManager {
                 }
             });
             add_window_action(show_menu_action);
+        }
+
+        private void setup_shift_key_controller() {
+            var key_controller = new Gtk.EventControllerKey();
+            key_controller.key_pressed.connect((keyval, keycode, state) => {
+                if (keyval == Gdk.Key.Shift_L || keyval == Gdk.Key.Shift_R) {
+                    shift_held = true;
+                }
+                return false;
+            });
+            key_controller.key_released.connect((keyval, keycode, state) => {
+                if (keyval == Gdk.Key.Shift_L || keyval == Gdk.Key.Shift_R) {
+                    shift_held = false;
+                }
+            });
+            ((Gtk.Widget) this).add_controller(key_controller);
+
+            // Show "Launch Application" tooltip only on hovered grid cell while Shift is held
+            grid_flow_box.set_has_tooltip(true);
+            grid_flow_box.query_tooltip.connect((x, y, keyboard_tooltip, tooltip) => {
+                if (!shift_held || view_mode != "grid") return false;
+                var child = grid_flow_box.get_child_at_pos((int) x, (int) y);
+                if (child == null) return false;
+                tooltip.set_text(_("Launch Application"));
+                return true;
+            });
         }
 
         private void add_window_action(GLib.Action action) {

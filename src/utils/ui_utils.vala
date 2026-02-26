@@ -197,6 +197,22 @@ namespace AppManager.Utils {
             return null;
         }
 
+        public static void spin_launch_icon(Gtk.Widget widget) {
+            var target = new Adw.CallbackAnimationTarget((value) => {
+                var rotation = new Gsk.Transform();
+                // Translate to center, rotate, translate back
+                float w = widget.get_width() / 2.0f;
+                float h = widget.get_height() / 2.0f;
+                rotation = rotation.translate(Graphene.Point() { x = w, y = h });
+                rotation = rotation.rotate((float) value);
+                rotation = rotation.translate(Graphene.Point() { x = -w, y = -h });
+                widget.allocate(widget.get_width(), widget.get_height(), -1, rotation);
+            });
+            var animation = new Adw.TimedAnimation(widget, 0, 360, 600, target);
+            animation.set_easing(Adw.Easing.EASE_IN_OUT_CUBIC);
+            animation.play();
+        }
+
         public static Gtk.Label create_wrapped_label(string text, bool use_markup = false, bool dim = false) {
             var label = new Gtk.Label(null);
             label.wrap = true;

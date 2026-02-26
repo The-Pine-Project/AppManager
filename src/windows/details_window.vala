@@ -21,6 +21,7 @@ namespace AppManager {
         // Shared state for build_ui sub-methods
         private string exec_path;
         private HashTable<string, string> desktop_props;
+        private Gtk.Widget? header_icon = null;
         
         public signal void uninstall_requested(InstallationRecord record, bool permanently);
         public signal void update_requested(InstallationRecord record);
@@ -118,21 +119,41 @@ namespace AppManager {
             header_box.set_margin_bottom(12);
             
             // App icon
+            header_icon = null;
             if (record.icon_path != null && record.icon_path.strip() != "") {
                 var icon_image = UiUtils.load_app_icon(record.icon_path);
                 if (icon_image != null) {
                     icon_image.set_pixel_size(128);
                     header_box.append(icon_image);
+                    header_icon = icon_image;
                 }
             }
             
-            // App name
+            // App name (clickable to launch)
             var name_label = new Gtk.Label(record.name);
             name_label.add_css_class("title-1");
             name_label.set_wrap(true);
             name_label.set_wrap_mode(Pango.WrapMode.WORD_CHAR);
             name_label.set_justify(Gtk.Justification.CENTER);
-            header_box.append(name_label);
+
+            var name_button = new Gtk.Button();
+            name_button.set_child(name_label);
+            name_button.add_css_class("flat");
+            name_button.set_cursor(new Gdk.Cursor.from_name("pointer", null));
+            name_button.clicked.connect(() => {
+                try {
+                    var app_info = new DesktopAppInfo.from_filename(record.desktop_file);
+                    if (app_info != null) {
+                        if (header_icon != null) {
+                            UiUtils.spin_launch_icon(header_icon);
+                        }
+                        app_info.launch(null, null);
+                    }
+                } catch (Error e) {
+                    warning("Failed to launch %s: %s", record.name, e.message);
+                }
+            });
+            header_box.append(name_button);
             
             // App version
             var version_label = new Gtk.Label(record.version ?? _("Version unknown"));
