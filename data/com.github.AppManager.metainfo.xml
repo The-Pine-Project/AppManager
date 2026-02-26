@@ -43,18 +43,8 @@
   </provides>
   <releases>
     <release version="3.3.0" date="2026-02-21">
-      <description>
-        <p>Replace 7-Zip with unsquashfs for AppImage extraction, improving reliability and reducing bundle size.</p>
-        <p>Fix zsync update handling to carry over fields from old records and support SHA-1 checksums.</p>
-        <p>Enhance drag-and-drop with visual feedback.</p>
-        <p>Fix cleanup logic in Installer to prevent app deletion on failure.</p>
-        <p>Improve i18n initialization with refined locale fallback logic.</p>
-      </description>
     </release>
     <release version="3.2.1" date="2025-12-24">
-      <description>
-        <p>Streamline executable resolution logic by using builtin env variable.</p>
-      </description>
     </release>
   </releases>
 </component>
