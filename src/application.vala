@@ -33,7 +33,7 @@ namespace AppManager {
         
         public Application() {
             Object(application_id: Core.APPLICATION_ID,
-                flags: ApplicationFlags.HANDLES_OPEN | ApplicationFlags.HANDLES_COMMAND_LINE | ApplicationFlags.NON_UNIQUE);
+                flags: ApplicationFlags.HANDLES_OPEN | ApplicationFlags.HANDLES_COMMAND_LINE);
             settings = new Settings(Core.APPLICATION_ID);
             registry = new InstallationRegistry();
             installer = new Installer(registry, settings);
@@ -76,6 +76,18 @@ Examples:
             
             if (opt_version) {
                 print("AppManager %s\n", Core.APPLICATION_VERSION);
+                return 0;
+            }
+
+            // Run background update daemon in this process (blocks with its own MainLoop).
+            // Handled locally so it never remotes to the primary GUI instance.
+            if (opt_background_update) {
+                if (!settings.get_boolean("auto-check-updates")) {
+                    debug("Auto-check updates disabled; exiting");
+                    return 0;
+                }
+                var bg_service = new BackgroundUpdateService(settings, registry, installer);
+                bg_service.run_daemon();
                 return 0;
             }
             
@@ -646,10 +658,22 @@ Examples:
         }
 
         protected override int command_line(GLib.ApplicationCommandLine command_line) {
-            if (opt_background_update) {
-                return run_background_update(command_line);
+            // Extract options from the command line (works for both local and remote invocations)
+            var opts = command_line.get_options_dict();
+            string? cmd_install = null;
+            string? cmd_uninstall = null;
+            string? cmd_is_installed = null;
+
+            if (opts.contains("install")) {
+                cmd_install = opts.lookup_value("install", VariantType.BYTESTRING).get_bytestring();
             }
-            
+            if (opts.contains("uninstall")) {
+                cmd_uninstall = opts.lookup_value("uninstall", new VariantType("s")).get_string();
+            }
+            if (opts.contains("is-installed")) {
+                cmd_is_installed = opts.lookup_value("is-installed", VariantType.BYTESTRING).get_bytestring();
+            }
+
             var file_list = new ArrayList<GLib.File>();
 
             // Handle non-option arguments (file paths)
@@ -657,10 +681,10 @@ Examples:
 
             // Support subcommand-style: app-manager install PATH / app-manager uninstall PATH
             // (--install/--uninstall flags are handled by GLib option parser as hidden options)
-            if (args.length > 2 && opt_install == null && args[1] == "install") {
-                opt_install = args[2];
-            } else if (args.length > 2 && opt_uninstall == null && args[1] == "uninstall") {
-                opt_uninstall = args[2];
+            if (args.length > 2 && cmd_install == null && args[1] == "install") {
+                cmd_install = args[2];
+            } else if (args.length > 2 && cmd_uninstall == null && args[1] == "uninstall") {
+                cmd_uninstall = args[2];
             }
             debug("command_line: got %u args", args.length);
             for (int _k = 0; _k < args.length; _k++)
@@ -692,10 +716,10 @@ Examples:
                 return 0;
             }
 
-            if (opt_install != null) {
+            if (cmd_install != null) {
                 try {
                     // Check architecture compatibility before installing
-                    var metadata = new AppImageMetadata(File.new_for_path(opt_install));
+                    var metadata = new AppImageMetadata(File.new_for_path(cmd_install));
                     if (!metadata.is_architecture_compatible()) {
                         var appimage_arch = metadata.architecture ?? "unknown";
                         command_line.printerr("Install failed: This AppImage is built for %s and cannot run on this system\n", appimage_arch);
@@ -703,13 +727,13 @@ Examples:
                     }
 
                     // Check for existing installation to replace/upgrade
-                    var existing = detect_existing_for_cli_install(opt_install);
+                    var existing = detect_existing_for_cli_install(cmd_install);
                     InstallationRecord record;
                     if (existing != null) {
-                        record = installer.upgrade(opt_install, existing);
+                        record = installer.upgrade(cmd_install, existing);
                         command_line.print("Updated %s\n", record.name);
                     } else {
-                        record = installer.install(opt_install);
+                        record = installer.install(cmd_install);
                         command_line.print("Installed %s\n", record.name);
                     }
                     return 0;
@@ -719,11 +743,11 @@ Examples:
                 }
             }
 
-            if (opt_uninstall != null) {
+            if (cmd_uninstall != null) {
                 try {
-                    var record = locate_record(opt_uninstall);
+                    var record = locate_record(cmd_uninstall);
                     if (record == null) {
-                        command_line.printerr("No installation matches %s\n", opt_uninstall);
+                        command_line.printerr("No installation matches %s\n", cmd_uninstall);
                         return 3;
                     }
                     
@@ -737,9 +761,9 @@ Examples:
                 }
             }
 
-            if (opt_is_installed != null) {
+            if (cmd_is_installed != null) {
                 try {
-                    var checksum = Utils.FileUtils.compute_checksum(opt_is_installed);
+                    var checksum = Utils.FileUtils.compute_checksum(cmd_is_installed);
                     var installed = registry.is_installed_checksum(checksum);
                     command_line.print(installed ? "installed\n" : "missing\n");
                     return installed ? 0 : 1;
@@ -952,21 +976,6 @@ Examples:
             }
 
             preferences_dialog.present(parent);
-        }
-
-        private int run_background_update(GLib.ApplicationCommandLine command_line) {
-            if (!settings.get_boolean("auto-check-updates")) {
-                debug("Auto-check updates disabled; exiting");
-                return 0;
-            }
-
-            if (bg_update_service == null) {
-                bg_update_service = new BackgroundUpdateService(settings, registry, installer);
-            }
-
-            // Run as persistent daemon - this will block until session ends
-            bg_update_service.run_daemon();
-            return 0;
         }
 
         /**
