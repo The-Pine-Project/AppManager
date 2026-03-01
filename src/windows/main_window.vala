@@ -28,6 +28,7 @@ namespace AppManager {
         private Gee.HashSet<string> pending_update_keys;
         private Gee.HashMap<string, string> record_size_cache;
         private Gee.HashSet<string> updating_records;
+        private Gee.HashMap<string, string> failed_update_keys; // key -> error message
         private DetailsWindow? active_details_window;
         private const string SHORTCUTS_RESOURCE = "/com/github/AppManager/ui/main-window-shortcuts.ui";
         private const string APPDATA_RESOURCE = "/com/github/AppManager/com.github.AppManager.metainfo.xml";
@@ -66,6 +67,7 @@ namespace AppManager {
             this.pending_update_keys = new Gee.HashSet<string>();
             this.record_size_cache = new Gee.HashMap<string, string>();
             this.updating_records = new Gee.HashSet<string>();
+            this.failed_update_keys = new Gee.HashMap<string, string>();
             this.active_details_window = null;
             this.app_rows = new Gee.ArrayList<Adw.PreferencesRow>();
             this.view_mode = settings.get_string("app-list-view-mode");
@@ -507,6 +509,12 @@ namespace AppManager {
                     update_dot.set_valign(Gtk.Align.CENTER);
                     update_dot.set_tooltip_text(_("Update available"));
                     suffix_box.append(update_dot);
+                } else if (failed_update_keys.has_key(state_key)) {
+                    var warn_icon = new Gtk.Image.from_icon_name("dialog-warning-symbolic");
+                    warn_icon.add_css_class("update-warning-indicator");
+                    warn_icon.set_valign(Gtk.Align.CENTER);
+                    warn_icon.set_tooltip_text(failed_update_keys.get(state_key));
+                    suffix_box.append(warn_icon);
                 }
 
                 suffix_box.append(arrow);
@@ -575,6 +583,14 @@ namespace AppManager {
                 update_dot.set_valign(Gtk.Align.END);
                 update_dot.set_tooltip_text(_("Update available"));
                 overlay.add_overlay(update_dot);
+            } else if (failed_update_keys.has_key(state_key)) {
+                var warn_icon = new Gtk.Image.from_icon_name("dialog-warning-symbolic");
+                warn_icon.add_css_class("grid-update-warning");
+                warn_icon.set_pixel_size(18);
+                warn_icon.set_halign(Gtk.Align.END);
+                warn_icon.set_valign(Gtk.Align.END);
+                warn_icon.set_tooltip_text(failed_update_keys.get(state_key));
+                overlay.add_overlay(warn_icon);
             }
 
             cell_box.append(overlay);
@@ -1310,6 +1326,7 @@ namespace AppManager {
         private void trigger_single_update(InstallationRecord record) {
             var key = record_state_key(record);
             updating_records.add(key);
+            failed_update_keys.unset(key);  // Clear any previous failure
             if (active_details_window != null && active_details_window.matches_record(record)) {
                 // Order matters: set_update_loading first, then set_update_updating
                 // because refresh_update_button() resets update_updating when update_loading is false
@@ -1345,8 +1362,10 @@ namespace AppManager {
         private void finalize_single_update(UpdateResult result) {
             var key = record_state_key(result.record);
             updating_records.remove(key);
+            // Always remove from pending — whether success or failure
+            pending_update_keys.remove(key);
             if (result.status == UpdateStatus.UPDATED) {
-                pending_update_keys.remove(key);
+                failed_update_keys.unset(key);
                 record_size_cache.unset(result.record.id);
                 // Remove from staged updates and save
                 staged_updates.remove(result.record.id);
@@ -1355,6 +1374,10 @@ namespace AppManager {
                 if (active_details_window != null && active_details_window.matches_record(result.record)) {
                     active_details_window.refresh_with_record(result.record);
                 }
+            } else if (result.status == UpdateStatus.FAILED) {
+                failed_update_keys.set(key, result.message ?? _("Update failed"));
+                staged_updates.remove(result.record.id);
+                staged_updates.save();
             }
             refresh_installations();
             sync_details_window_state(result.record);
@@ -1362,36 +1385,30 @@ namespace AppManager {
         }
 
         private void finalize_update_workflow(Gee.ArrayList<UpdateResult> results) {
-            var remaining = new Gee.HashSet<string>();
+            bool staged_changed = false;
             foreach (var result in results) {
                 var key = record_state_key(result.record);
                 updating_records.remove(key);
-                if (!pending_update_keys.contains(key)) {
-                    continue;
-                }
-                if (result.status != UpdateStatus.UPDATED) {
-                    remaining.add(key);
-                } else {
+                if (result.status == UpdateStatus.UPDATED) {
+                    failed_update_keys.unset(key);
                     record_size_cache.unset(result.record.id);
-                    // Remove from staged updates as well
                     staged_updates.remove(result.record.id);
+                    staged_changed = true;
+                } else if (result.status == UpdateStatus.FAILED) {
+                    failed_update_keys.set(key, result.message ?? _("Update failed"));
+                    staged_updates.remove(result.record.id);
+                    staged_changed = true;
                 }
                 sync_details_window_state(result.record);
             }
-            // Save staged updates after removing completed ones
-            staged_updates.save();
-            
-            pending_update_keys.clear();
-            foreach (var key in remaining) {
-                pending_update_keys.add(key);
+            if (staged_changed) {
+                staged_updates.save();
             }
-            refresh_installations();
 
-            if (pending_update_keys.size > 0) {
-                set_update_button_state(UpdateWorkflowState.READY_TO_UPDATE);
-            } else {
-                set_update_button_state(UpdateWorkflowState.READY_TO_CHECK);
-            }
+            // Remove all from pending — failures are no longer "pending"
+            pending_update_keys.clear();
+            refresh_installations();
+            set_update_button_state(UpdateWorkflowState.READY_TO_CHECK);
         }
 
         private void update_global_update_state_from_pending() {
@@ -1536,8 +1553,12 @@ namespace AppManager {
         }
 
         private void start_single_probe(InstallationRecord record, DetailsWindow? source = null) {
+            // Clear any previous failure when re-checking
+            var key = record_state_key(record);
+            failed_update_keys.unset(key);
             if (source != null) {
                 source.set_update_loading(true);
+                source.set_update_failed(null);
             }
             start_single_probe_async.begin(record, source);
         }
@@ -1597,8 +1618,14 @@ namespace AppManager {
             if (!active_details_window.matches_record(record)) {
                 return;
             }
-            var has_update = pending_update_keys.contains(record_state_key(record));
+            var key = record_state_key(record);
+            var has_update = pending_update_keys.contains(key);
             active_details_window.set_update_available(has_update);
+            if (failed_update_keys.has_key(key)) {
+                active_details_window.set_update_failed(failed_update_keys.get(key));
+            } else {
+                active_details_window.set_update_failed(null);
+            }
         }
 
         private enum UpdateWorkflowState {
@@ -1747,6 +1774,9 @@ namespace AppManager {
             var details_window = new DetailsWindow(record, registry, installer, has_update);
             if (is_updating) {
                 details_window.set_update_loading(true);
+            }
+            if (failed_update_keys.has_key(key)) {
+                details_window.set_update_failed(failed_update_keys.get(key));
             }
             details_window.uninstall_requested.connect((r, permanently) => {
                 navigation_view.pop();

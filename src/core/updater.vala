@@ -14,7 +14,8 @@ namespace AppManager.Core {
         ALREADY_CURRENT,
         MISSING_ASSET,
         API_UNAVAILABLE,
-        NO_TRACKING_HEADERS
+        NO_TRACKING_HEADERS,
+        APP_IDENTITY_MISMATCH
     }
 
     public class UpdateResult : Object {
@@ -64,6 +65,7 @@ namespace AppManager.Core {
         private string user_agent;
         private string update_log_path;
         private const int MAX_PARALLEL_JOBS = 5;
+        private const int MAX_ASSET_VERIFY_DEPTH = 3;
         private static string? _system_arch = null;
         private GLib.Settings? app_settings = null;
 
@@ -688,8 +690,8 @@ namespace AppManager.Core {
                     }
                 }
 
-                var asset = select_appimage_asset(release.assets);
-                if (asset == null) {
+                var candidates = select_appimage_assets(release.assets);
+                if (candidates.size == 0) {
                     record_skipped(record, UpdateSkipReason.MISSING_ASSET);
                     log_update_event(record, "SKIP", "no matching AppImage for " + get_system_arch());
                     return new UpdateResult(record, UpdateStatus.SKIPPED, _("No matching AppImage found for %s").printf(get_system_arch()), latest, UpdateSkipReason.MISSING_ASSET);
@@ -697,33 +699,61 @@ namespace AppManager.Core {
 
                 record_downloading(record);
 
-                var download = download_file(asset.download_url, cancellable);
-                InstallationRecord? new_record = null;
-                try {
-                    new_record = installer.upgrade(download.file_path, record);
-                } finally {
-                    AppManager.Utils.FileUtils.remove_dir_recursive(download.temp_dir);
+                // Try candidates up to MAX_ASSET_VERIFY_DEPTH, verifying identity
+                int depth = int.min(candidates.size, MAX_ASSET_VERIFY_DEPTH);
+                string? last_mismatch_msg = null;
+                for (int ci = 0; ci < depth; ci++) {
+                    var asset = candidates[ci];
+                    var download = download_file(asset.download_url, cancellable);
+                    try {
+                        var verify_error = verify_appimage_identity(download.file_path, record);
+                        if (verify_error != null) {
+                            last_mismatch_msg = verify_error;
+                            warning("Identity verification failed for %s candidate #%d (%s): %s",
+                                record.name, ci + 1, asset.name, verify_error);
+                            log_update_event(record, "VERIFY_FAIL", "candidate #%d (%s): %s".printf(ci + 1, asset.name, verify_error));
+                            continue;
+                        }
+
+                        // Verification passed — install
+                        InstallationRecord? new_record = null;
+                        try {
+                            new_record = installer.upgrade(download.file_path, record);
+                        } finally {
+                            AppManager.Utils.FileUtils.remove_dir_recursive(download.temp_dir);
+                        }
+
+                        // Store the release tag and version for version-less apps
+                        if (new_record != null) {
+                            if (release.tag_name != null) {
+                                new_record.last_release_tag = release.tag_name;
+                            }
+                            // Store version from release API if installer didn't detect one
+                            if ((new_record.version == null || new_record.version.strip() == "") &&
+                                release.version != null && release.version.strip() != "") {
+                                new_record.version = release.version;
+                            }
+                            // Use registry.update() to guard against file monitor
+                            // triggering registry.reload() after register()
+                            registry.update(new_record, false);
+                        }
+
+                        var display_version = release.tag_name ?? asset.name;
+                        record_succeeded(record);
+                        log_update_event(record, "UPDATED", "updated to %s".printf(display_version));
+                        return new UpdateResult(new_record ?? record, UpdateStatus.UPDATED, _("Updated to %s").printf(display_version), release.version ?? display_version);
+                    } finally {
+                        // Clean up download temp dir if still present (not cleaned by upgrade path)
+                        if (FileUtils.test(download.temp_dir, FileTest.IS_DIR)) {
+                            AppManager.Utils.FileUtils.remove_dir_recursive(download.temp_dir);
+                        }
+                    }
                 }
 
-                // Store the release tag and version for version-less apps
-                if (new_record != null) {
-                    if (release.tag_name != null) {
-                        new_record.last_release_tag = release.tag_name;
-                    }
-                    // Store version from release API if installer didn't detect one
-                    if ((new_record.version == null || new_record.version.strip() == "") &&
-                        release.version != null && release.version.strip() != "") {
-                        new_record.version = release.version;
-                    }
-                    // Use registry.update() to guard against file monitor
-                    // triggering registry.reload() after register()
-                    registry.update(new_record, false);
-                }
-
-                var display_version = release.tag_name ?? asset.name;
-                record_succeeded(record);
-                log_update_event(record, "UPDATED", "updated to %s".printf(display_version));
-                return new UpdateResult(new_record ?? record, UpdateStatus.UPDATED, _("Updated to %s").printf(display_version), release.version ?? display_version);
+                // All candidates failed identity verification
+                record_failed(record, last_mismatch_msg ?? _("App identity mismatch"));
+                log_update_event(record, "FAILED", "identity mismatch after %d candidate(s)".printf(depth));
+                return new UpdateResult(record, UpdateStatus.FAILED, last_mismatch_msg ?? _("App identity mismatch"), latest, UpdateSkipReason.APP_IDENTITY_MISMATCH);
             } catch (Error e) {
                 warning("Failed to update %s: %s", record.name, e.message);
                 record_failed(record, e.message);
@@ -839,6 +869,15 @@ namespace AppManager.Core {
                 var download = download_file(source.url, cancellable);
                 InstallationRecord? new_record = null;
                 try {
+                    // Verify identity before installing
+                    var verify_error = verify_appimage_identity(download.file_path, record);
+                    if (verify_error != null) {
+                        warning("Identity verification failed for %s (direct URL): %s", record.name, verify_error);
+                        log_update_event(record, "VERIFY_FAIL", verify_error);
+                        record_failed(record, verify_error);
+                        return new UpdateResult(record, UpdateStatus.FAILED, verify_error, current_fingerprint, UpdateSkipReason.APP_IDENTITY_MISMATCH);
+                    }
+
                     new_record = installer.upgrade(download.file_path, record);
                 } finally {
                     AppManager.Utils.FileUtils.remove_dir_recursive(download.temp_dir);
@@ -876,9 +915,23 @@ namespace AppManager.Core {
          *   3. Single AppImage (if only one exists)
          */
         private ReleaseAsset? select_appimage_asset(ArrayList<ReleaseAsset> assets) {
-            var appimages = new ArrayList<ReleaseAsset>();
-            ReleaseAsset? arch_match = null;
-            ReleaseAsset? no_arch_asset = null;
+            var ranked = select_appimage_assets(assets);
+            return ranked.size > 0 ? ranked[0] : null;
+        }
+
+        /**
+         * Select AppImage assets for the current system, ranked by preference.
+         * Returns a list of candidates so the update flow can try alternatives
+         * if the top candidate fails identity verification (e.g., mono-repo).
+         * Priority:
+         *   1. AppImage with explicit system architecture match
+         *   2. AppImage with no architecture (assumes x86_64 default)
+         *   3. Remaining AppImages
+         */
+        private ArrayList<ReleaseAsset> select_appimage_assets(ArrayList<ReleaseAsset> assets) {
+            var arch_matches = new ArrayList<ReleaseAsset>();
+            var no_arch_assets = new ArrayList<ReleaseAsset>();
+            var others = new ArrayList<ReleaseAsset>();
 
             foreach (var asset in assets) {
                 var name_lower = asset.name.down();
@@ -888,35 +941,31 @@ namespace AppManager.Core {
                     continue;
                 }
                 
-                appimages.add(asset);
-                
                 // Check explicit architecture match (against both name and URL)
-                if (arch_match == null && (matches_system_arch(asset.name) || matches_system_arch(asset.download_url))) {
-                    arch_match = asset;
+                if (matches_system_arch(asset.name) || matches_system_arch(asset.download_url)) {
+                    arch_matches.add(asset);
+                } else if (!has_any_arch_in_name(asset.name)) {
+                    // No architecture in filename (common for x86_64 default)
+                    no_arch_assets.add(asset);
+                } else {
+                    others.add(asset);
                 }
-                
-                // Track assets with no architecture in filename (common for x86_64 default)
-                if (no_arch_asset == null && !has_any_arch_in_name(asset.name)) {
-                    no_arch_asset = asset;
-                }
             }
 
-            // Return explicit architecture match if found
-            if (arch_match != null) {
-                return arch_match;
+            var ranked = new ArrayList<ReleaseAsset>();
+
+            // Architecture matches first
+            ranked.add_all(arch_matches);
+
+            // On x86_64, no-arch assets next (many projects assume x86_64 is default)
+            if (get_system_arch() == "x86_64") {
+                ranked.add_all(no_arch_assets);
             }
 
-            // On x86_64, fall back to no-arch asset (many projects assume x86_64 is default)
-            if (no_arch_asset != null && get_system_arch() == "x86_64") {
-                return no_arch_asset;
-            }
+            // Then remaining assets
+            ranked.add_all(others);
 
-            // If only one AppImage exists, use it
-            if (appimages.size == 1) {
-                return appimages[0];
-            }
-
-            return null;
+            return ranked;
         }
         
         /**
@@ -937,6 +986,96 @@ namespace AppManager.Core {
                 }
             }
             return false;
+        }
+
+        // ─────────────────────────────────────────────────────────────────────
+        // AppImage Identity Verification
+        // ─────────────────────────────────────────────────────────────────────
+
+        /**
+         * Verify that a downloaded AppImage is a valid AppImage for the correct
+         * architecture and belongs to the same application as the installed one.
+         *
+         * Extracts the .desktop entry from the AppImage and compares the Name=
+         * field against the registered app name.
+         *
+         * @param file_path Path to the downloaded AppImage file
+         * @param record The installation record of the currently installed app
+         * @return null if verification passed, or an error message if it failed
+         */
+        internal static string? verify_appimage_identity(string file_path, InstallationRecord record) {
+            // 1. Check it's actually a valid AppImage (ELF + AI magic)
+            var format = AppImageAssets.detect_format(file_path);
+            if (format == AppImageFormat.UNKNOWN) {
+                return _("Downloaded file is not a valid AppImage");
+            }
+
+            // 2. Check architecture compatibility
+            AppImageMetadata metadata;
+            try {
+                metadata = new AppImageMetadata(File.new_for_path(file_path));
+            } catch (Error e) {
+                return _("Downloaded file is not a valid AppImage");
+            }
+            if (!metadata.is_architecture_compatible()) {
+                return _("AppImage architecture '%s' is incompatible with this system").printf(metadata.architecture ?? "unknown");
+            }
+
+            // 3. Extract .desktop and compare Name=
+            string? desktop_name = null;
+            string temp_dir;
+            try {
+                temp_dir = AppManager.Utils.FileUtils.create_temp_dir("appmgr-verify-");
+            } catch (Error e) {
+                warning("Failed to create temp dir for identity verification: %s", e.message);
+                // Non-fatal: skip verification if we can't create temp dir
+                return null;
+            }
+            try {
+                var desktop_path = AppImageAssets.extract_desktop_entry(file_path, temp_dir);
+                var entry = new DesktopEntry(desktop_path);
+                desktop_name = entry.name;
+            } catch (Error e) {
+                debug("Failed to extract .desktop for identity check: %s", e.message);
+                // If we can't extract the desktop entry, skip identity check
+                // (some AppImages may have unusual structures)
+                return null;
+            } finally {
+                AppManager.Utils.FileUtils.remove_dir_recursive(temp_dir);
+            }
+
+            if (desktop_name == null || desktop_name.strip() == "") {
+                // No Name= in .desktop - skip identity check
+                return null;
+            }
+
+            var record_name = record.name;
+            if (record_name == null || record_name.strip() == "") {
+                // No registered name to compare against
+                return null;
+            }
+
+            if (normalize_app_name(desktop_name) == normalize_app_name(record_name)) {
+                return null; // Match — verification passed
+            }
+
+            return _("App identity mismatch: expected '%s' but got '%s'").printf(record_name, desktop_name.strip());
+        }
+
+        /**
+         * Normalize an application name for comparison.
+         * Strips whitespace, converts to lowercase, removes common punctuation.
+         */
+        internal static string normalize_app_name(string name) {
+            var lower = name.strip().down();
+            var builder = new StringBuilder();
+            for (int i = 0; i < lower.length; i++) {
+                char c = lower[i];
+                if (c.isalnum()) {
+                    builder.append_c(c);
+                }
+            }
+            return builder.str;
         }
 
         // ─────────────────────────────────────────────────────────────────────

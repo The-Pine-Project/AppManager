@@ -10,6 +10,7 @@ namespace AppManager {
         private bool update_available;
         private bool update_loading = false;
         private bool update_updating = false;  // true when actually updating (vs just checking)
+        private string? update_failure_message = null;  // non-null when last update failed
         private Gtk.Button? update_button;
         private Gtk.Spinner? update_spinner;
         private Gtk.Button? extract_button;
@@ -57,6 +58,11 @@ namespace AppManager {
 
         public void set_update_updating(bool updating) {
             update_updating = updating;
+            refresh_update_button();
+        }
+
+        public void set_update_failed(string? message) {
+            update_failure_message = message;
             refresh_update_button();
         }
 
@@ -879,6 +885,7 @@ namespace AppManager {
                 update_spinner.start();
                 update_button.sensitive = false;
                 update_button.remove_css_class("suggested-action");
+                update_button.remove_css_class("update-failed-button");
                 return;
             }
 
@@ -886,6 +893,7 @@ namespace AppManager {
             update_spinner.stop();
             update_button.sensitive = true;
             update_updating = false;  // Reset updating state
+            update_button.remove_css_class("update-failed-button");
 
             if (update_available) {
                 var update_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
@@ -894,9 +902,20 @@ namespace AppManager {
                 update_box.append(new Gtk.Label(_("Update")));
                 update_button.set_child(update_box);
                 update_button.add_css_class("suggested-action");
+            } else if (update_failure_message != null) {
+                var warn_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
+                warn_box.set_halign(Gtk.Align.CENTER);
+                warn_box.append(new Gtk.Image.from_icon_name("dialog-warning-symbolic"));
+                warn_box.append(new Gtk.Label(_("Update Failed")));
+                update_button.set_child(warn_box);
+                update_button.remove_css_class("suggested-action");
+                update_button.add_css_class("update-failed-button");
+                update_button.set_tooltip_text(update_failure_message);
             } else {
+                update_button.set_child(null);
                 update_button.set_label(_("Check Update"));
                 update_button.remove_css_class("suggested-action");
+                update_button.set_tooltip_text(null);
             }
         }
 

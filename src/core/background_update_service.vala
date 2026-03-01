@@ -293,6 +293,9 @@ X-XDP-Autostart=com.github.AppManager
                     case UpdateStatus.FAILED:
                         failed++;
                         append_update_log("FAILED %s: %s".printf(result.record.name ?? result.record.id, result.message));
+                        // Remove from staged updates so it doesn't reappear as pending
+                        staged_updates.remove(result.record.id);
+                        staged_changed = true;
                         break;
                 }
             }

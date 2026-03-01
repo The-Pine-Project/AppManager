@@ -89,6 +89,20 @@
     padding: 2px;
 }
 
+/* Warning indicators for failed updates */
+.update-warning-indicator {
+    color: @warning_color;
+}
+.grid-update-warning {
+    color: @warning_color;
+    background-color: alpha(@window_bg_color, 0.8);
+    border-radius: 50%;
+    padding: 2px;
+}
+.update-failed-button {
+    color: @warning_color;
+}
+
 .drop-target-highlight {
     background-color: alpha(@accent_bg_color, 0.15);
     border-radius: 12px;
