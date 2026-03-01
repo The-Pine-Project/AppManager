@@ -962,8 +962,10 @@ namespace AppManager.Core {
                 ranked.add_all(no_arch_assets);
             }
 
-            // Then remaining assets
-            ranked.add_all(others);
+            // Only include wrong-arch assets as last resort when no better candidates exist
+            if (ranked.size == 0) {
+                ranked.add_all(others);
+            }
 
             return ranked;
         }
