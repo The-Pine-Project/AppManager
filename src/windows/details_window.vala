@@ -191,9 +191,6 @@ namespace AppManager {
                 try {
                     var app_info = new DesktopAppInfo.from_filename(record.desktop_file);
                     if (app_info != null) {
-                        if (header_icon != null) {
-                            UiUtils.spin_launch_icon(header_icon as Gtk.Image);
-                        }
                         app_info.launch(null, null);
 
                         // Show spinner for 3 seconds as launch feedback

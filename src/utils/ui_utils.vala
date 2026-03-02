@@ -208,8 +208,18 @@ namespace AppManager.Utils {
                 rotation = rotation.translate(Graphene.Point() { x = -w, y = -h });
                 widget.allocate(widget.get_width(), widget.get_height(), -1, rotation);
             });
-            var animation = new Adw.TimedAnimation(widget, 0, 720, 800, target);
+            // First spin: 360 degrees
+            var animation = new Adw.TimedAnimation(widget, 0, 360, 400, target);
             animation.set_easing(Adw.Easing.EASE_IN_OUT_CUBIC);
+            animation.done.connect(() => {
+                // Pause 0.5 seconds, then second spin: 360 degrees
+                Timeout.add(500, () => {
+                    var animation2 = new Adw.TimedAnimation(widget, 0, 360, 400, target);
+                    animation2.set_easing(Adw.Easing.EASE_IN_OUT_CUBIC);
+                    animation2.play();
+                    return false;
+                });
+            });
             animation.play();
         }
 
