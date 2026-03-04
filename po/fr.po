@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: app-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 22:18+0200\n"
-"PO-Revision-Date: 2026-02-28 12:00+0000\n"
+"PO-Revision-Date: 2026-03-04 12:00+0000\n"
 "Last-Translator: denisrennes\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -211,23 +211,21 @@ msgid "Deleted permanently"
 msgstr "Définitivement supprimé"
 
 #: src/application.vala:843 src/application.vala:849
-#, fuzzy, c-format
+#, c-format
 msgid "%s moved to Trash"
-msgstr "Mis à la corbeille"
+msgstr "%s mis à la corbeille"
 
 #: src/application.vala:844
 msgid "Undo"
-msgstr ""
+msgstr "Annuler"
 
 #: src/application.vala:876
-#, fuzzy
 msgid "Undo failed"
-msgstr "Échec de la désinstallation"
+msgstr "Échec de l'annulation"
 
 #: src/application.vala:879
-#, fuzzy
 msgid "Restored"
-msgstr "Restaurer par défaut"
+msgstr "Restauré"
 
 #: src/application.vala:887
 msgid "Extraction is only available for portable installations."
@@ -267,14 +265,13 @@ msgid "%d app update(s) available"
 msgstr "%d mise(s) à jour d'application disponible(s)"
 
 #: src/core/background_update_service.vala:312
-#, fuzzy
 msgid "App updates failed"
-msgstr "Mises à jour d'applications disponibles"
+msgstr "Echec de mise à jour d'applications"
 
 #: src/core/background_update_service.vala:313
-#, fuzzy, c-format
+#, c-format
 msgid "%d app update(s) failed"
-msgstr "%d mise(s) à jour échouée(s)"
+msgstr "%d mise(s) à jour d'applications échouée(s)"
 
 #. Build actions array: pairs of (action_key, label)
 #. "default" action is invoked when user clicks the notification body
@@ -392,9 +389,8 @@ msgstr "Mis à jour vers %s"
 
 #. All candidates failed identity verification
 #: src/core/updater.vala:754 src/core/updater.vala:756
-#, fuzzy
 msgid "App identity mismatch"
-msgstr "Architecture incompatible"
+msgstr "Identité d'application incohérente"
 
 #: src/core/updater.vala:827 src/core/updater.vala:857
 #: src/core/updater.vala:1517
@@ -413,18 +409,18 @@ msgstr "Mis à jour"
 
 #: src/core/updater.vala:1012 src/core/updater.vala:1020
 msgid "Downloaded file is not a valid AppImage"
-msgstr ""
+msgstr "Le fichier téléchargé n'est pas un AppImage valide"
 
 #: src/core/updater.vala:1023
 #, c-format
 msgid "AppImage architecture '%s' is incompatible with this system"
-msgstr ""
+msgstr "L'architecture d'AppImage '%s' est incompatible avec cette machine"
 
 #. Match — verification passed
 #: src/core/updater.vala:1064
 #, c-format
 msgid "App identity mismatch: expected '%s' but got '%s'"
-msgstr ""
+msgstr "Incohérence d'identité de l'application : reçu '%s' au lieu de '%s'"
 
 #: src/core/updater.vala:1106
 msgid ""
@@ -481,7 +477,6 @@ msgid "Extracted"
 msgstr "Extrait"
 
 #: src/windows/details_window.vala:256
-#, fuzzy
 msgid "App version"
 msgstr "Version"
 
@@ -622,9 +617,8 @@ msgid "Checking..."
 msgstr "Vérification..."
 
 #: src/windows/details_window.vala:962
-#, fuzzy
 msgid "Update Failed"
-msgstr "Mise à jour disponible"
+msgstr "La mise à jour a échoué"
 
 #: src/windows/details_window.vala:969
 msgid "Check Update"
@@ -966,9 +960,8 @@ msgid "Update cancelled"
 msgstr "Mise à jour annulée"
 
 #: src/windows/main_window.vala:1385 src/windows/main_window.vala:1405
-#, fuzzy
 msgid "Update failed"
-msgstr "Mise à jour disponible"
+msgstr "La mise à jour a échoué"
 
 #: src/windows/main_window.vala:1458
 msgid "Checking updates"
@@ -1317,12 +1310,10 @@ msgid "Arnis Kemlers"
 msgstr "Arnis Kemlers"
 
 #: data/com.github.AppManager.metainfo.xml:9
-#, fuzzy
 msgid "Drag-and-drop AppImage installer and management application"
-msgstr "Installateur d'AppImage pour GNOME, par glisser-déposer"
+msgstr "Installateur d'AppImage par glisser-déposer et gestionnaire d'AppImages"
 
 #: data/com.github.AppManager.metainfo.xml:35
-#, fuzzy
 msgid ""
 "AppManager lets you install or uninstall AppImages with a familiar drag-and-"
 "drop workflow inspired by macOS. It handles desktop integration, icon "
@@ -1330,8 +1321,5 @@ msgid ""
 msgstr ""
 "AppManager vous permet d'installer ou de désinstaller des AppImages par "
 "simple glisser-déposer, inspiré de macOS. Il gère l'intégration au bureau, "
-"l'extraction d'icônes, les bits exécutables et les menus contextuels "
-"Nautilus."
+"l'extraction d'icônes, les bits exécutables et la mise-à-jour des applications."
 
-#~ msgid "Launch Application"
-#~ msgstr "Lancer l'application"
