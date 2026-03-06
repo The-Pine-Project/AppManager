@@ -450,7 +450,7 @@ msgstr "Izpakots"
 
 #: src/windows/details_window.vala:256
 msgid "App version"
-msgstr "Versija"
+msgstr "Lietotnes versija"
 
 #. Terminal app card (only show if is_terminal)
 #: src/windows/details_window.vala:267
@@ -569,7 +569,7 @@ msgstr "Darbības"
 #. Extract button
 #: src/windows/details_window.vala:884
 msgid "Extract AppImage"
-msgstr "Izpakot AppImage"
+msgstr "Izpakot Lietotni"
 
 #: src/windows/details_window.vala:921
 msgid "Restore default"

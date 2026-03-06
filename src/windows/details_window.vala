@@ -252,7 +252,7 @@ namespace AppManager {
             
             // Version card (only show if version is known)
             if (record.version != null && record.version.strip() != "") {
-                var version_card = create_info_card(record.version);
+                var version_card = create_info_card("v%s".printf(record.version));
                 version_card.set_tooltip_text(_("App version"));
                 cards_box.append(version_card);
             }
