@@ -198,6 +198,10 @@ X-XDP-Autostart=com.github.AppManager
         public async void perform_background_check(Cancellable? cancellable = null) {
             log_debug("background update: start");
 
+            // Reload registry from disk to pick up changes made by the GUI process
+            // (installs, upgrades, uninstalls) since the daemon last checked.
+            registry.reload(false);
+
             if (!settings.get_boolean("auto-check-updates")) {
                 log_debug("background update: auto-check disabled; skipping");
                 return;
