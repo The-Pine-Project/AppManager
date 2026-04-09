@@ -36,6 +36,12 @@ namespace AppManager.Core {
             }
         }
 
+        public static string custom_values_file {
+            owned get {
+                return Path.build_filename(data_dir, CUSTOM_VALUES_FILENAME);
+            }
+        }
+
         public static string updates_log_file {
             owned get {
                 return Path.build_filename(data_dir, UPDATES_LOG_FILENAME);

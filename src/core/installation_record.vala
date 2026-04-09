@@ -176,9 +176,6 @@ namespace AppManager.Core {
             builder.set_member_name("prerelease_enabled");
             builder.add_boolean_value(prerelease_enabled);
             
-            // Custom values set by user - only write if set (not null)
-            serialize_custom_values(builder);
-            
             builder.end_object();
             return builder.get_root();
         }
@@ -222,10 +219,10 @@ namespace AppManager.Core {
         }
 
         /**
-         * Serializes only the name and custom values for uninstalled app history.
-         * Used when app is uninstalled to preserve user customizations.
+         * Serializes name and all custom values to a JSON node.
+         * Used by CustomValuesStore to persist user customizations separately.
          */
-        public Json.Node to_history_json() {
+        public Json.Node to_custom_values_json() {
             var builder = new Json.Builder();
             builder.begin_object();
             builder.set_member_name("name");

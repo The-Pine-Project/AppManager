@@ -3,6 +3,7 @@ namespace AppManager.Core {
     public const string REGISTRY_FILENAME = "installations.json";
     public const string UPDATES_LOG_FILENAME = "updates.log";
     public const string STAGED_UPDATES_FILENAME = "staged-updates.json";
+    public const string CUSTOM_VALUES_FILENAME = "custom.json";
     public const string DATA_DIRNAME = "app-manager";
     public const string APPLICATIONS_DIRNAME = "Applications";
     public const string EXTRACTED_DIRNAME = ".installed";

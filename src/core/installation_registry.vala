@@ -3,14 +3,14 @@ using Gee;
 namespace AppManager.Core {
     public class InstallationRegistry : Object {
         private HashTable<string, InstallationRecord> records;
-        // History stores uninstalled apps' name and custom values as JSON objects
-        private HashTable<string, Json.Object> history;
         // Tracks apps currently being installed/uninstalled to skip during reconcile
         private HashTable<string, bool> in_flight;
         // Flag to prevent reconciliation during path migration
         private bool migration_in_progress = false;
         private File registry_file;
         private Mutex registry_mutex = Mutex();
+        // Separate store for user custom values (custom.json)
+        private CustomValuesStore custom_values_store;
         public signal void changed();
 
         /**
@@ -36,9 +36,9 @@ namespace AppManager.Core {
 
         public InstallationRegistry() {
             records = new HashTable<string, InstallationRecord>(GLib.str_hash, GLib.str_equal);
-            history = new HashTable<string, Json.Object>(GLib.str_hash, GLib.str_equal);
             in_flight = new HashTable<string, bool>(GLib.str_hash, GLib.str_equal);
             registry_file = File.new_for_path(AppPaths.registry_file);
+            custom_values_store = new CustomValuesStore();
             // Constructor runs in single-threaded context, no locking needed
             load_unlocked();
         }
@@ -167,13 +167,12 @@ namespace AppManager.Core {
         public void register(InstallationRecord record) {
             registry_mutex.lock();
             records.insert(record.id, record);
-            // Remove any history entry for this app name since it's now registered
-            // This prevents duplicate entries in the JSON (don't persist yet - we'll save below)
-            remove_history_unlocked(record.name);
             // Clear in-flight flag now that registration is complete
             in_flight.remove(record.id);
             save_unlocked();
             registry_mutex.unlock();
+            // Persist custom values to custom.json
+            custom_values_store.save_from_record(record);
             notify_changed();
         }
 
@@ -188,6 +187,8 @@ namespace AppManager.Core {
             records.insert(record.id, record);
             save_unlocked();
             registry_mutex.unlock();
+            // Persist custom values to custom.json
+            custom_values_store.save_from_record(record);
             if (notify) {
                 notify_changed();
             }
@@ -195,10 +196,12 @@ namespace AppManager.Core {
 
         public void unregister(string id) {
             registry_mutex.lock();
-            // Before removing, save custom values to history for potential reinstall
+            // Before removing, save custom values for potential reinstall
             var record = records.get(id);
             if (record != null) {
-                save_to_history_unlocked(record);
+                // Custom values remain in custom.json automatically (no removal needed)
+                // Just ensure they are persisted if not already
+                custom_values_store.save_from_record(record);
             }
             records.remove(id);
             // Clear in-flight flag
@@ -209,71 +212,11 @@ namespace AppManager.Core {
         }
         
         /**
-         * Saves custom values from a record to history for later restoration.
-         * Only saves if record has custom values worth preserving.
-         * Note: Caller must hold registry_mutex.
-         */
-        private void save_to_history_unlocked(InstallationRecord record) {
-            if (record.has_custom_values()) {
-                var history_node = record.to_history_json();
-                history.insert(record.name.down(), history_node.get_object());
-                debug("Saved history for %s", record.name);
-            }
-        }
-        
-        /**
-         * Looks up historical custom values for an app by name.
-         * Returns null if no history exists.
-         */
-        public Json.Object? lookup_history(string app_name) {
-            registry_mutex.lock();
-            var result = history.get(app_name.down());
-            registry_mutex.unlock();
-            return result;
-        }
-        
-        /**
-         * Removes historical custom values for an app by name.
-         * Called after successful registration to prevent duplicate entries.
-         * @param persist If true, saves registry to disk. Set to false when save will happen later.
-         */
-        public void remove_history(string app_name, bool persist = true) {
-            registry_mutex.lock();
-            var key = app_name.down();
-            if (history.contains(key)) {
-                history.remove(key);
-                if (persist) {
-                    save_unlocked();
-                }
-                debug("Removed history for %s", app_name);
-            }
-            registry_mutex.unlock();
-        }
-        
-        /**
-         * Removes history entry without locking.
-         * Note: Caller must hold registry_mutex.
-         */
-        private void remove_history_unlocked(string app_name) {
-            var key = app_name.down();
-            if (history.contains(key)) {
-                history.remove(key);
-                debug("Removed history for %s", app_name);
-            }
-        }
-        
-        /**
-         * Applies historical custom values to a record if available.
+         * Applies custom values from the store to a record if available.
          * Called during fresh install to restore user's previous settings.
          */
         public void apply_history_to_record(InstallationRecord record) {
-            registry_mutex.lock();
-            var history_obj = history.get(record.name.down());
-            registry_mutex.unlock();
-            if (history_obj != null) {
-                debug("Restoring history for %s", record.name);
-                record.apply_history(history_obj);
-            }
+            custom_values_store.apply_to_record(record);
         }
 
         public void persist(bool notify = true) {
@@ -297,10 +240,11 @@ namespace AppManager.Core {
                 preserved_in_flight.insert(id, true);
             }
             records = new HashTable<string, InstallationRecord>(GLib.str_hash, GLib.str_equal);
-            history = new HashTable<string, Json.Object>(GLib.str_hash, GLib.str_equal);
             in_flight = preserved_in_flight;
             load_unlocked();
             registry_mutex.unlock();
+            // Reload custom values store
+            custom_values_store.reload();
             if (notify) {
                 notify_changed();
             }
@@ -338,8 +282,7 @@ namespace AppManager.Core {
                     orphaned.add(record);
                     records_to_remove.add(record.id);
                     
-                    // Save custom values to history before removing (same as unregister)
-                    save_to_history_unlocked(record);
+                    // Custom values remain in custom.json for potential reinstall
                     
                     // Clean up associated files
                     cleanup_record_files(record);
@@ -399,6 +342,11 @@ namespace AppManager.Core {
         /**
          * Internal load function without locking.
          * Note: Caller must hold registry_mutex or ensure exclusive access.
+         *
+         * Handles migration from old format where custom values and history
+         * were stored in installations.json. On first load after migration,
+         * custom values are extracted to custom.json and stripped from
+         * installations.json.
          */
         private void load_unlocked() {
             if (!registry_file.query_exists(null)) {
@@ -417,8 +365,13 @@ namespace AppManager.Core {
                 var parser = new Json.Parser();
                 parser.load_from_data(contents, contents.length);
                 var root = parser.get_root();
+                
+                // Tracks whether we found custom values or history in the old format
+                bool needs_migration = false;
+                var legacy_history = new HashTable<string, Json.Object>(GLib.str_hash, GLib.str_equal);
+                
                 if (root != null && root.get_node_type() == Json.NodeType.OBJECT) {
-                    // New format with "installations" array, history entries stored alongside
+                    // New format with "installations" array
                     var root_obj = root.get_object();
                     
                     // Load installations
@@ -431,16 +384,22 @@ namespace AppManager.Core {
                                 if (obj.has_member("id")) {
                                     var record = InstallationRecord.from_json(obj);
                                     records.insert(record.id, record);
+                                    // Detect if this record has custom values embedded (old format)
+                                    if (record.has_custom_values()) {
+                                        needs_migration = true;
+                                    }
                                 } else if (obj.has_member("name")) {
                                     // This is a history entry (uninstalled app with custom values)
+                                    // Migrate to custom.json
                                     var name = obj.get_string_member("name");
-                                    history.insert(name.down(), obj);
+                                    legacy_history.insert(name.down(), obj);
+                                    needs_migration = true;
                                 }
                             }
                         }
                     }
                     
-                    // Legacy history array support (for migration)
+                    // Legacy history array support
                     if (root_obj.has_member("history")) {
                         var history_array = root_obj.get_array_member("history");
                         foreach (var node in history_array.get_elements()) {
@@ -448,10 +407,10 @@ namespace AppManager.Core {
                                 var obj = node.get_object();
                                 if (obj.has_member("name")) {
                                     var name = obj.get_string_member("name");
-                                    // Only add if not already in history
-                                    if (history.get(name.down()) == null) {
-                                        history.insert(name.down(), obj);
+                                    if (legacy_history.get(name.down()) == null) {
+                                        legacy_history.insert(name.down(), obj);
                                     }
+                                    needs_migration = true;
                                 }
                             }
                         }
@@ -463,7 +422,36 @@ namespace AppManager.Core {
                             var obj = node.get_object();
                             var record = InstallationRecord.from_json(obj);
                             records.insert(record.id, record);
+                            if (record.has_custom_values()) {
+                                needs_migration = true;
+                            }
                         }
+                    }
+                }
+                
+                // Migrate custom values from old format to custom.json
+                if (needs_migration && !custom_values_store.has_entries()) {
+                    debug("Migrating custom values from installations.json to custom.json");
+                    
+                    // Migrate from installed records
+                    var records_array = new ArrayList<InstallationRecord>();
+                    foreach (var record in records.get_values()) {
+                        records_array.add(record);
+                    }
+                    custom_values_store.migrate_from_records(records_array.to_array());
+                    
+                    // Migrate from history entries
+                    if (legacy_history.size() > 0) {
+                        custom_values_store.migrate_from_history(legacy_history);
+                    }
+                    
+                    // Re-save installations.json without custom values or history entries
+                    save_unlocked();
+                    debug("Migration to custom.json complete");
+                } else {
+                    // Normal load: apply custom values from custom.json to loaded records
+                    foreach (var record in records.get_values()) {
+                        custom_values_store.apply_to_record(record);
                     }
                 }
             } catch (Error e) {
@@ -480,20 +468,13 @@ namespace AppManager.Core {
                 var builder = new Json.Builder();
                 builder.begin_object();
                 
-                // Save all entries (installations and history) in single "installations" array
+                // Save installations only (custom values are in custom.json)
                 builder.set_member_name("installations");
                 builder.begin_array();
                 
                 // Add installed apps
                 foreach (var record in records.get_values()) {
                     builder.add_value(record.to_json());
-                }
-                
-                // Add history entries (uninstalled apps with custom values)
-                foreach (var history_obj in history.get_values()) {
-                    var node = new Json.Node(Json.NodeType.OBJECT);
-                    node.set_object(history_obj);
-                    builder.add_value(node);
                 }
                 
                 builder.end_array();

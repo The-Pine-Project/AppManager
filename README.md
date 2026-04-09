@@ -9,7 +9,7 @@
 
 # <img width="48" height="48" alt="com github AppManager" src="https://github.com/user-attachments/assets/879952cc-d0b3-48c8-aa35-1132c7423fe0" /> AppManager
 
-**AppManager** is a GTK/Libadwaita developed desktop utility in **Vala** that makes installing and uninstalling AppImages on Linux desktop painless. It supports both SquashFS and DwarFS AppImage formats, features a seamless background **auto-update** process, and leverages **zsync** delta updates for efficient bandwidth usage. Double-click any `.AppImage` to open a macOS-style drag-and-drop window, just drag to install and AppManager will move the app, wire up desktop entries, and copy icons. 
+**AppManager** is a GTK/Libadwaita developed desktop utility in **Vala** that makes installing and uninstalling AppImages on Linux desktop painless. It supports both SquashFS and DwarFS AppImage formats, features a seamless background **auto-update** process, and leverages **zsync** delta updates for efficient bandwidth usage. Double-click any `.AppImage` to open a macOS-style drag-and-drop window, just drag to install and AppManager will move the app, wire up desktop entries, and copy icons.
 
 > **This AppImage bundles everything and it should work on any Linux distro, including old and musl-based ones.**
 
@@ -47,19 +47,19 @@ Install the development packages required to build AppManager on each distributi
 - **Debian / Ubuntu:**
 
 ```bash
-sudo apt install valac meson ninja-build pkg-config libadwaita-1-dev libgtk-4-dev libglib2.0-dev libjson-glib-dev libgee-0.8-dev libgirepository1.0-dev libsoup-3.0-dev cmake desktop-file-utils jq
+sudo apt install valac meson ninja-build pkg-config libadwaita-1-dev libgtk-4-dev libglib2.0-dev libjson-glib-dev libgee-0.8-dev libgirepository1.0-dev libsoup-3.0-dev cmake desktop-file-utils jq libzstd-dev
 ```
 
 - **Fedora:**
 
 ```bash
-sudo dnf install vala meson ninja-build gtk4-devel libadwaita-devel glib2-devel json-glib-devel libgee-devel libsoup3-devel cmake desktop-file-utils jq
+sudo dnf install vala meson ninja-build gtk4-devel libadwaita-devel glib2-devel json-glib-devel libgee-devel libsoup3-devel cmake desktop-file-utils jq libzstd-devel
 ```
 
 - **Arch Linux / Manjaro:**
 
 ```bash
-sudo pacman -S vala meson ninja gtk4 libadwaita glib2 json-glib libgee libsoup cmake desktop-file-utils jq
+sudo pacman -S vala meson ninja gtk4 libadwaita glib2 json-glib libgee libsoup cmake desktop-file-utils jq libzstd-devel
 ```
 
 </details>
