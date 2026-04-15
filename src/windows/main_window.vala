@@ -53,6 +53,7 @@ namespace AppManager {
         private string view_mode = "list";
         private bool _fullscreen_active = false;
         private string pre_fullscreen_view_mode = "list";
+        private Gtk.Widget? import_hint_widget;
 
         public MainWindow(Application app, InstallationRegistry registry, Installer installer, Settings settings) {
             Object(application: app);
@@ -171,7 +172,45 @@ namespace AppManager {
             content_stack.add_named(empty_state_box, "empty");
             content_stack.set_visible_child_name("list");
 
-            var root_toolbar = create_toolbar_with_header(content_stack, true);
+            // GNOME-style hint overlay: title + subtitle + pill button, centered in
+            // the content area when only AppManager itself is installed.
+            var hint_title = new Gtk.Label(_("No Apps Yet"));
+            hint_title.add_css_class("title-2");
+            hint_title.set_halign(Gtk.Align.CENTER);
+
+            var hint_subtitle = new Gtk.Label(_("Import your AppImages to manage and update them here"));
+            hint_subtitle.add_css_class("dim-label");
+            hint_subtitle.set_halign(Gtk.Align.CENTER);
+            hint_subtitle.set_wrap(true);
+            hint_subtitle.set_max_width_chars(42);
+            hint_subtitle.set_justify(Gtk.Justification.CENTER);
+
+            var hint_btn = new Gtk.Button();
+            hint_btn.add_css_class("pill");
+            hint_btn.add_css_class("suggested-action");
+            hint_btn.set_halign(Gtk.Align.CENTER);
+            hint_btn.set_margin_top(6);
+            var hint_btn_content = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 8);
+            hint_btn_content.set_halign(Gtk.Align.CENTER);
+            hint_btn_content.append(new Gtk.Image.from_icon_name("folder-open-symbolic"));
+            hint_btn_content.append(new Gtk.Label(_("Import AppImages ...")));
+            hint_btn.set_child(hint_btn_content);
+            hint_btn.clicked.connect(() => present_import_folder_dialog());
+
+            var hint_box = new Gtk.Box(Gtk.Orientation.VERTICAL, 12);
+            hint_box.set_halign(Gtk.Align.CENTER);
+            hint_box.set_valign(Gtk.Align.CENTER);
+            hint_box.set_visible(false);
+            hint_box.append(hint_title);
+            hint_box.append(hint_subtitle);
+            hint_box.append(hint_btn);
+            import_hint_widget = hint_box;
+
+            var content_overlay = new Gtk.Overlay();
+            content_overlay.set_child(content_stack);
+            content_overlay.add_overlay(hint_box);
+
+            var root_toolbar = create_toolbar_with_header(content_overlay, true);
             var root_page = new Adw.NavigationPage(root_toolbar, "main");
             root_page.title = _("AppManager");
             navigation_view.add(root_page);
@@ -370,11 +409,11 @@ namespace AppManager {
             debug("MainWindow: refresh_installations called");
             ensure_apps_group_present();
             clear_apps_group_rows();
-            
+
             var all_records = registry.list();
             has_installations = all_records.length > 0;
             var filtered_list = new Gee.ArrayList<InstallationRecord>();
-            
+
             foreach (var record in all_records) {
                 if (current_search_query != "") {
                     var name = record.name ?? "";
@@ -384,7 +423,14 @@ namespace AppManager {
                 }
                 filtered_list.add(record);
             }
-            
+
+            // Show the import hint (overlay) when only AppManager itself is installed.
+            // Hide it when filtered_list is empty — the empty-state page has its own button.
+            bool only_self = has_only_self_records(all_records);
+            if (import_hint_widget != null) {
+                import_hint_widget.set_visible(only_self && filtered_list.size > 0);
+            }
+
             // Prune based on all records (not filtered) to avoid removing staged updates during search
             prune_pending_keys_and_staged_updates(all_records);
             prune_size_cache(filtered_list);
@@ -1575,6 +1621,34 @@ namespace AppManager {
             if (unsupported > 0) {
                 add_toast(_("%d app(s) use unsupported update links").printf(unsupported));
             }
+        }
+
+        /**
+         * Returns true when every record in the registry is AppManager managing itself.
+         * In that case the list is treated as effectively empty so the import prompt shows.
+         */
+        private bool has_only_self_records(InstallationRecord[] records) {
+            if (records.length == 0) return false;
+            foreach (var rec in records) {
+                if (!is_self_app_record(rec)) return false;
+            }
+            return true;
+        }
+
+        /**
+         * Heuristic: does this record look like AppManager itself?
+         * Checks the app name and desktop file path for "appmanager".
+         */
+        private bool is_self_app_record(InstallationRecord record) {
+            if (record.name != null) {
+                var name = record.name.strip().down().replace(" ", "").replace("-", "");
+                if (name.has_prefix("appmanager")) return true;
+            }
+            if (record.desktop_file != null &&
+                    record.desktop_file.down().contains("appmanager")) {
+                return true;
+            }
+            return false;
         }
 
         private string record_state_key(InstallationRecord record) {
