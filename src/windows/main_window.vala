@@ -54,6 +54,8 @@ namespace AppManager {
         private bool _fullscreen_active = false;
         private string pre_fullscreen_view_mode = "list";
         private Gtk.Widget? import_hint_widget;
+        private bool import_in_progress = false;
+        private bool import_cancel_requested = false;
 
         public MainWindow(Application app, InstallationRegistry registry, Installer installer, Settings settings) {
             Object(application: app);
@@ -223,6 +225,9 @@ namespace AppManager {
             });
 
             this.close_request.connect(() => {
+                if (import_in_progress) {
+                    return true;
+                }
                 settings.set_int("window-width", this.get_width());
                 settings.set_int("window-height", this.get_height());
                 return false;
@@ -1930,8 +1935,9 @@ namespace AppManager {
                         continue;
                     }
                     var name = info.get_name();
-                    if (name.down().has_suffix(".appimage")) {
-                        appimages.add(Path.build_filename(folder.get_path(), name));
+                    var full_path = Path.build_filename(folder.get_path(), name);
+                    if (AppImageAssets.detect_format(full_path) != AppImageFormat.UNKNOWN) {
+                        appimages.add(full_path);
                     }
                 }
             } catch (Error e) {
@@ -1944,11 +1950,55 @@ namespace AppManager {
                 return;
             }
 
+            int total = appimages.size;
             int installed = 0;
             int skipped = 0;
             int failed = 0;
+            int cancelled = 0;
 
+            var progress_dialog = new Adw.AlertDialog(
+                _("Importing AppImages…"),
+                _("Installing %d AppImage(s)…").printf(total));
+            progress_dialog.add_response("cancel", _("Cancel"));
+            progress_dialog.set_response_appearance("cancel", Adw.ResponseAppearance.DESTRUCTIVE);
+            progress_dialog.close_response = "cancel";
+            progress_dialog.can_close = false;
+
+            var progress_bar = new Gtk.ProgressBar();
+            progress_bar.show_text = true;
+            progress_bar.margin_start = 12;
+            progress_bar.margin_end = 12;
+            progress_bar.margin_top = 12;
+            progress_bar.margin_bottom = 4;
+            progress_bar.fraction = 0.0;
+            progress_bar.text = _("Starting…");
+            progress_dialog.extra_child = progress_bar;
+
+            import_in_progress = true;
+            import_cancel_requested = false;
+
+            progress_dialog.response.connect((response_id) => {
+                if (response_id == "cancel") {
+                    import_cancel_requested = true;
+                    progress_bar.text = _("Cancelling…");
+                }
+            });
+
+            progress_dialog.present(this);
+
+            int index = 0;
             foreach (var path in appimages) {
+                index++;
+
+                if (import_cancel_requested) {
+                    cancelled = total - (installed + skipped + failed);
+                    break;
+                }
+
+                var basename = Path.get_basename(path);
+                progress_bar.fraction = (double)(index - 1) / (double)total;
+                progress_bar.text = _("%d of %d: %s").printf(index, total, basename);
+
                 SourceFunc callback = run_folder_import.callback;
                 InstallationRecord? record = null;
                 Error? install_error = null;
@@ -1996,7 +2046,13 @@ namespace AppManager {
                 } else {
                     installed++;
                 }
+
+                progress_bar.fraction = (double)index / (double)total;
             }
+
+            import_in_progress = false;
+            progress_dialog.can_close = true;
+            progress_dialog.force_close();
 
             if (installed > 0) {
                 add_toast(_("Imported %d app(s)").printf(installed));
@@ -2006,6 +2062,9 @@ namespace AppManager {
             }
             if (failed > 0) {
                 add_toast(_("%d app(s) failed to import").printf(failed));
+            }
+            if (cancelled > 0) {
+                add_toast(_("Cancelled — %d app(s) not imported").printf(cancelled));
             }
 
             refresh_installations();
