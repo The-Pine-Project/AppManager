@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-18 00:03+0300\n"
+"POT-Creation-Date: 2026-04-18 00:23+0300\n"
 "PO-Revision-Date: 2026-01-27 12:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
@@ -14,7 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/application.vala:260
 msgid "Incompatible AppImage"
@@ -22,8 +23,8 @@ msgstr "Nesuderinamas programos vaizdas"
 
 #: src/application.vala:261
 msgid ""
-"This AppImage is incompatible or corrupted. Missing required files (AppRun, "
-".desktop, or icon)."
+"This AppImage is incompatible or corrupted. Missing required files "
+"(AppRun, .desktop, or icon)."
 msgstr ""
 "Šis programos vaizdas yra nesuderinamas arba sugadintas. Trūksta būtinų "
 "failų (AppRun, .desktop arba piktogramos)."
@@ -60,8 +61,8 @@ msgstr "Atidaryti %s?"
 #: src/application.vala:374 src/windows/drop_window.vala:237
 #, c-format
 msgid ""
-"Origins of %s application can not be verified. Are you sure you want to open"
-" it?"
+"Origins of %s application can not be verified. Are you sure you want to open "
+"it?"
 msgstr ""
 "Programos %s kilmė negali būti patvirtinta. Ar tikrai norite ją atidaryti?"
 
@@ -76,8 +77,8 @@ msgstr "Įdiegti"
 #: src/application.vala:380 src/application.vala:411 src/application.vala:827
 #: src/windows/details_window.vala:1111 src/windows/details_window.vala:1127
 #: src/windows/drop_window.vala:248 src/windows/drop_window.vala:422
-#: src/windows/drop_window.vala:1001 src/windows/main_window.vala:1913
-#: src/windows/main_window.vala:1962 src/windows/preferences_window.vala:432
+#: src/windows/drop_window.vala:1001 src/windows/main_window.vala:1927
+#: src/windows/main_window.vala:1976 src/windows/preferences_window.vala:432
 #: src/windows/preferences_window.vala:466
 msgid "Cancel"
 msgstr "Atšaukti"
@@ -182,7 +183,8 @@ msgstr "Perkelti į šiukšlinę"
 #: src/application.vala:825
 #, c-format
 msgid ""
-"%s could not be moved to the trash. Do you want to delete it permanently instead?\n"
+"%s could not be moved to the trash. Do you want to delete it permanently "
+"instead?\n"
 "\n"
 "This action cannot be undone."
 msgstr ""
@@ -417,8 +419,7 @@ msgstr "Programos tapatybė nesutampa: tikėtasi „%s“, gauta „%s“"
 
 #: src/core/updater.vala:1104
 msgid ""
-"GitHub authentication failed (401). Check your token in Preferences → "
-"GitHub."
+"GitHub authentication failed (401). Check your token in Preferences → GitHub."
 msgstr ""
 "„GitHub“ autentifikavimas nepavyko (401). Patikrinkite prieigos raktą "
 "skiltyje „Nuostatos“ → „GitHub“."
@@ -602,8 +603,8 @@ msgstr "Išskleisti AppImage"
 msgid "Restore default"
 msgstr "Atkurti numatytąsias reikšmes"
 
-#: src/windows/details_window.vala:934 src/windows/main_window.vala:589
-#: src/windows/main_window.vala:663
+#: src/windows/details_window.vala:934 src/windows/main_window.vala:590
+#: src/windows/main_window.vala:664
 msgid "Updating..."
 msgstr "Atnaujinama..."
 
@@ -629,8 +630,8 @@ msgstr ""
 
 #: src/windows/details_window.vala:1038
 msgid ""
-"Currently GitHub and GitLab URL formats are fully supported. Direct download"
-" links also work if the server provides Last-Modified or Content-Length "
+"Currently GitHub and GitLab URL formats are fully supported. Direct download "
+"links also work if the server provides Last-Modified or Content-Length "
 "headers."
 msgstr ""
 "Šiuo metu visiškai palaikomi GitHub ir GitLab URL formatai. Tiesioginės "
@@ -741,394 +742,398 @@ msgstr "Patvirtinkite šios AppImage autentiškumą."
 msgid "Enter the SHA256 hash "
 msgstr "Įveskite SHA256 maišą "
 
-#: src/windows/main_window.vala:63 src/windows/main_window.vala:217
+#: src/windows/main_window.vala:64 src/windows/main_window.vala:218
 #: data/com.github.AppManager.metainfo.xml:4
 msgid "AppManager"
 msgstr "AppManager"
 
 #. GNOME-style hint overlay: title + subtitle + pill button, centered in
 #. the content area when only AppManager itself is installed.
-#: src/windows/main_window.vala:179
+#: src/windows/main_window.vala:180
 msgid "No Apps Yet"
 msgstr "Programų dar nėra"
 
-#: src/windows/main_window.vala:183
+#: src/windows/main_window.vala:184
 msgid "Import your AppImages to manage and update them here"
 msgstr ""
 "Importuokite savo AppImages, kad galėtumėte jas čia tvarkyti ir atnaujinti"
 
-#: src/windows/main_window.vala:198 src/windows/main_window.vala:371
+#: src/windows/main_window.vala:199 src/windows/main_window.vala:372
 msgid "Import AppImages ..."
 msgstr "Importuoti AppImages ..."
 
-#: src/windows/main_window.vala:276
+#: src/windows/main_window.vala:277
 msgid "Get more ..."
 msgstr "Gauti daugiau ..."
 
-#: src/windows/main_window.vala:288
+#: src/windows/main_window.vala:289
 msgid "Find more AppImages"
 msgstr "Rasti daugiau AppImage"
 
-#: src/windows/main_window.vala:289
+#: src/windows/main_window.vala:290
 msgid "Browse these sources to discover and download AppImages"
 msgstr "Naršykite šiuos šaltinius, kad rastumėte ir atsisiųstumėte AppImage"
 
-#: src/windows/main_window.vala:315
+#: src/windows/main_window.vala:316
 msgid "Import AppImages from folder ..."
 msgstr "Importuoti AppImages iš aplanko ..."
 
-#: src/windows/main_window.vala:353 src/windows/main_window.vala:446
+#: src/windows/main_window.vala:354 src/windows/main_window.vala:447
 msgid "No AppImage apps installed"
 msgstr "Nėra įdiegtų AppImage programų"
 
-#: src/windows/main_window.vala:358
+#: src/windows/main_window.vala:359
 msgid "Download AppImage and double click to install with AppManager"
 msgstr ""
 "Atsisiųskite AppImage ir dukart spustelėkite, kad įdiegtumėte su AppManager"
 
-#: src/windows/main_window.vala:446
+#: src/windows/main_window.vala:447
 msgid "No results found"
 msgstr "Rezultatų nerasta"
 
-#: src/windows/main_window.vala:525 src/windows/main_window.vala:1051
+#: src/windows/main_window.vala:526 src/windows/main_window.vala:1054
 msgid "My Apps"
 msgstr "Mano programos"
 
-#: src/windows/main_window.vala:596 src/windows/main_window.vala:670
+#: src/windows/main_window.vala:597 src/windows/main_window.vala:671
 msgid "Update available"
 msgstr "Yra atnaujinimas"
 
 #. App name label (same size as list view)
-#: src/windows/main_window.vala:685
+#: src/windows/main_window.vala:686
 msgid "Unknown"
 msgstr "Nežinoma"
 
-#: src/windows/main_window.vala:778
+#: src/windows/main_window.vala:779
 msgid "extracted"
 msgstr "išskleista"
 
-#: src/windows/main_window.vala:835
+#: src/windows/main_window.vala:836
 msgid "Updated just now"
 msgstr "Ką tik atnaujinta"
 
-#: src/windows/main_window.vala:835
+#: src/windows/main_window.vala:836
 msgid "Installed just now"
 msgstr "Ką tik įdiegta"
 
-#: src/windows/main_window.vala:843
+#: src/windows/main_window.vala:844
 #, c-format
 msgid "Updated %d min ago"
 msgstr "Atnaujinta prieš %d min"
 
-#: src/windows/main_window.vala:843
+#: src/windows/main_window.vala:844
 #, c-format
 msgid "Installed %d min ago"
 msgstr "Įdiegta prieš %d min"
 
-#: src/windows/main_window.vala:851
+#: src/windows/main_window.vala:852
 #, c-format
 msgid "Updated %d hours ago"
 msgstr "Atnaujinta prieš %d val"
 
-#: src/windows/main_window.vala:851
+#: src/windows/main_window.vala:852
 #, c-format
 msgid "Installed %d hours ago"
 msgstr "Įdiegta prieš %d val"
 
-#: src/windows/main_window.vala:858
+#: src/windows/main_window.vala:859
 #, c-format
 msgid "Updated %d days ago"
 msgstr "Atnaujinta prieš %d d."
 
-#: src/windows/main_window.vala:858
+#: src/windows/main_window.vala:859
 #, c-format
 msgid "Installed %d days ago"
 msgstr "Įdiegta prieš %d d."
 
-#: src/windows/main_window.vala:876
+#: src/windows/main_window.vala:878 src/windows/main_window.vala:1185
+msgid "Leave Fullscreen"
+msgstr "Išeiti iš viso ekrano"
+
+#: src/windows/main_window.vala:878 src/windows/main_window.vala:1185
 msgid "Fullscreen"
 msgstr "Visas ekranas"
 
-#: src/windows/main_window.vala:880 src/windows/preferences_window.vala:34
+#: src/windows/main_window.vala:883 src/windows/preferences_window.vala:34
 msgid "Preferences"
 msgstr "Nuostatos"
 
-#: src/windows/main_window.vala:881
+#: src/windows/main_window.vala:884
 msgid "Keyboard shortcuts"
 msgstr "Klaviatūros spartieji klavišai"
 
-#: src/windows/main_window.vala:882 src/windows/main_window.vala:1782
+#: src/windows/main_window.vala:885 src/windows/main_window.vala:1796
 msgid "About AppManager"
 msgstr "Apie AppManager"
 
-#: src/windows/main_window.vala:886
+#: src/windows/main_window.vala:889
 msgid "Quit"
 msgstr "Išeiti"
 
-#: src/windows/main_window.vala:900
+#: src/windows/main_window.vala:903
 msgid "Support AppManager"
 msgstr "Palaikykite „AppManager“."
 
-#: src/windows/main_window.vala:915
+#: src/windows/main_window.vala:918
 msgid "Buy Me a Coffee"
 msgstr "Nupirk man kavos"
 
-#: src/windows/main_window.vala:934
+#: src/windows/main_window.vala:937
 msgid "Become a sponsor on GitHub"
 msgstr "Tapkite GitHub rėmėju"
 
-#: src/windows/main_window.vala:939
+#: src/windows/main_window.vala:942
 msgid "Sponsor Me ♡"
 msgstr "Rėmėk mane ♡"
 
-#: src/windows/main_window.vala:950
+#: src/windows/main_window.vala:953
 msgid "Star AppManager on GitHub"
 msgstr "Star AppManager „GitHub“."
 
-#: src/windows/main_window.vala:955
+#: src/windows/main_window.vala:958
 msgid "Star AppManager"
 msgstr "Star AppManager"
 
-#: src/windows/main_window.vala:966
+#: src/windows/main_window.vala:969
 msgid "View contributors on GitHub"
 msgstr "Peržiūrėkite bendradarbius „GitHub“."
 
-#: src/windows/main_window.vala:971 src/windows/main_window.vala:1801
+#: src/windows/main_window.vala:974 src/windows/main_window.vala:1815
 msgid "Contributors"
 msgstr "Pagalbininkai"
 
-#: src/windows/main_window.vala:994 src/windows/main_window.vala:1780
+#: src/windows/main_window.vala:997 src/windows/main_window.vala:1794
 msgid "Search"
 msgstr "Ieškoti"
 
-#: src/windows/main_window.vala:1000
+#: src/windows/main_window.vala:1003
 msgid "Support this project"
 msgstr "Palaikykite šį projektą"
 
-#: src/windows/main_window.vala:1010
+#: src/windows/main_window.vala:1013
 msgid "More actions"
 msgstr "Daugiau veiksmų"
 
-#: src/windows/main_window.vala:1025
+#: src/windows/main_window.vala:1028
 msgid "Search apps..."
 msgstr "Ieškoti programų..."
 
 #. FUSE is not installed warning banner
-#: src/windows/main_window.vala:1033
+#: src/windows/main_window.vala:1036
 msgid "FUSE is not installed. Some AppImages may fail to run"
 msgstr "FUSE neįdiegta. Kai kurios AppImage gali neveikti"
 
-#: src/windows/main_window.vala:1035
+#: src/windows/main_window.vala:1038
 msgid "Learn More"
 msgstr "Sužinoti daugiau"
 
-#: src/windows/main_window.vala:1056
+#: src/windows/main_window.vala:1059
 msgid "Shift+click to launch app"
 msgstr "Shift+spustelėjimas programai paleisti"
 
-#: src/windows/main_window.vala:1093
+#: src/windows/main_window.vala:1096
 msgid "Switch to grid view"
 msgstr "Perjungti į tinklelio rodinį"
 
-#: src/windows/main_window.vala:1096
+#: src/windows/main_window.vala:1099
 msgid "Switch to list view"
 msgstr "Perjungti į sąrašo rodinį"
 
-#: src/windows/main_window.vala:1227 src/windows/main_window.vala:1298
+#: src/windows/main_window.vala:1241 src/windows/main_window.vala:1312
 msgid "Updates already running"
 msgstr "Atnaujinimai jau vykdomi"
 
-#: src/windows/main_window.vala:1275
+#: src/windows/main_window.vala:1289
 msgid "Cancel update"
 msgstr "Atšaukti atnaujinimą"
 
-#: src/windows/main_window.vala:1306
+#: src/windows/main_window.vala:1320
 msgid "Cancelling..."
 msgstr "Atšaukiama..."
 
-#: src/windows/main_window.vala:1332
+#: src/windows/main_window.vala:1346
 msgid "Update check cancelled"
 msgstr "Atnaujinimų tikrinimas atšauktas"
 
-#: src/windows/main_window.vala:1362
+#: src/windows/main_window.vala:1376
 #, c-format
 msgid "%d app(s) have updates"
 msgstr "%d programa(-os) turi atnaujinimų"
 
-#: src/windows/main_window.vala:1365
+#: src/windows/main_window.vala:1379
 msgid "No updates available right now"
 msgstr "Šiuo metu atnaujinimų nėra"
 
-#: src/windows/main_window.vala:1372
+#: src/windows/main_window.vala:1386
 msgid "Nothing queued for updating"
 msgstr "Eilėje atnaujinimui nieko nėra"
 
-#: src/windows/main_window.vala:1399
+#: src/windows/main_window.vala:1413
 msgid "Update cancelled"
 msgstr "Atnaujinimas atšauktas"
 
-#: src/windows/main_window.vala:1464 src/windows/main_window.vala:1484
+#: src/windows/main_window.vala:1478 src/windows/main_window.vala:1498
 msgid "Update failed"
 msgstr "Yra atnaujinimas"
 
-#: src/windows/main_window.vala:1537
+#: src/windows/main_window.vala:1551
 msgid "Checking updates"
 msgstr "Tikrinami atnaujinimai"
 
-#: src/windows/main_window.vala:1540
+#: src/windows/main_window.vala:1554
 msgid "Update Apps"
 msgstr "Atnaujinti programas"
 
-#: src/windows/main_window.vala:1543
+#: src/windows/main_window.vala:1557
 msgid "Updating apps"
 msgstr "Atnaujinamos programos"
 
-#: src/windows/main_window.vala:1546
+#: src/windows/main_window.vala:1560
 msgid "Check updates"
 msgstr "Tikrinti atnaujinimus"
 
-#: src/windows/main_window.vala:1570
+#: src/windows/main_window.vala:1584
 msgid "No installed apps to update"
 msgstr "Nėra įdiegtų programų atnaujinimui"
 
-#: src/windows/main_window.vala:1610
+#: src/windows/main_window.vala:1624
 #, c-format
 msgid "Updated %d app(s)"
 msgstr "Atnaujinta %d programa(-os)"
 
-#: src/windows/main_window.vala:1613
+#: src/windows/main_window.vala:1627
 #, c-format
 msgid "%d update(s) failed"
 msgstr "%d atnaujinimas(-ai) nepavyko"
 
-#: src/windows/main_window.vala:1621
+#: src/windows/main_window.vala:1635
 msgid "Add update addresses in Details to enable updates"
 msgstr ""
 "Pridėkite atnaujinimų adresus skiltyje Išsami informacija, kad įgalintumėte "
 "atnaujinimus"
 
-#: src/windows/main_window.vala:1623
+#: src/windows/main_window.vala:1637
 msgid "All supported apps are already up to date"
 msgstr "Visos palaikomos programos jau atnaujintos"
 
-#: src/windows/main_window.vala:1627
+#: src/windows/main_window.vala:1641
 #, c-format
 msgid "%d app(s) use unsupported update links"
 msgstr "%d programa(-os) naudoja nepalaikomas atnaujinimų nuorodas"
 
-#: src/windows/main_window.vala:1722
+#: src/windows/main_window.vala:1736
 #, c-format
 msgid "Update available for %s"
 msgstr "Yra atnaujinimas programai %s"
 
-#: src/windows/main_window.vala:1768
+#: src/windows/main_window.vala:1782
 msgid "General"
 msgstr "Bendra"
 
-#: src/windows/main_window.vala:1772
+#: src/windows/main_window.vala:1786
 msgid "Navigation"
 msgstr "Navigacija"
 
-#: src/windows/main_window.vala:1776
+#: src/windows/main_window.vala:1790
 msgid "Window"
 msgstr "Langas"
 
-#: src/windows/main_window.vala:1778
+#: src/windows/main_window.vala:1792
 msgid "Check for updates"
 msgstr "Tikrinti atnaujinimus"
 
-#: src/windows/main_window.vala:1779
+#: src/windows/main_window.vala:1793
 msgid "Show main menu"
 msgstr "Rodyti pagrindinį meniu"
 
-#: src/windows/main_window.vala:1781
+#: src/windows/main_window.vala:1795
 msgid "Show shortcuts"
 msgstr "Rodyti sparčiuosius klavišus"
 
-#: src/windows/main_window.vala:1783
+#: src/windows/main_window.vala:1797
 msgid "Close window"
 msgstr "Uždaryti langą"
 
-#: src/windows/main_window.vala:1784
+#: src/windows/main_window.vala:1798
 msgid "Quit AppManager"
 msgstr "Išeiti iš AppManager"
 
-#: src/windows/main_window.vala:1785
+#: src/windows/main_window.vala:1799
 msgid "Toggle fullscreen"
 msgstr "Perjungti viso ekrano režimą"
 
-#: src/windows/main_window.vala:1802
+#: src/windows/main_window.vala:1816
 msgid "Credits"
 msgstr "Padėkos"
 
-#: src/windows/main_window.vala:1886
+#: src/windows/main_window.vala:1900
 msgid "Select folder with AppImages"
 msgstr "Pasirinkite aplanką su AppImages"
 
-#: src/windows/main_window.vala:1904
+#: src/windows/main_window.vala:1918
 msgid "Import AppImages"
 msgstr "Importuoti AppImages"
 
-#: src/windows/main_window.vala:1905
+#: src/windows/main_window.vala:1919
 #, c-format
 msgid "Install AppImages found in %s"
 msgstr "Įdiegti %s rastus AppImages"
 
-#: src/windows/main_window.vala:1907
+#: src/windows/main_window.vala:1921
 msgid "Move AppImages"
 msgstr "Perkelti AppImages"
 
-#: src/windows/main_window.vala:1914
+#: src/windows/main_window.vala:1928
 msgid "Import"
 msgstr "Importuoti"
 
-#: src/windows/main_window.vala:1944
+#: src/windows/main_window.vala:1958
 #, c-format
 msgid "Failed to read folder: %s"
 msgstr "Nepavyko perskaityti aplanko: %s"
 
-#: src/windows/main_window.vala:1949
+#: src/windows/main_window.vala:1963
 msgid "No AppImage files found in folder"
 msgstr "Aplanke AppImage failų nerasta"
 
-#: src/windows/main_window.vala:1960
+#: src/windows/main_window.vala:1974
 msgid "Importing AppImages…"
 msgstr "Importuojama AppImages…"
 
-#: src/windows/main_window.vala:1961
+#: src/windows/main_window.vala:1975
 #, c-format
 msgid "Installing %d AppImage(s)…"
 msgstr "Įdiegiama %d AppImage(-ių)…"
 
-#: src/windows/main_window.vala:1974
+#: src/windows/main_window.vala:1988
 msgid "Starting…"
 msgstr "Pradedama…"
 
-#: src/windows/main_window.vala:1983
+#: src/windows/main_window.vala:1997
 msgid "Cancelling…"
 msgstr "Atšaukiama…"
 
-#: src/windows/main_window.vala:2000
+#: src/windows/main_window.vala:2014
 #, c-format
 msgid "%d of %d: %s"
 msgstr "%d iš %d: %s"
 
-#: src/windows/main_window.vala:2058
+#: src/windows/main_window.vala:2072
 #, c-format
 msgid "Imported %d app(s)"
 msgstr "Importuota %d programa(-os)"
 
-#: src/windows/main_window.vala:2061
+#: src/windows/main_window.vala:2075
 #, c-format
 msgid "Skipped %d already installed app(s)"
 msgstr "Praleista %d jau įdiegta(-os) programa(-os)"
 
-#: src/windows/main_window.vala:2064
+#: src/windows/main_window.vala:2078
 #, c-format
 msgid "%d app(s) failed to import"
 msgstr "Nepavyko importuoti %d programos(-ų)"
 
-#: src/windows/main_window.vala:2067
+#: src/windows/main_window.vala:2081
 #, c-format
 msgid "Cancelled — %d app(s) not imported"
 msgstr "Atšaukta — %d programa(-os) neimportuota(-os)"
@@ -1141,8 +1146,8 @@ msgstr "Montavimas"
 #: src/windows/preferences_window.vala:60
 msgid "Configure where AppImages are installed (default: ~/Applications)"
 msgstr ""
-"Konfigūruoti, kur yra įdiegtos programos „AppImages“ (numatytasis: "
-"~/Applications)"
+"Konfigūruoti, kur yra įdiegtos programos „AppImages“ (numatytasis: ~/"
+"Applications)"
 
 #: src/windows/preferences_window.vala:63
 msgid "Installation directory"
@@ -1358,8 +1363,7 @@ msgstr "Gerai"
 
 #: src/windows/preferences_window.vala:560
 msgid "Authentication failed — token is invalid or expired"
-msgstr ""
-"Autentifikavimas nepavyko – prieigos raktas netinkamas arba pasibaigęs"
+msgstr "Autentifikavimas nepavyko – prieigos raktas netinkamas arba pasibaigęs"
 
 #: src/windows/preferences_window.vala:562
 msgid "Access forbidden — token lacks required permissions"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-18 00:03+0300\n"
+"POT-Creation-Date: 2026-04-18 00:23+0300\n"
 "PO-Revision-Date: 2026-02-26 10:50+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #: src/application.vala:260
 msgid "Incompatible AppImage"
@@ -23,11 +24,11 @@ msgstr "Niekompatybilny obraz aplikacji"
 
 #: src/application.vala:261
 msgid ""
-"This AppImage is incompatible or corrupted. Missing required files (AppRun, "
-".desktop, or icon)."
+"This AppImage is incompatible or corrupted. Missing required files "
+"(AppRun, .desktop, or icon)."
 msgstr ""
-"Ten obraz aplikacji jest niezgodny lub uszkodzony. Brakuje wymaganych plików"
-" (AppRun, .desktop lub ikona)."
+"Ten obraz aplikacji jest niezgodny lub uszkodzony. Brakuje wymaganych plików "
+"(AppRun, .desktop lub ikona)."
 
 #. Architecture mismatch banner
 #: src/application.vala:262 src/application.vala:274 src/application.vala:843
@@ -50,8 +51,7 @@ msgstr "Niedopasowanie architektury"
 #: src/application.vala:273 src/windows/drop_window.vala:331
 #, c-format
 msgid "This app is built for %s and cannot run here"
-msgstr ""
-"Ta aplikacja została stworzona dla %s i nie może być tutaj uruchomiona"
+msgstr "Ta aplikacja została stworzona dla %s i nie może być tutaj uruchomiona"
 
 #. Use app icon with warning badge overlay
 #: src/application.vala:370 src/windows/drop_window.vala:234
@@ -62,8 +62,8 @@ msgstr "Otwórz %s?"
 #: src/application.vala:374 src/windows/drop_window.vala:237
 #, c-format
 msgid ""
-"Origins of %s application can not be verified. Are you sure you want to open"
-" it?"
+"Origins of %s application can not be verified. Are you sure you want to open "
+"it?"
 msgstr ""
 "Nie można zweryfikować pochodzenia aplikacji %s. Czy na pewno chcesz to "
 "otworzyć?"
@@ -79,8 +79,8 @@ msgstr "Zainstalować"
 #: src/application.vala:380 src/application.vala:411 src/application.vala:827
 #: src/windows/details_window.vala:1111 src/windows/details_window.vala:1127
 #: src/windows/drop_window.vala:248 src/windows/drop_window.vala:422
-#: src/windows/drop_window.vala:1001 src/windows/main_window.vala:1913
-#: src/windows/main_window.vala:1962 src/windows/preferences_window.vala:432
+#: src/windows/drop_window.vala:1001 src/windows/main_window.vala:1927
+#: src/windows/main_window.vala:1976 src/windows/preferences_window.vala:432
 #: src/windows/preferences_window.vala:466
 msgid "Cancel"
 msgstr "Anulować"
@@ -185,7 +185,8 @@ msgstr "Przenieś do Kosza"
 #: src/application.vala:825
 #, c-format
 msgid ""
-"%s could not be moved to the trash. Do you want to delete it permanently instead?\n"
+"%s could not be moved to the trash. Do you want to delete it permanently "
+"instead?\n"
 "\n"
 "This action cannot be undone."
 msgstr ""
@@ -420,8 +421,7 @@ msgstr "Niezgodność tożsamości aplikacji: oczekiwano „%s”, a otrzymano �
 
 #: src/core/updater.vala:1104
 msgid ""
-"GitHub authentication failed (401). Check your token in Preferences → "
-"GitHub."
+"GitHub authentication failed (401). Check your token in Preferences → GitHub."
 msgstr ""
 "Uwierzytelnianie w GitHub nie powiodło się (401). Sprawdź swój token w "
 "Preferencjach → GitHub."
@@ -606,8 +606,8 @@ msgstr "Wyodrębnij obraz aplikacji"
 msgid "Restore default"
 msgstr "Przywróć domyślne"
 
-#: src/windows/details_window.vala:934 src/windows/main_window.vala:589
-#: src/windows/main_window.vala:663
+#: src/windows/details_window.vala:934 src/windows/main_window.vala:590
+#: src/windows/main_window.vala:664
 msgid "Updating..."
 msgstr "Aktualizowanie..."
 
@@ -633,8 +633,8 @@ msgstr ""
 
 #: src/windows/details_window.vala:1038
 msgid ""
-"Currently GitHub and GitLab URL formats are fully supported. Direct download"
-" links also work if the server provides Last-Modified or Content-Length "
+"Currently GitHub and GitLab URL formats are fully supported. Direct download "
+"links also work if the server provides Last-Modified or Content-Length "
 "headers."
 msgstr ""
 "Obecnie formaty URL GitHub i GitLab są w pełni obsługiwane. Bezpośrednie "
@@ -748,394 +748,398 @@ msgstr "Sprawdź autentyczność tego obrazu aplikacji."
 msgid "Enter the SHA256 hash "
 msgstr "Wprowadź skrót SHA256"
 
-#: src/windows/main_window.vala:63 src/windows/main_window.vala:217
+#: src/windows/main_window.vala:64 src/windows/main_window.vala:218
 #: data/com.github.AppManager.metainfo.xml:4
 msgid "AppManager"
 msgstr "Menedżer aplikacji"
 
 #. GNOME-style hint overlay: title + subtitle + pill button, centered in
 #. the content area when only AppManager itself is installed.
-#: src/windows/main_window.vala:179
+#: src/windows/main_window.vala:180
 msgid "No Apps Yet"
 msgstr "Brak aplikacji"
 
-#: src/windows/main_window.vala:183
+#: src/windows/main_window.vala:184
 msgid "Import your AppImages to manage and update them here"
 msgstr ""
 "Zaimportuj swoje pliki AppImages, aby nimi tutaj zarządzać i je aktualizować"
 
-#: src/windows/main_window.vala:198 src/windows/main_window.vala:371
+#: src/windows/main_window.vala:199 src/windows/main_window.vala:372
 msgid "Import AppImages ..."
 msgstr "Importuj AppImages ..."
 
-#: src/windows/main_window.vala:276
+#: src/windows/main_window.vala:277
 msgid "Get more ..."
 msgstr "Zdobądź więcej..."
 
-#: src/windows/main_window.vala:288
+#: src/windows/main_window.vala:289
 msgid "Find more AppImages"
 msgstr "Znajdź więcej obrazów aplikacji"
 
-#: src/windows/main_window.vala:289
+#: src/windows/main_window.vala:290
 msgid "Browse these sources to discover and download AppImages"
 msgstr "Przeglądaj te źródła, aby odkryć i pobrać AppImages"
 
-#: src/windows/main_window.vala:315
+#: src/windows/main_window.vala:316
 msgid "Import AppImages from folder ..."
 msgstr "Importuj AppImages z folderu ..."
 
-#: src/windows/main_window.vala:353 src/windows/main_window.vala:446
+#: src/windows/main_window.vala:354 src/windows/main_window.vala:447
 msgid "No AppImage apps installed"
 msgstr "Brak zainstalowanych aplikacji AppImage"
 
-#: src/windows/main_window.vala:358
+#: src/windows/main_window.vala:359
 msgid "Download AppImage and double click to install with AppManager"
 msgstr ""
 "Pobierz AppImage i kliknij dwukrotnie, aby zainstalować za pomocą AppManager"
 
-#: src/windows/main_window.vala:446
+#: src/windows/main_window.vala:447
 msgid "No results found"
 msgstr "Nie znaleziono żadnych wyników"
 
-#: src/windows/main_window.vala:525 src/windows/main_window.vala:1051
+#: src/windows/main_window.vala:526 src/windows/main_window.vala:1054
 msgid "My Apps"
 msgstr "Moje aplikacje"
 
-#: src/windows/main_window.vala:596 src/windows/main_window.vala:670
+#: src/windows/main_window.vala:597 src/windows/main_window.vala:671
 msgid "Update available"
 msgstr "Dostępna aktualizacja"
 
 #. App name label (same size as list view)
-#: src/windows/main_window.vala:685
+#: src/windows/main_window.vala:686
 msgid "Unknown"
 msgstr "Nieznany"
 
-#: src/windows/main_window.vala:778
+#: src/windows/main_window.vala:779
 msgid "extracted"
 msgstr "wytłoczony"
 
-#: src/windows/main_window.vala:835
+#: src/windows/main_window.vala:836
 msgid "Updated just now"
 msgstr "Zaktualizowano właśnie teraz"
 
-#: src/windows/main_window.vala:835
+#: src/windows/main_window.vala:836
 msgid "Installed just now"
 msgstr "Zainstalowano właśnie teraz"
 
-#: src/windows/main_window.vala:843
+#: src/windows/main_window.vala:844
 #, c-format
 msgid "Updated %d min ago"
 msgstr "Zaktualizowano %d min temu"
 
-#: src/windows/main_window.vala:843
+#: src/windows/main_window.vala:844
 #, c-format
 msgid "Installed %d min ago"
 msgstr "Zainstalowano %d min temu"
 
-#: src/windows/main_window.vala:851
+#: src/windows/main_window.vala:852
 #, c-format
 msgid "Updated %d hours ago"
 msgstr "Zaktualizowano %d godzin temu"
 
-#: src/windows/main_window.vala:851
+#: src/windows/main_window.vala:852
 #, c-format
 msgid "Installed %d hours ago"
 msgstr "Zainstalowano %d godzin temu"
 
-#: src/windows/main_window.vala:858
+#: src/windows/main_window.vala:859
 #, c-format
 msgid "Updated %d days ago"
 msgstr "Zaktualizowano %d dni temu"
 
-#: src/windows/main_window.vala:858
+#: src/windows/main_window.vala:859
 #, c-format
 msgid "Installed %d days ago"
 msgstr "Zainstalowano %d dni temu"
 
-#: src/windows/main_window.vala:876
+#: src/windows/main_window.vala:878 src/windows/main_window.vala:1185
+msgid "Leave Fullscreen"
+msgstr "Opuść pełny ekran"
+
+#: src/windows/main_window.vala:878 src/windows/main_window.vala:1185
 msgid "Fullscreen"
 msgstr "Pełny ekran"
 
-#: src/windows/main_window.vala:880 src/windows/preferences_window.vala:34
+#: src/windows/main_window.vala:883 src/windows/preferences_window.vala:34
 msgid "Preferences"
 msgstr "Preferencje"
 
-#: src/windows/main_window.vala:881
+#: src/windows/main_window.vala:884
 msgid "Keyboard shortcuts"
 msgstr "Skróty klawiaturowe"
 
-#: src/windows/main_window.vala:882 src/windows/main_window.vala:1782
+#: src/windows/main_window.vala:885 src/windows/main_window.vala:1796
 msgid "About AppManager"
 msgstr "Informacje o AppManagerze"
 
-#: src/windows/main_window.vala:886
+#: src/windows/main_window.vala:889
 msgid "Quit"
 msgstr "Zrezygnować"
 
-#: src/windows/main_window.vala:900
+#: src/windows/main_window.vala:903
 msgid "Support AppManager"
 msgstr "Wsparcie AppManagera"
 
-#: src/windows/main_window.vala:915
+#: src/windows/main_window.vala:918
 msgid "Buy Me a Coffee"
 msgstr "Kup mi kawę"
 
-#: src/windows/main_window.vala:934
+#: src/windows/main_window.vala:937
 msgid "Become a sponsor on GitHub"
 msgstr "Zostań sponsorem na GitHubie"
 
-#: src/windows/main_window.vala:939
+#: src/windows/main_window.vala:942
 msgid "Sponsor Me ♡"
 msgstr "Sponsoruj mnie ♡"
 
-#: src/windows/main_window.vala:950
+#: src/windows/main_window.vala:953
 msgid "Star AppManager on GitHub"
 msgstr "Gwiazda AppManager na GitHub"
 
-#: src/windows/main_window.vala:955
+#: src/windows/main_window.vala:958
 msgid "Star AppManager"
 msgstr "Gwiazdowy menedżer aplikacji"
 
-#: src/windows/main_window.vala:966
+#: src/windows/main_window.vala:969
 msgid "View contributors on GitHub"
 msgstr "Wyświetl współautorów w GitHub"
 
-#: src/windows/main_window.vala:971 src/windows/main_window.vala:1801
+#: src/windows/main_window.vala:974 src/windows/main_window.vala:1815
 msgid "Contributors"
 msgstr "Współautorzy"
 
-#: src/windows/main_window.vala:994 src/windows/main_window.vala:1780
+#: src/windows/main_window.vala:997 src/windows/main_window.vala:1794
 msgid "Search"
 msgstr "Szukaj"
 
-#: src/windows/main_window.vala:1000
+#: src/windows/main_window.vala:1003
 msgid "Support this project"
 msgstr "Wesprzyj ten projekt"
 
-#: src/windows/main_window.vala:1010
+#: src/windows/main_window.vala:1013
 msgid "More actions"
 msgstr "Więcej akcji"
 
-#: src/windows/main_window.vala:1025
+#: src/windows/main_window.vala:1028
 msgid "Search apps..."
 msgstr "Wyszukaj aplikacje..."
 
 #. FUSE is not installed warning banner
-#: src/windows/main_window.vala:1033
+#: src/windows/main_window.vala:1036
 msgid "FUSE is not installed. Some AppImages may fail to run"
 msgstr ""
 "FUSE nie jest zainstalowany. Niektóre obrazy aplikacji mogą nie działać"
 
-#: src/windows/main_window.vala:1035
+#: src/windows/main_window.vala:1038
 msgid "Learn More"
 msgstr "Dowiedz się więcej"
 
-#: src/windows/main_window.vala:1056
+#: src/windows/main_window.vala:1059
 msgid "Shift+click to launch app"
 msgstr "Shift+kliknięcie, aby uruchomić aplikację"
 
-#: src/windows/main_window.vala:1093
+#: src/windows/main_window.vala:1096
 msgid "Switch to grid view"
 msgstr "Przełącz na widok siatki"
 
-#: src/windows/main_window.vala:1096
+#: src/windows/main_window.vala:1099
 msgid "Switch to list view"
 msgstr "Przełącz do widoku listy"
 
-#: src/windows/main_window.vala:1227 src/windows/main_window.vala:1298
+#: src/windows/main_window.vala:1241 src/windows/main_window.vala:1312
 msgid "Updates already running"
 msgstr "Aktualizacje już działają"
 
-#: src/windows/main_window.vala:1275
+#: src/windows/main_window.vala:1289
 msgid "Cancel update"
 msgstr "Anuluj aktualizację"
 
-#: src/windows/main_window.vala:1306
+#: src/windows/main_window.vala:1320
 msgid "Cancelling..."
 msgstr "Anulowanie..."
 
-#: src/windows/main_window.vala:1332
+#: src/windows/main_window.vala:1346
 msgid "Update check cancelled"
 msgstr "Sprawdzanie aktualizacji anulowane"
 
-#: src/windows/main_window.vala:1362
+#: src/windows/main_window.vala:1376
 #, c-format
 msgid "%d app(s) have updates"
 msgstr "%d aplikacje mają aktualizacje"
 
-#: src/windows/main_window.vala:1365
+#: src/windows/main_window.vala:1379
 msgid "No updates available right now"
 msgstr "W tej chwili nie są dostępne żadne aktualizacje"
 
-#: src/windows/main_window.vala:1372
+#: src/windows/main_window.vala:1386
 msgid "Nothing queued for updating"
 msgstr "Nic nie czekało w kolejce do aktualizacji"
 
-#: src/windows/main_window.vala:1399
+#: src/windows/main_window.vala:1413
 msgid "Update cancelled"
 msgstr "Aktualizacja anulowana"
 
-#: src/windows/main_window.vala:1464 src/windows/main_window.vala:1484
+#: src/windows/main_window.vala:1478 src/windows/main_window.vala:1498
 msgid "Update failed"
 msgstr "Dostępna aktualizacja"
 
-#: src/windows/main_window.vala:1537
+#: src/windows/main_window.vala:1551
 msgid "Checking updates"
 msgstr "Sprawdzanie aktualizacji"
 
-#: src/windows/main_window.vala:1540
+#: src/windows/main_window.vala:1554
 msgid "Update Apps"
 msgstr "Aktualizuj aplikacje"
 
-#: src/windows/main_window.vala:1543
+#: src/windows/main_window.vala:1557
 msgid "Updating apps"
 msgstr "Aktualizowanie aplikacji"
 
-#: src/windows/main_window.vala:1546
+#: src/windows/main_window.vala:1560
 msgid "Check updates"
 msgstr "Sprawdź aktualizacje"
 
-#: src/windows/main_window.vala:1570
+#: src/windows/main_window.vala:1584
 msgid "No installed apps to update"
 msgstr "Brak zainstalowanych aplikacji do aktualizacji"
 
-#: src/windows/main_window.vala:1610
+#: src/windows/main_window.vala:1624
 #, c-format
 msgid "Updated %d app(s)"
 msgstr "Zaktualizowano aplikacje %d"
 
-#: src/windows/main_window.vala:1613
+#: src/windows/main_window.vala:1627
 #, c-format
 msgid "%d update(s) failed"
 msgstr "Aktualizacje %d nie powiodły się"
 
-#: src/windows/main_window.vala:1621
+#: src/windows/main_window.vala:1635
 msgid "Add update addresses in Details to enable updates"
 msgstr ""
 "Dodaj adresy aktualizacji w obszarze Szczegóły, aby włączyć aktualizacje"
 
-#: src/windows/main_window.vala:1623
+#: src/windows/main_window.vala:1637
 msgid "All supported apps are already up to date"
 msgstr "Wszystkie obsługiwane aplikacje są już aktualne"
 
-#: src/windows/main_window.vala:1627
+#: src/windows/main_window.vala:1641
 #, c-format
 msgid "%d app(s) use unsupported update links"
 msgstr "%d aplikacje korzystają z nieobsługiwanych łączy do aktualizacji"
 
-#: src/windows/main_window.vala:1722
+#: src/windows/main_window.vala:1736
 #, c-format
 msgid "Update available for %s"
 msgstr "Aktualizacja dostępna dla %s"
 
-#: src/windows/main_window.vala:1768
+#: src/windows/main_window.vala:1782
 msgid "General"
 msgstr "Ogólny"
 
-#: src/windows/main_window.vala:1772
+#: src/windows/main_window.vala:1786
 msgid "Navigation"
 msgstr "Nawigacja"
 
-#: src/windows/main_window.vala:1776
+#: src/windows/main_window.vala:1790
 msgid "Window"
 msgstr "Okno"
 
-#: src/windows/main_window.vala:1778
+#: src/windows/main_window.vala:1792
 msgid "Check for updates"
 msgstr "Sprawdź aktualizacje"
 
-#: src/windows/main_window.vala:1779
+#: src/windows/main_window.vala:1793
 msgid "Show main menu"
 msgstr "Pokaż menu główne"
 
-#: src/windows/main_window.vala:1781
+#: src/windows/main_window.vala:1795
 msgid "Show shortcuts"
 msgstr "Pokaż skróty"
 
-#: src/windows/main_window.vala:1783
+#: src/windows/main_window.vala:1797
 msgid "Close window"
 msgstr "Zamknij okno"
 
-#: src/windows/main_window.vala:1784
+#: src/windows/main_window.vala:1798
 msgid "Quit AppManager"
 msgstr "Zamknij AppManager"
 
-#: src/windows/main_window.vala:1785
+#: src/windows/main_window.vala:1799
 msgid "Toggle fullscreen"
 msgstr "Przełącz pełny ekran"
 
-#: src/windows/main_window.vala:1802
+#: src/windows/main_window.vala:1816
 msgid "Credits"
 msgstr "Kredyty"
 
-#: src/windows/main_window.vala:1886
+#: src/windows/main_window.vala:1900
 msgid "Select folder with AppImages"
 msgstr "Wybierz folder z plikami AppImages"
 
-#: src/windows/main_window.vala:1904
+#: src/windows/main_window.vala:1918
 msgid "Import AppImages"
 msgstr "Importuj AppImages"
 
-#: src/windows/main_window.vala:1905
+#: src/windows/main_window.vala:1919
 #, c-format
 msgid "Install AppImages found in %s"
 msgstr "Zainstaluj pliki AppImages znalezione w %s"
 
-#: src/windows/main_window.vala:1907
+#: src/windows/main_window.vala:1921
 msgid "Move AppImages"
 msgstr "Przenieś AppImages"
 
-#: src/windows/main_window.vala:1914
+#: src/windows/main_window.vala:1928
 msgid "Import"
 msgstr "Importuj"
 
-#: src/windows/main_window.vala:1944
+#: src/windows/main_window.vala:1958
 #, c-format
 msgid "Failed to read folder: %s"
 msgstr "Nie udało się odczytać folderu: %s"
 
-#: src/windows/main_window.vala:1949
+#: src/windows/main_window.vala:1963
 msgid "No AppImage files found in folder"
 msgstr "Nie znaleziono plików AppImage w folderze"
 
-#: src/windows/main_window.vala:1960
+#: src/windows/main_window.vala:1974
 msgid "Importing AppImages…"
 msgstr "Importowanie AppImages…"
 
-#: src/windows/main_window.vala:1961
+#: src/windows/main_window.vala:1975
 #, c-format
 msgid "Installing %d AppImage(s)…"
 msgstr "Instalowanie %d AppImage…"
 
-#: src/windows/main_window.vala:1974
+#: src/windows/main_window.vala:1988
 msgid "Starting…"
 msgstr "Uruchamianie…"
 
-#: src/windows/main_window.vala:1983
+#: src/windows/main_window.vala:1997
 msgid "Cancelling…"
 msgstr "Anulowanie…"
 
-#: src/windows/main_window.vala:2000
+#: src/windows/main_window.vala:2014
 #, c-format
 msgid "%d of %d: %s"
 msgstr "%d z %d: %s"
 
-#: src/windows/main_window.vala:2058
+#: src/windows/main_window.vala:2072
 #, c-format
 msgid "Imported %d app(s)"
 msgstr "Zaimportowano %d aplikacji"
 
-#: src/windows/main_window.vala:2061
+#: src/windows/main_window.vala:2075
 #, c-format
 msgid "Skipped %d already installed app(s)"
 msgstr "Pominięto %d już zainstalowaną aplikację"
 
-#: src/windows/main_window.vala:2064
+#: src/windows/main_window.vala:2078
 #, c-format
 msgid "%d app(s) failed to import"
 msgstr "Nie udało się zaimportować %d aplikacji"
 
-#: src/windows/main_window.vala:2067
+#: src/windows/main_window.vala:2081
 #, c-format
 msgid "Cancelled — %d app(s) not imported"
 msgstr "Anulowano — %d aplikacji nie zaimportowano"
@@ -1406,8 +1410,8 @@ msgid ""
 msgstr ""
 "AppManager umożliwia instalowanie lub odinstalowywanie AppImages za pomocą "
 "znanego przepływu pracy typu „przeciągnij i upuść” inspirowanego systemem "
-"macOS. Obsługuje integrację pulpitu, wyodrębnianie ikon, pliki wykonywalne i"
-" menu kontekstowe Nautilusa."
+"macOS. Obsługuje integrację pulpitu, wyodrębnianie ikon, pliki wykonywalne i "
+"menu kontekstowe Nautilusa."
 
 #~ msgid "Launch Application"
 #~ msgstr "Wyodrębnić aplikację?"
