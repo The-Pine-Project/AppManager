@@ -3,9 +3,10 @@
 # This file is distributed under the same license as the app-manager package.
 #
 msgid ""
-msgstr "Project-Id-Version: app-manager\n"
+msgstr ""
+"Project-Id-Version: app-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 22:18+0200\n"
+"POT-Creation-Date: 2026-04-18 00:03+0300\n"
 "PO-Revision-Date: 2026-01-27 12:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Latvian\n"
@@ -13,8 +14,7 @@ msgstr "Project-Id-Version: app-manager\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
-"2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
 #: src/application.vala:260
 msgid "Incompatible AppImage"
@@ -22,15 +22,15 @@ msgstr "Nederīga Lietotne"
 
 #: src/application.vala:261
 msgid ""
-"This AppImage is incompatible or corrupted. Missing required files "
-"(AppRun, .desktop, or icon)."
+"This AppImage is incompatible or corrupted. Missing required files (AppRun, "
+".desktop, or icon)."
 msgstr ""
-"Šī lietotne ir nederīga vai bojāta. Trūkst nepieciešamo failu "
-"(AppRun, .desktop vai ikona)."
+"Šī lietotne ir nederīga vai bojāta. Trūkst nepieciešamo failu (AppRun, "
+".desktop vai ikona)."
 
 #. Architecture mismatch banner
-#: src/application.vala:262 src/application.vala:274 src/application.vala:835
-#: src/application.vala:929 src/application.vala:941
+#: src/application.vala:262 src/application.vala:274 src/application.vala:843
+#: src/application.vala:937 src/application.vala:949
 #: src/windows/dialog_window.vala:95 src/windows/drop_window.vala:99
 #: src/windows/drop_window.vala:109
 msgid "Close"
@@ -60,8 +60,8 @@ msgstr "Atvērt %s?"
 #: src/application.vala:374 src/windows/drop_window.vala:237
 #, c-format
 msgid ""
-"Origins of %s application can not be verified. Are you sure you want to open "
-"it?"
+"Origins of %s application can not be verified. Are you sure you want to open"
+" it?"
 msgstr "Lietotnes %s izcelsmi nevar pārbaudīt. Vai tiešām vēlaties to atvērt?"
 
 #: src/application.vala:377 src/windows/drop_window.vala:244
@@ -72,10 +72,11 @@ msgstr "Instalējiet AppImage, lai pievienotu to savām lietotnēm."
 msgid "Install"
 msgstr "Instalēt"
 
-#: src/application.vala:380 src/application.vala:411 src/application.vala:819
-#: src/windows/details_window.vala:1104 src/windows/details_window.vala:1120
+#: src/application.vala:380 src/application.vala:411 src/application.vala:827
+#: src/windows/details_window.vala:1111 src/windows/details_window.vala:1127
 #: src/windows/drop_window.vala:248 src/windows/drop_window.vala:422
-#: src/windows/drop_window.vala:1001 src/windows/preferences_window.vala:432
+#: src/windows/drop_window.vala:1001 src/windows/main_window.vala:1913
+#: src/windows/main_window.vala:1962 src/windows/preferences_window.vala:432
 #: src/windows/preferences_window.vala:466
 msgid "Cancel"
 msgstr "Atcelt"
@@ -100,7 +101,7 @@ msgstr "Nezināma versija"
 msgid "Will update to version %s"
 msgstr "Tiks atjaunināts uz versiju %s"
 
-#: src/application.vala:410 src/windows/details_window.vala:955
+#: src/application.vala:410 src/windows/details_window.vala:956
 #: src/windows/drop_window.vala:421
 msgid "Update"
 msgstr "Atjaunināt"
@@ -113,8 +114,12 @@ msgstr "Aizstāt %s?"
 
 #: src/application.vala:435 src/windows/drop_window.vala:452
 #, c-format
-msgid "A newer item named %s already exists in this location. Do you want to replace it with the older one you're copying?"
-msgstr "Jaunāks vienums ar nosaukumu %s jau pastāv šajā vietā. Vai vēlaties to aizstāt ar vecāko, ko kopējat?"
+msgid ""
+"A newer item named %s already exists in this location. Do you want to "
+"replace it with the older one you're copying?"
+msgstr ""
+"Jaunāks vienums ar nosaukumu %s jau pastāv šajā vietā. Vai vēlaties to "
+"aizstāt ar vecāko, ko kopējat?"
 
 #: src/application.vala:437 src/windows/drop_window.vala:454
 #, c-format
@@ -123,8 +128,12 @@ msgstr "Instalēts: %s | Ienākošais: %s"
 
 #: src/application.vala:441 src/windows/drop_window.vala:458
 #, c-format
-msgid "An item named %s already exists in this location. Do you want to replace it with one you're copying?"
-msgstr "Vienums ar nosaukumu %s jau pastāv šajā vietā. Vai vēlaties to aizstāt ar to, ko kopējat?"
+msgid ""
+"An item named %s already exists in this location. Do you want to replace it "
+"with one you're copying?"
+msgstr ""
+"Vienums ar nosaukumu %s jau pastāv šajā vietā. Vai vēlaties to aizstāt ar "
+"to, ko kopējat?"
 
 #: src/application.vala:446 src/windows/drop_window.vala:462
 msgid "Stop"
@@ -165,107 +174,113 @@ msgid "Dismiss"
 msgstr "Noraidīt"
 
 #. Offer to delete permanently as fallback
-#: src/application.vala:816
+#: src/application.vala:824
 msgid "Cannot move to trash"
 msgstr "Pārvietot uz miskasti"
 
-#: src/application.vala:817
+#: src/application.vala:825
 #, c-format
 msgid ""
-"%s could not be moved to the trash. Do you want to delete it permanently instead?\n\n"
+"%s could not be moved to the trash. Do you want to delete it permanently instead?\n"
+"\n"
 "This action cannot be undone."
 msgstr ""
-"%s nevarēja pārvietot uz miskasti. Vai tā vietā vēlaties to dzēst neatgriezeniski?\n\n"
+"%s nevarēja pārvietot uz miskasti. Vai tā vietā vēlaties to dzēst neatgriezeniski?\n"
+"\n"
 "Šo darbību nevar atsaukt."
 
-#: src/application.vala:820 src/windows/details_window.vala:1088
-#: src/windows/details_window.vala:1105
+#: src/application.vala:828 src/core/installer.vala:675
+#: src/core/path_migration_service.vala:350
+#: src/windows/details_window.vala:1095 src/windows/details_window.vala:1112
 msgid "Delete Permanently"
 msgstr "Nodzēst Neatgriezeniski"
 
-#: src/application.vala:832
+#: src/application.vala:840
 msgid "Uninstall failed"
 msgstr "Atinstalēšana neizdevās"
 
-#: src/application.vala:833
+#: src/application.vala:841
 #, c-format
 msgid "%s could not be removed: %s"
 msgstr "%s nevarēja noņemt: %s"
 
-#: src/application.vala:841
+#: src/application.vala:849
 msgid "Deleted permanently"
 msgstr "Nodzēst neatgriezeniski"
 
-#: src/application.vala:843 src/application.vala:849
+#: src/application.vala:851 src/application.vala:857
 #, c-format
 msgid "%s moved to Trash"
 msgstr "Pārvietots uz miskasti"
 
-#: src/application.vala:844
+#: src/application.vala:852
 msgid "Undo"
 msgstr "Atcelt"
 
-#: src/application.vala:876
+#: src/application.vala:884
 msgid "Undo failed"
 msgstr "Atinstalēšana neizdevās"
 
-#: src/application.vala:879
+#: src/application.vala:887
 msgid "Restored"
 msgstr "Atjaunots"
 
-#: src/application.vala:887
+#: src/application.vala:895
 msgid "Extraction is only available for portable installations."
 msgstr "Izpakošana ir pieejama tikai portatīvām instalācijām."
 
-#: src/application.vala:923
+#: src/application.vala:931
 msgid "Extracted for faster launch"
 msgstr "Izpakots ātrākai palaišanai"
 
-#: src/application.vala:926
+#: src/application.vala:934
 msgid "Extraction complete"
 msgstr "Izpakošana pabeigta"
 
-#: src/application.vala:927
+#: src/application.vala:935
 #, c-format
 msgid "%s was extracted and will open faster."
 msgstr "%s tika izpakots un atvērsies ātrāk."
 
-#: src/application.vala:938
+#: src/application.vala:946
 msgid "Extraction failed"
 msgstr "Izpakošana neizdevās"
 
-#: src/application.vala:939
+#: src/application.vala:947
 #, c-format
 msgid "%s could not be extracted: %s"
 msgstr "%s nevarēja izpakot: %s"
 
-#: src/core/background_update_service.vala:261
-#: src/core/background_update_service.vala:418
+#: src/core/background_update_service.vala:263
+#: src/core/background_update_service.vala:420
 msgid "App updates available"
 msgstr "Pieejami lietotņu atjauninājumi"
 
-#: src/core/background_update_service.vala:262
-#: src/core/background_update_service.vala:419
+#: src/core/background_update_service.vala:264
+#: src/core/background_update_service.vala:421
 #, c-format
 msgid "%d app update(s) available"
 msgstr "Pieejams(-i) %d lietotnes atjauninājums(-i)"
 
-#: src/core/background_update_service.vala:312
+#: src/core/background_update_service.vala:314
 msgid "App updates failed"
 msgstr "Pieejami lietotņu atjauninājumi"
 
-#: src/core/background_update_service.vala:313
+#: src/core/background_update_service.vala:315
 #, c-format
 msgid "%d app update(s) failed"
 msgstr "%d atjauninājums(-i) neizdevās"
 
 #. Build actions array: pairs of (action_key, label)
 #. "default" action is invoked when user clicks the notification body
-#: src/core/background_update_service.vala:334
+#: src/core/background_update_service.vala:336
 msgid "Open AppManager"
 msgstr "Atvērt AppManager"
 
-#: src/core/installer.vala:655 src/windows/details_window.vala:1092
+#. Update the localized uninstall label using KeyFile for safety
+#. (avoids clobbering Name[xx]= in other groups via raw string replace)
+#: src/core/installer.vala:675 src/core/path_migration_service.vala:350
+#: src/windows/details_window.vala:1099
 msgid "Move to Trash"
 msgstr "Pārvietot uz miskasti"
 
@@ -337,97 +352,111 @@ msgstr ""
 "Dažas lietotnes neizdevās migrēt:\n"
 "%s"
 
-#: src/core/updater.vala:579 src/core/updater.vala:644
+#: src/core/updater.vala:577 src/core/updater.vala:642
 msgid "No update address configured"
 msgstr "Nav konfigurēta atjaunināšanas adrese"
 
-#: src/core/updater.vala:584 src/core/updater.vala:653
+#: src/core/updater.vala:582 src/core/updater.vala:651
 msgid "Update source not supported"
 msgstr "Atjaunināšanas avots nav atbalstīts"
 
-#: src/core/updater.vala:600 src/core/updater.vala:671
+#: src/core/updater.vala:598 src/core/updater.vala:669
 msgid "Unable to read releases"
 msgstr "Nevar nolasīt izlaidumus"
 
-#: src/core/updater.vala:605 src/core/updater.vala:697
+#: src/core/updater.vala:603 src/core/updater.vala:695
 #, c-format
 msgid "No matching AppImage found for %s"
 msgstr "Nav atrastas atbilstošas AppImage lietotnes priekš %s"
 
 #. Version comparison: if both have versions, compare them
-#. Remote version is same or older than current
-#: src/core/updater.vala:613 src/core/updater.vala:619
-#: src/core/updater.vala:681 src/core/updater.vala:689
-#: src/core/updater.vala:839 src/core/updater.vala:864
-#: src/core/updater.vala:1461 src/core/updater.vala:1489
-#: src/core/updater.vala:1501 src/core/updater.vala:1530
-#: src/core/updater.vala:1576 src/core/updater.vala:1587
-#: src/core/updater.vala:1611
+#: src/core/updater.vala:611 src/core/updater.vala:617
+#: src/core/updater.vala:679 src/core/updater.vala:687
+#: src/core/updater.vala:837 src/core/updater.vala:862
+#: src/core/updater.vala:1493 src/core/updater.vala:1509
+#: src/core/updater.vala:1594 src/core/updater.vala:1605
 msgid "Already up to date"
 msgstr "Jau atjaunināts"
 
-#: src/core/updater.vala:744 src/core/updater.vala:1677
-#: src/core/updater.vala:1764
+#: src/core/updater.vala:742 src/core/updater.vala:1668
+#: src/core/updater.vala:1755
 #, c-format
 msgid "Updated to %s"
 msgstr "Atjaunināts uz %s"
 
 #. All candidates failed identity verification
-#: src/core/updater.vala:754 src/core/updater.vala:756
+#: src/core/updater.vala:752 src/core/updater.vala:754
 msgid "App identity mismatch"
 msgstr "Lietotnes identitātes neatbilstība"
 
-#: src/core/updater.vala:827 src/core/updater.vala:857
-#: src/core/updater.vala:1517
+#: src/core/updater.vala:825 src/core/updater.vala:855
 msgid "Server does not provide change tracking headers"
 msgstr "Serveris nesniedz izmaiņu izsekošanas galvenes"
 
-#: src/core/updater.vala:835 src/core/updater.vala:1526
-#: src/core/updater.vala:1605
+#: src/core/updater.vala:833
 msgid "Baseline recorded"
 msgstr "Reģistrēts sākumstāvoklis"
 
-#: src/core/updater.vala:897 src/core/updater.vala:1678
-#: src/core/updater.vala:1765
+#: src/core/updater.vala:895 src/core/updater.vala:1669
+#: src/core/updater.vala:1756
 msgid "Updated"
 msgstr "Atjaunināts"
 
-#: src/core/updater.vala:1012 src/core/updater.vala:1020
+#: src/core/updater.vala:1010 src/core/updater.vala:1018
 msgid "Downloaded file is not a valid AppImage"
 msgstr "Lejupielādētais fails nav derīga AppImage lietotne"
 
-#: src/core/updater.vala:1023
+#: src/core/updater.vala:1021
 #, c-format
 msgid "AppImage architecture '%s' is incompatible with this system"
 msgstr "AppImage lietotnes arhitektūra '%s' nav saderīga ar šo sistēmu"
 
 #. Match — verification passed
-#: src/core/updater.vala:1064
+#: src/core/updater.vala:1062
 #, c-format
 msgid "App identity mismatch: expected '%s' but got '%s'"
 msgstr "Lietotnes identitātes neatbilstība: gaidīts '%s', bet saņemts '%s'"
 
-#: src/core/updater.vala:1106
-msgid "GitHub authentication failed (401). Check your token in Preferences → GitHub."
-msgstr "GitHub autentifikācija neizdevās (401). Pārbaudiet savu pilnvaru sadaļā Preferences → GitHub."
+#: src/core/updater.vala:1104
+msgid ""
+"GitHub authentication failed (401). Check your token in Preferences → "
+"GitHub."
+msgstr ""
+"GitHub autentifikācija neizdevās (401). Pārbaudiet savu pilnvaru sadaļā "
+"Preferences → GitHub."
+
+#: src/core/updater.vala:1109
+msgid ""
+"GitHub API rate limit exceeded. Add a token in Preferences → GitHub to "
+"increase your limit."
+msgstr ""
+"Pārsniegts GitHub API ātruma ierobežojums. Pievienojiet pilnvaru sadaļā "
+"Preferences → GitHub, lai palielinātu ierobežojumu."
 
 #: src/core/updater.vala:1111
-msgid "GitHub API rate limit exceeded. Add a token in Preferences → GitHub to increase your limit."
-msgstr "Pārsniegts GitHub API ātruma ierobežojums. Pievienojiet pilnvaru sadaļā Preferences → GitHub, lai palielinātu ierobežojumu."
+msgid ""
+"GitHub access forbidden (403). Your token may lack the required permissions."
+msgstr ""
+"GitHub piekļuve aizliegta (403). Jūsu pilnvarai var nebūt nepieciešamo "
+"atļauju."
 
-#: src/core/updater.vala:1113
-msgid "GitHub access forbidden (403). Your token may lack the required permissions."
-msgstr "GitHub piekļuve aizliegta (403). Jūsu pilnvarai var nebūt nepieciešamo atļauju."
-
-#: src/core/updater.vala:1436
+#: src/core/updater.vala:1449
 msgid "Unknown zsync source type"
 msgstr "Nezināms zsync avota veids"
 
-#: src/core/updater.vala:1547
+#: src/core/updater.vala:1474 src/core/updater.vala:1582
+msgid "Malformed zsync file (no checksum)"
+msgstr "Bojāts zsync fails (nav kontrolsummas)"
+
+#: src/core/updater.vala:1489
+msgid "Failed to compute local checksum"
+msgstr "Neizdevās aprēķināt lokālo kontrolsummu"
+
+#: src/core/updater.vala:1559
 msgid "Unknown zsync source"
 msgstr "Nezināms zsync avots"
 
-#: src/core/updater.vala:1718
+#: src/core/updater.vala:1709
 msgid "Cannot determine download URL from zsync URL"
 msgstr "Nevar noteikt lejupielādes URL no zsync URL"
 
@@ -448,199 +477,204 @@ msgstr "Portatīvs"
 msgid "Extracted"
 msgstr "Izpakots"
 
-#: src/windows/details_window.vala:256
+#: src/windows/details_window.vala:257
 msgid "App version"
 msgstr "Lietotnes versija"
 
 #. Terminal app card (only show if is_terminal)
-#: src/windows/details_window.vala:267
+#: src/windows/details_window.vala:268
 msgid "Terminal"
 msgstr "Terminālis"
 
-#: src/windows/details_window.vala:275
+#: src/windows/details_window.vala:276
 msgid "This app supports efficient delta updates"
 msgstr "Šī lietotne atbalsta efektīvus delta atjauninājumus"
 
-#: src/windows/details_window.vala:282
+#: src/windows/details_window.vala:283
 msgid "Hidden"
 msgstr "Slēpts"
 
-#: src/windows/details_window.vala:292
+#: src/windows/details_window.vala:293
 msgid "Properties"
 msgstr "Rekvizīti"
 
-#: src/windows/details_window.vala:297
+#: src/windows/details_window.vala:298
 msgid "Command line arguments"
 msgstr "Komandrindas argumenti"
 
-#: src/windows/details_window.vala:329
+#: src/windows/details_window.vala:330
 msgid "Update info"
 msgstr "Atjaunināšanas informācija"
 
-#: src/windows/details_window.vala:335
+#: src/windows/details_window.vala:336
 msgid "How update links work"
 msgstr "Kā darbojas atjaunināšanas saites"
 
-#: src/windows/details_window.vala:347
+#: src/windows/details_window.vala:348
 msgid "Pre-release Updates"
 msgstr "Pirmsizlaiduma atjauninājumi"
 
-#: src/windows/details_window.vala:348
+#: src/windows/details_window.vala:349
 msgid "Include pre-release versions when checking for updates"
 msgstr "Iekļaut pirmsizlaiduma versijas, pārbaudot atjauninājumus"
 
-#: src/windows/details_window.vala:363
+#: src/windows/details_window.vala:364
 msgid "Update link is managed by the embedded zsync update mechanism"
-msgstr "Atjaunināšanas saite tiek pārvaldīta ar iebūvēto zsync atjaunināšanas mehānismu"
+msgstr ""
+"Atjaunināšanas saite tiek pārvaldīta ar iebūvēto zsync atjaunināšanas "
+"mehānismu"
 
-#: src/windows/details_window.vala:399
+#: src/windows/details_window.vala:400
 msgid "Update Link"
 msgstr "Atjaunināšanas saite"
 
-#: src/windows/details_window.vala:454
+#: src/windows/details_window.vala:455
 msgid "Web Page"
 msgstr "Tīmekļa lapa"
 
-#: src/windows/details_window.vala:483
+#: src/windows/details_window.vala:484
 msgid "Open web page"
 msgstr "Atvērt tīmekļa lapu"
 
-#: src/windows/details_window.vala:497
+#: src/windows/details_window.vala:498
 msgid "Advanced"
 msgstr "Papildu"
 
-#: src/windows/details_window.vala:524
+#: src/windows/details_window.vala:525
 msgid "Environment Variables"
 msgstr "Vides mainīgie"
 
-#: src/windows/details_window.vala:525
+#: src/windows/details_window.vala:526
 msgid "Set custom environment variables for this app"
 msgstr "Iestatīt pielāgotus vides mainīgos šai lietotnei"
 
-#: src/windows/details_window.vala:578
+#: src/windows/details_window.vala:579
 msgid "NAME"
 msgstr "NOSAUKUMS"
 
-#: src/windows/details_window.vala:592
+#: src/windows/details_window.vala:593
 msgid "value"
 msgstr "vērtība"
 
-#: src/windows/details_window.vala:604
+#: src/windows/details_window.vala:605
 msgid "Remove variable"
 msgstr "Noņemt mainīgo"
 
-#: src/windows/details_window.vala:729
+#: src/windows/details_window.vala:730
 msgid "Keywords"
 msgstr "Atslēgvārdi"
 
-#: src/windows/details_window.vala:739
+#: src/windows/details_window.vala:740
 msgid "Icon name"
 msgstr "Ikonas nosaukums"
 
-#: src/windows/details_window.vala:749
+#: src/windows/details_window.vala:750
 msgid "Startup WM Class"
 msgstr "Startēšanas WM klase"
 
-#: src/windows/details_window.vala:759
+#: src/windows/details_window.vala:760
 msgid "Version"
 msgstr "Versija"
 
-#: src/windows/details_window.vala:771
+#: src/windows/details_window.vala:772
 msgid "Hide from app drawer"
 msgstr "Slēpt no lietotņu atvilktnes"
 
-#: src/windows/details_window.vala:772
+#: src/windows/details_window.vala:773
 msgid "Don't show in application menu"
 msgstr "Nerādīt lietotņu izvēlnē"
 
-#: src/windows/details_window.vala:783
+#: src/windows/details_window.vala:784
 msgid "Add to $PATH"
 msgstr "Pievienot $PATH"
 
-#: src/windows/details_window.vala:784
+#: src/windows/details_window.vala:785
 #, c-format
 msgid "Create a launcher in %s so you can run it from the terminal"
 msgstr "Izveidot palaidēju %s, lai varētu palaist no termināļa"
 
-#: src/windows/details_window.vala:845
+#: src/windows/details_window.vala:846
 msgid "Actions"
 msgstr "Darbības"
 
 #. Extract button
-#: src/windows/details_window.vala:884
+#: src/windows/details_window.vala:885
 msgid "Extract AppImage"
 msgstr "Izpakot Lietotni"
 
-#: src/windows/details_window.vala:921
+#: src/windows/details_window.vala:922
 msgid "Restore default"
 msgstr "Atjaunot noklusējumu"
 
-#: src/windows/details_window.vala:933 src/windows/main_window.vala:510
-#: src/windows/main_window.vala:584
+#: src/windows/details_window.vala:934 src/windows/main_window.vala:589
+#: src/windows/main_window.vala:663
 msgid "Updating..."
 msgstr "Atjaunina..."
 
-#: src/windows/details_window.vala:935
+#: src/windows/details_window.vala:936
 msgid "Checking..."
 msgstr "Pārbauda..."
 
-#: src/windows/details_window.vala:962
+#: src/windows/details_window.vala:963
 msgid "Update Failed"
 msgstr "Pieejams atjauninājums"
 
-#: src/windows/details_window.vala:969
+#: src/windows/details_window.vala:970
 msgid "Check Update"
 msgstr "Pārbaudīt atjauninājumu"
 
-#: src/windows/details_window.vala:1036
+#: src/windows/details_window.vala:1037
 msgid ""
 "Update info lets AppManager fetch new builds for you. Paste the download "
 "link and AppManager will do the rest."
 msgstr ""
-"Atjaunināšanas informācija ļauj AppManager iegūt jaunas versijas jūsu vietā. "
-"Ielīmējiet lejupielādes saiti un AppManager paveiks pārējo."
+"Atjaunināšanas informācija ļauj AppManager iegūt jaunas versijas jūsu vietā."
+" Ielīmējiet lejupielādes saiti un AppManager paveiks pārējo."
 
-#: src/windows/details_window.vala:1037
+#: src/windows/details_window.vala:1038
 msgid ""
-"Currently GitHub and GitLab URL formats are fully supported. Direct download "
-"links also work if the server provides Last-Modified or Content-Length "
+"Currently GitHub and GitLab URL formats are fully supported. Direct download"
+" links also work if the server provides Last-Modified or Content-Length "
 "headers."
 msgstr ""
 "Pašlaik GitHub un GitLab URL formāti ir pilnībā atbalstīti. Tiešās "
 "lejupielādes saites arī darbojas, ja serveris nodrošina Last-Modified vai "
 "Content-Length galvenes."
 
-#: src/windows/details_window.vala:1038
+#: src/windows/details_window.vala:1039
 msgid "Update links"
 msgstr "Atjaunināšanas saites"
 
-#: src/windows/details_window.vala:1039
+#: src/windows/details_window.vala:1040
 msgid "Got it"
 msgstr "Nu skaidrīte"
 
-#: src/windows/details_window.vala:1093
+#: src/windows/details_window.vala:1100
 msgid "Hold Shift to delete permanently"
 msgstr "Turiet Shift, lai dzēstu neatgriezeniski"
 
-#: src/windows/details_window.vala:1100
+#: src/windows/details_window.vala:1107
 #, c-format
 msgid "<b>%s</b> will be permanently deleted. This action cannot be undone."
 msgstr "<b>%s</b> tiks neatgriezeniski dzēsts. Šo darbību nevar atsaukt."
 
-#: src/windows/details_window.vala:1101
+#: src/windows/details_window.vala:1108
 msgid "Delete permanently?"
 msgstr "Dzēst neatgriezeniski?"
 
-#: src/windows/details_window.vala:1118
-msgid "Extracting will unpack the application so it opens faster, but it will consume more disk space. This action cannot be reversed automatically."
-msgstr "Izvilkšana izpakos lietotni, lai tā atvērtos ātrāk, bet tas patērēs "
-"vairāk diska vietas. Šo darbību nevar automātiski atgriezt."
+#: src/windows/details_window.vala:1125
+msgid ""
+"Extracting will unpack the application so it opens faster, but it will "
+"consume more disk space. This action cannot be reversed automatically."
+msgstr ""
+"Izvilkšana izpakos lietotni, lai tā atvērtos ātrāk, bet tas patērēs vairāk "
+"diska vietas. Šo darbību nevar automātiski atgriezt."
 
-#: src/windows/details_window.vala:1119
+#: src/windows/details_window.vala:1126
 msgid "Extract application?"
 msgstr "Izpakot lietotni?"
 
-#: src/windows/details_window.vala:1121
+#: src/windows/details_window.vala:1128
 msgid "Extract"
 msgstr "Izpakot"
 
@@ -711,304 +745,398 @@ msgstr "Pārbaudiet šīs Lietotnes autentiskumu."
 msgid "Enter the SHA256 hash "
 msgstr "Ievadiet SHA256 jaucējkodu "
 
-#: src/windows/main_window.vala:60 src/windows/main_window.vala:176
+#: src/windows/main_window.vala:63 src/windows/main_window.vala:217
 #: data/com.github.AppManager.metainfo.xml:4
 msgid "AppManager"
 msgstr "AppManager"
 
-#: src/windows/main_window.vala:232
+#. GNOME-style hint overlay: title + subtitle + pill button, centered in
+#. the content area when only AppManager itself is installed.
+#: src/windows/main_window.vala:179
+msgid "No Apps Yet"
+msgstr "Vēl nav lietotņu"
+
+#: src/windows/main_window.vala:183
+msgid "Import your AppImages to manage and update them here"
+msgstr "Importējiet savus AppImages, lai tos šeit pārvaldītu un atjauninātu"
+
+#: src/windows/main_window.vala:198 src/windows/main_window.vala:371
+msgid "Import AppImages ..."
+msgstr "Importēt AppImages ..."
+
+#: src/windows/main_window.vala:276
 msgid "Get more ..."
 msgstr "Iegūt vairāk ..."
 
-#: src/windows/main_window.vala:244
+#: src/windows/main_window.vala:288
 msgid "Find more AppImages"
 msgstr "Atrast vairāk AppImage lietotnes"
 
-#: src/windows/main_window.vala:245
+#: src/windows/main_window.vala:289
 msgid "Browse these sources to discover and download AppImages"
-msgstr "Pārlūkojiet šos avotus, lai atrastu un lejupielādētu AppImage lietotnes"
+msgstr ""
+"Pārlūkojiet šos avotus, lai atrastu un lejupielādētu AppImage lietotnes"
 
-#: src/windows/main_window.vala:295 src/windows/main_window.vala:367
+#: src/windows/main_window.vala:315
+msgid "Import AppImages from folder ..."
+msgstr "Importēt AppImages no mapes ..."
+
+#: src/windows/main_window.vala:353 src/windows/main_window.vala:446
 msgid "No AppImage apps installed"
 msgstr "Nav instalētu AppImage lietotņu"
 
-#: src/windows/main_window.vala:300
+#: src/windows/main_window.vala:358
 msgid "Download AppImage and double click to install with AppManager"
-msgstr "Lejupielādējiet AppImage lietotni un dubultklikšķiniet, lai instalētu ar AppManager"
+msgstr ""
+"Lejupielādējiet AppImage lietotni un dubultklikšķiniet, lai instalētu ar "
+"AppManager"
 
-#: src/windows/main_window.vala:367
+#: src/windows/main_window.vala:446
 msgid "No results found"
 msgstr "Rezultāti nav atrasti"
 
-#: src/windows/main_window.vala:446 src/windows/main_window.vala:972
+#: src/windows/main_window.vala:525 src/windows/main_window.vala:1051
 msgid "My Apps"
 msgstr "Manas lietotnes"
 
-#: src/windows/main_window.vala:517 src/windows/main_window.vala:591
+#: src/windows/main_window.vala:596 src/windows/main_window.vala:670
 msgid "Update available"
 msgstr "Pieejams atjauninājums"
 
 #. App name label (same size as list view)
-#: src/windows/main_window.vala:606
+#: src/windows/main_window.vala:685
 msgid "Unknown"
 msgstr "Nezināms"
 
-#: src/windows/main_window.vala:699
+#: src/windows/main_window.vala:778
 msgid "extracted"
 msgstr "izpakots"
 
-#: src/windows/main_window.vala:756
+#: src/windows/main_window.vala:835
 msgid "Updated just now"
 msgstr "Tikko atjaunināts"
 
-#: src/windows/main_window.vala:756
+#: src/windows/main_window.vala:835
 msgid "Installed just now"
 msgstr "Tikko instalēts"
 
-#: src/windows/main_window.vala:764
+#: src/windows/main_window.vala:843
 #, c-format
 msgid "Updated %d min ago"
 msgstr "Atjaunināts pirms %d min"
 
-#: src/windows/main_window.vala:764
+#: src/windows/main_window.vala:843
 #, c-format
 msgid "Installed %d min ago"
 msgstr "Instalēts pirms %d min"
 
-#: src/windows/main_window.vala:772
+#: src/windows/main_window.vala:851
 #, c-format
 msgid "Updated %d hours ago"
 msgstr "Atjaunināts pirms %d stundām"
 
-#: src/windows/main_window.vala:772
+#: src/windows/main_window.vala:851
 #, c-format
 msgid "Installed %d hours ago"
 msgstr "Instalēts pirms %d stundām"
 
-#: src/windows/main_window.vala:779
+#: src/windows/main_window.vala:858
 #, c-format
 msgid "Updated %d days ago"
 msgstr "Atjaunināts pirms %d dienām"
 
-#: src/windows/main_window.vala:779
+#: src/windows/main_window.vala:858
 #, c-format
 msgid "Installed %d days ago"
 msgstr "Instalēts pirms %d dienām"
 
-#: src/windows/main_window.vala:797
+#: src/windows/main_window.vala:876
 msgid "Fullscreen"
 msgstr "Pilnekrāns"
 
-#: src/windows/main_window.vala:801 src/windows/preferences_window.vala:34
+#: src/windows/main_window.vala:880 src/windows/preferences_window.vala:34
 msgid "Preferences"
 msgstr "Iestatījumi"
 
-#: src/windows/main_window.vala:802
+#: src/windows/main_window.vala:881
 msgid "Keyboard shortcuts"
 msgstr "Tastatūras saīsnes"
 
-#: src/windows/main_window.vala:803 src/windows/main_window.vala:1675
+#: src/windows/main_window.vala:882 src/windows/main_window.vala:1782
 msgid "About AppManager"
 msgstr "Par AppManager"
 
-#: src/windows/main_window.vala:807
+#: src/windows/main_window.vala:886
 msgid "Quit"
 msgstr "Iziet"
 
-#: src/windows/main_window.vala:821
+#: src/windows/main_window.vala:900
 msgid "Support AppManager"
 msgstr "Atbalstiet AppManager"
 
-#: src/windows/main_window.vala:836
+#: src/windows/main_window.vala:915
 msgid "Buy Me a Coffee"
 msgstr "Nopērc man kafiju"
 
-#: src/windows/main_window.vala:855
+#: src/windows/main_window.vala:934
 msgid "Become a sponsor on GitHub"
 msgstr "Kļūsti par sponsoru vietnē GitHub"
 
-#: src/windows/main_window.vala:860
+#: src/windows/main_window.vala:939
 msgid "Sponsor Me ♡"
 msgstr "Sponsorējiet mani ♡"
 
-#: src/windows/main_window.vala:871
+#: src/windows/main_window.vala:950
 msgid "Star AppManager on GitHub"
 msgstr "Star AppManager vietnē GitHub"
 
-#: src/windows/main_window.vala:876
+#: src/windows/main_window.vala:955
 msgid "Star AppManager"
 msgstr "Star AppManager"
 
-#: src/windows/main_window.vala:887
+#: src/windows/main_window.vala:966
 msgid "View contributors on GitHub"
 msgstr "Skatiet līdzautorus vietnē GitHub"
 
-#: src/windows/main_window.vala:892 src/windows/main_window.vala:1694
+#: src/windows/main_window.vala:971 src/windows/main_window.vala:1801
 msgid "Contributors"
 msgstr "Līdzautori"
 
-#: src/windows/main_window.vala:915 src/windows/main_window.vala:1673
+#: src/windows/main_window.vala:994 src/windows/main_window.vala:1780
 msgid "Search"
 msgstr "Meklēt"
 
-#: src/windows/main_window.vala:921
+#: src/windows/main_window.vala:1000
 msgid "Support this project"
 msgstr "Atbalstiet šo projektu"
 
-#: src/windows/main_window.vala:931
+#: src/windows/main_window.vala:1010
 msgid "More actions"
 msgstr "Vairāk darbību"
 
-#: src/windows/main_window.vala:946
+#: src/windows/main_window.vala:1025
 msgid "Search apps..."
 msgstr "Meklēt lietotnes..."
 
 #. FUSE is not installed warning banner
-#: src/windows/main_window.vala:954
+#: src/windows/main_window.vala:1033
 msgid "FUSE is not installed. Some AppImages may fail to run"
 msgstr "FUSE nav instalēts. Dažas Lietotnes var nedarboties"
 
-#: src/windows/main_window.vala:956
+#: src/windows/main_window.vala:1035
 msgid "Learn More"
 msgstr "Uzzināt vairāk"
 
-#: src/windows/main_window.vala:977
+#: src/windows/main_window.vala:1056
 msgid "Shift+click to launch app"
 msgstr "Shift+klikšķis, lai palaistu lietotni"
 
-#: src/windows/main_window.vala:1014
+#: src/windows/main_window.vala:1093
 msgid "Switch to grid view"
 msgstr "Pārslēdzieties uz režģa skatu"
 
-#: src/windows/main_window.vala:1017
+#: src/windows/main_window.vala:1096
 msgid "Switch to list view"
 msgstr "Pārslēdzieties uz saraksta skatu"
 
-#: src/windows/main_window.vala:1148 src/windows/main_window.vala:1219
+#: src/windows/main_window.vala:1227 src/windows/main_window.vala:1298
 msgid "Updates already running"
 msgstr "Atjauninājumi jau darbojas"
 
-#: src/windows/main_window.vala:1196
+#: src/windows/main_window.vala:1275
 msgid "Cancel update"
 msgstr "Atcelt atjaunināšanu"
 
-#: src/windows/main_window.vala:1227
+#: src/windows/main_window.vala:1306
 msgid "Cancelling..."
 msgstr "Atceļ..."
 
-#: src/windows/main_window.vala:1253
+#: src/windows/main_window.vala:1332
 msgid "Update check cancelled"
 msgstr "Atjauninājumu pārbaude atcelta"
 
-#: src/windows/main_window.vala:1283
+#: src/windows/main_window.vala:1362
 #, c-format
 msgid "%d app(s) have updates"
 msgstr "%d lietotnei(-ēm) ir atjauninājumi"
 
-#: src/windows/main_window.vala:1286
+#: src/windows/main_window.vala:1365
 msgid "No updates available right now"
 msgstr "Pašlaik nav pieejamu atjauninājumu"
 
-#: src/windows/main_window.vala:1293
+#: src/windows/main_window.vala:1372
 msgid "Nothing queued for updating"
 msgstr "Nekas nav rindā atjaunināšanai"
 
-#: src/windows/main_window.vala:1320
+#: src/windows/main_window.vala:1399
 msgid "Update cancelled"
 msgstr "Atjaunināšana atcelta"
 
-#: src/windows/main_window.vala:1385 src/windows/main_window.vala:1405
+#: src/windows/main_window.vala:1464 src/windows/main_window.vala:1484
 msgid "Update failed"
 msgstr "Pieejams atjauninājums"
 
-#: src/windows/main_window.vala:1458
+#: src/windows/main_window.vala:1537
 msgid "Checking updates"
 msgstr "Pārbauda atjauninājumus"
 
-#: src/windows/main_window.vala:1461
+#: src/windows/main_window.vala:1540
 msgid "Update Apps"
 msgstr "Atjaunināt lietotnes"
 
-#: src/windows/main_window.vala:1464
+#: src/windows/main_window.vala:1543
 msgid "Updating apps"
 msgstr "Atjaunina lietotnes"
 
-#: src/windows/main_window.vala:1467
+#: src/windows/main_window.vala:1546
 msgid "Check updates"
 msgstr "Pārbaudīt atjauninājumus"
 
-#: src/windows/main_window.vala:1491
+#: src/windows/main_window.vala:1570
 msgid "No installed apps to update"
 msgstr "Nav instalētu lietotņu atjaunināšanai"
 
-#: src/windows/main_window.vala:1531
+#: src/windows/main_window.vala:1610
 #, c-format
 msgid "Updated %d app(s)"
 msgstr "Atjaunināta(-s) %d lietotne(-es)"
 
-#: src/windows/main_window.vala:1534
+#: src/windows/main_window.vala:1613
 #, c-format
 msgid "%d update(s) failed"
 msgstr "%d atjauninājums(-i) neizdevās"
 
-#: src/windows/main_window.vala:1542
+#: src/windows/main_window.vala:1621
 msgid "Add update addresses in Details to enable updates"
-msgstr "Pievienojiet atjaunināšanas adreses sadaļā Detaļas, lai iespējotu "
+msgstr ""
+"Pievienojiet atjaunināšanas adreses sadaļā Detaļas, lai iespējotu "
 "atjauninājumus"
 
-#: src/windows/main_window.vala:1544
+#: src/windows/main_window.vala:1623
 msgid "All supported apps are already up to date"
 msgstr "Visas atbalstītās lietotnes jau ir atjauninātas"
 
-#: src/windows/main_window.vala:1548
+#: src/windows/main_window.vala:1627
 #, c-format
 msgid "%d app(s) use unsupported update links"
 msgstr "%d lietotne(-es) izmanto neatbalstītas atjaunināšanas saites"
 
-#: src/windows/main_window.vala:1615
+#: src/windows/main_window.vala:1722
 #, c-format
 msgid "Update available for %s"
 msgstr "Pieejams atjauninājums priekš %s"
 
-#: src/windows/main_window.vala:1661
+#: src/windows/main_window.vala:1768
 msgid "General"
 msgstr "Vispārīgi"
 
-#: src/windows/main_window.vala:1665
+#: src/windows/main_window.vala:1772
 msgid "Navigation"
 msgstr "Navigācija"
 
-#: src/windows/main_window.vala:1669
+#: src/windows/main_window.vala:1776
 msgid "Window"
 msgstr "Logs"
 
-#: src/windows/main_window.vala:1671
+#: src/windows/main_window.vala:1778
 msgid "Check for updates"
 msgstr "Pārbaudīt atjauninājumus"
 
-#: src/windows/main_window.vala:1672
+#: src/windows/main_window.vala:1779
 msgid "Show main menu"
 msgstr "Rādīt galveno izvēlni"
 
-#: src/windows/main_window.vala:1674
+#: src/windows/main_window.vala:1781
 msgid "Show shortcuts"
 msgstr "Rādīt saīsnes"
 
-#: src/windows/main_window.vala:1676
+#: src/windows/main_window.vala:1783
 msgid "Close window"
 msgstr "Aizvērt logu"
 
-#: src/windows/main_window.vala:1677
+#: src/windows/main_window.vala:1784
 msgid "Quit AppManager"
 msgstr "Iziet no AppManager"
 
-#: src/windows/main_window.vala:1678
+#: src/windows/main_window.vala:1785
 msgid "Toggle fullscreen"
 msgstr "Pārslēgt pilnekrāna režīmu"
 
-#: src/windows/main_window.vala:1695
+#: src/windows/main_window.vala:1802
 msgid "Credits"
 msgstr "Pateicības"
+
+#: src/windows/main_window.vala:1886
+msgid "Select folder with AppImages"
+msgstr "Izvēlēties mapi ar AppImages"
+
+#: src/windows/main_window.vala:1904
+msgid "Import AppImages"
+msgstr "Importēt AppImages"
+
+#: src/windows/main_window.vala:1905
+#, c-format
+msgid "Install AppImages found in %s"
+msgstr "Instalēt %s atrastos AppImages"
+
+#: src/windows/main_window.vala:1907
+msgid "Move AppImages"
+msgstr "Pārvietot AppImages"
+
+#: src/windows/main_window.vala:1914
+msgid "Import"
+msgstr "Importēt"
+
+#: src/windows/main_window.vala:1944
+#, c-format
+msgid "Failed to read folder: %s"
+msgstr "Neizdevās nolasīt mapi: %s"
+
+#: src/windows/main_window.vala:1949
+msgid "No AppImage files found in folder"
+msgstr "Mapē nav atrasts neviens AppImage fails"
+
+#: src/windows/main_window.vala:1960
+msgid "Importing AppImages…"
+msgstr "Importē AppImages…"
+
+#: src/windows/main_window.vala:1961
+#, c-format
+msgid "Installing %d AppImage(s)…"
+msgstr "Instalē %d AppImage(-us)…"
+
+#: src/windows/main_window.vala:1974
+msgid "Starting…"
+msgstr "Sāk…"
+
+#: src/windows/main_window.vala:1983
+msgid "Cancelling…"
+msgstr "Atceļ…"
+
+#: src/windows/main_window.vala:2000
+#, c-format
+msgid "%d of %d: %s"
+msgstr "%d no %d: %s"
+
+#: src/windows/main_window.vala:2058
+#, c-format
+msgid "Imported %d app(s)"
+msgstr "Importētas %d lietotnes"
+
+#: src/windows/main_window.vala:2061
+#, c-format
+msgid "Skipped %d already installed app(s)"
+msgstr "Izlaistas %d jau instalētas lietotnes"
+
+#: src/windows/main_window.vala:2064
+#, c-format
+msgid "%d app(s) failed to import"
+msgstr "Neizdevās importēt %d lietotni(-es)"
+
+#: src/windows/main_window.vala:2067
+#, c-format
+msgid "Cancelled — %d app(s) not imported"
+msgstr "Atcelts — %d lietotne(-es) nav importēta(-as)"
 
 #. Installation directory group
 #: src/windows/preferences_window.vala:59
@@ -1017,8 +1145,8 @@ msgstr "Uzstādīšana"
 
 #: src/windows/preferences_window.vala:60
 msgid "Configure where AppImages are installed (default: ~/Applications)"
-msgstr "Konfigurējiet, kur tiek instalētas Lietotnes (noklusējums: "
-"~/Applications)"
+msgstr ""
+"Konfigurējiet, kur tiek instalētas Lietotnes (noklusējums: ~/Applications)"
 
 #: src/windows/preferences_window.vala:63
 msgid "Installation directory"
@@ -1103,8 +1231,8 @@ msgstr "AppImage sīktēlu ģenerētājs"
 
 #: src/windows/preferences_window.vala:190
 msgid "Install appimage-thumbnailer to generate thumbnails for AppImages"
-msgstr "Instalējiet appimage-thumbnailer, lai ģenerētu sīktēlus AppImage "
-"failiem"
+msgstr ""
+"Instalējiet appimage-thumbnailer, lai ģenerētu sīktēlus AppImage failiem"
 
 #: src/windows/preferences_window.vala:199
 msgid "Hide Nautilus thumbnail background"
@@ -1171,7 +1299,9 @@ msgstr "Izveidojiet žetonu vietnē GitHub"
 
 #: src/windows/preferences_window.vala:285
 msgid "Fine-grained token with read-only public repo access is sufficient"
-msgstr "Precīzi konfigurēts žetons ar tikai lasāmu piekļuvi publiskajiem repozitorijiem ir pietiekams"
+msgstr ""
+"Precīzi konfigurēts žetons ar tikai lasāmu piekļuvi publiskajiem "
+"repozitorijiem ir pietiekams"
 
 #: src/windows/preferences_window.vala:342
 msgid "Select Installation Directory"
@@ -1231,7 +1361,8 @@ msgstr "Labi"
 
 #: src/windows/preferences_window.vala:560
 msgid "Authentication failed — token is invalid or expired"
-msgstr "Autentifikācija neizdevās — žetons ir nederīgs vai beidzies derīguma termiņš"
+msgstr ""
+"Autentifikācija neizdevās — žetons ir nederīgs vai beidzies derīguma termiņš"
 
 #: src/windows/preferences_window.vala:562
 msgid "Access forbidden — token lacks required permissions"
@@ -1263,7 +1394,8 @@ msgstr "Arnis Kemlers"
 
 #: data/com.github.AppManager.metainfo.xml:9
 msgid "Drag-and-drop AppImage installer and management application"
-msgstr "Vilkt un nomest AppImage instalēšanas un pārvaldības lietojumprogramma"
+msgstr ""
+"Vilkt un nomest AppImage instalēšanas un pārvaldības lietojumprogramma"
 
 #: data/com.github.AppManager.metainfo.xml:35
 msgid ""

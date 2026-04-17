@@ -3,9 +3,10 @@
 # This file is distributed under the same license as the app-manager package.
 #
 msgid ""
-msgstr "Project-Id-Version: app-manager\n"
+msgstr ""
+"Project-Id-Version: app-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 22:18+0200\n"
+"POT-Creation-Date: 2026-04-18 00:03+0300\n"
 "PO-Revision-Date: 2026-03-04 12:00+0000\n"
 "Last-Translator: denisrennes\n"
 "Language-Team: French\n"
@@ -21,15 +22,15 @@ msgstr "AppImage incompatible"
 
 #: src/application.vala:261
 msgid ""
-"This AppImage is incompatible or corrupted. Missing required files "
-"(AppRun, .desktop, or icon)."
+"This AppImage is incompatible or corrupted. Missing required files (AppRun, "
+".desktop, or icon)."
 msgstr ""
 "Cet AppImage est incompatible ou corrompu. Fichiers requis manquants "
 "(AppRun, .desktop ou icône)."
 
 #. Architecture mismatch banner
-#: src/application.vala:262 src/application.vala:274 src/application.vala:835
-#: src/application.vala:929 src/application.vala:941
+#: src/application.vala:262 src/application.vala:274 src/application.vala:843
+#: src/application.vala:937 src/application.vala:949
 #: src/windows/dialog_window.vala:95 src/windows/drop_window.vala:99
 #: src/windows/drop_window.vala:109
 msgid "Close"
@@ -48,8 +49,8 @@ msgstr "Architecture incompatible"
 #: src/application.vala:273 src/windows/drop_window.vala:331
 #, c-format
 msgid "This app is built for %s and cannot run here"
-msgstr "Cette application est pour %s et ne peut être exécutée sur cette "
-"machine"
+msgstr ""
+"Cette application est pour %s et ne peut être exécutée sur cette machine"
 
 #. Use app icon with warning badge overlay
 #: src/application.vala:370 src/windows/drop_window.vala:234
@@ -60,8 +61,8 @@ msgstr "Ouvrir %s ?"
 #: src/application.vala:374 src/windows/drop_window.vala:237
 #, c-format
 msgid ""
-"Origins of %s application can not be verified. Are you sure you want to open "
-"it?"
+"Origins of %s application can not be verified. Are you sure you want to open"
+" it?"
 msgstr ""
 "L'origine de l'application %s ne peut pas être vérifiée. Êtes-vous sûr de "
 "vouloir l'ouvrir ?"
@@ -74,10 +75,11 @@ msgstr "Installez l'AppImage pour l'ajouter à vos applications."
 msgid "Install"
 msgstr "Installer"
 
-#: src/application.vala:380 src/application.vala:411 src/application.vala:819
-#: src/windows/details_window.vala:1104 src/windows/details_window.vala:1120
+#: src/application.vala:380 src/application.vala:411 src/application.vala:827
+#: src/windows/details_window.vala:1111 src/windows/details_window.vala:1127
 #: src/windows/drop_window.vala:248 src/windows/drop_window.vala:422
-#: src/windows/drop_window.vala:1001 src/windows/preferences_window.vala:432
+#: src/windows/drop_window.vala:1001 src/windows/main_window.vala:1913
+#: src/windows/main_window.vala:1962 src/windows/preferences_window.vala:432
 #: src/windows/preferences_window.vala:466
 msgid "Cancel"
 msgstr "Annuler"
@@ -102,7 +104,7 @@ msgstr "Version inconnue"
 msgid "Will update to version %s"
 msgstr "Sera mis à jour vers la version %s"
 
-#: src/application.vala:410 src/windows/details_window.vala:955
+#: src/application.vala:410 src/windows/details_window.vala:956
 #: src/windows/drop_window.vala:421
 msgid "Update"
 msgstr "Mettre à jour"
@@ -115,8 +117,11 @@ msgstr "Remplacer %s ?"
 
 #: src/application.vala:435 src/windows/drop_window.vala:452
 #, c-format
-msgid "A newer item named %s already exists in this location. Do you want to replace it with the older one you're copying?"
-msgstr "Un élément plus récent nommé %s existe déjà à cet emplacement. Voulez-vous "
+msgid ""
+"A newer item named %s already exists in this location. Do you want to "
+"replace it with the older one you're copying?"
+msgstr ""
+"Un élément plus récent nommé %s existe déjà à cet emplacement. Voulez-vous "
 "le remplacer par celui-ci, plus ancien ?"
 
 #: src/application.vala:437 src/windows/drop_window.vala:454
@@ -126,8 +131,12 @@ msgstr "Installé : %s | Entrant : %s"
 
 #: src/application.vala:441 src/windows/drop_window.vala:458
 #, c-format
-msgid "An item named %s already exists in this location. Do you want to replace it with one you're copying?"
-msgstr "Un élément nommé %s existe déjà à cet emplacement. Voulez-vous le remplacer ?"
+msgid ""
+"An item named %s already exists in this location. Do you want to replace it "
+"with one you're copying?"
+msgstr ""
+"Un élément nommé %s existe déjà à cet emplacement. Voulez-vous le remplacer "
+"?"
 
 #: src/application.vala:446 src/windows/drop_window.vala:462
 msgid "Stop"
@@ -168,109 +177,113 @@ msgid "Dismiss"
 msgstr "Ignorer"
 
 #. Offer to delete permanently as fallback
-#: src/application.vala:816
+#: src/application.vala:824
 msgid "Cannot move to trash"
 msgstr "Impossible de mettre à la corbeille"
 
-#: src/application.vala:817
+#: src/application.vala:825
 #, c-format
 msgid ""
-"%s could not be moved to the trash. Do you want to delete it permanently instead?\n\n"
+"%s could not be moved to the trash. Do you want to delete it permanently instead?\n"
+"\n"
 "This action cannot be undone."
 msgstr ""
-"%s n'a pas pu être mis à la corbeille. Voulez-vous le supprimer "
-"définitivement ?\n"
+"%s n'a pas pu être mis à la corbeille. Voulez-vous le supprimer définitivement ?\n"
 "\n"
 "Cette action ne peut être annulée."
 
-#: src/application.vala:820 src/windows/details_window.vala:1088
-#: src/windows/details_window.vala:1105
+#: src/application.vala:828 src/core/installer.vala:675
+#: src/core/path_migration_service.vala:350
+#: src/windows/details_window.vala:1095 src/windows/details_window.vala:1112
 msgid "Delete Permanently"
 msgstr "Supprimer définitivement"
 
-#: src/application.vala:832
+#: src/application.vala:840
 msgid "Uninstall failed"
 msgstr "Échec de la désinstallation"
 
-#: src/application.vala:833
+#: src/application.vala:841
 #, c-format
 msgid "%s could not be removed: %s"
 msgstr "%s n'a pas pu être supprimé : %s"
 
-#: src/application.vala:841
+#: src/application.vala:849
 msgid "Deleted permanently"
 msgstr "Définitivement supprimé"
 
-#: src/application.vala:843 src/application.vala:849
+#: src/application.vala:851 src/application.vala:857
 #, c-format
 msgid "%s moved to Trash"
 msgstr "%s mis à la corbeille"
 
-#: src/application.vala:844
+#: src/application.vala:852
 msgid "Undo"
 msgstr "Annuler"
 
-#: src/application.vala:876
+#: src/application.vala:884
 msgid "Undo failed"
 msgstr "Échec de l'annulation"
 
-#: src/application.vala:879
+#: src/application.vala:887
 msgid "Restored"
 msgstr "Restauré"
 
-#: src/application.vala:887
+#: src/application.vala:895
 msgid "Extraction is only available for portable installations."
 msgstr "L'extraction n'est disponible que pour les installations portables."
 
-#: src/application.vala:923
+#: src/application.vala:931
 msgid "Extracted for faster launch"
 msgstr "Extrait pour un lancement plus rapide"
 
-#: src/application.vala:926
+#: src/application.vala:934
 msgid "Extraction complete"
 msgstr "Extraction terminée"
 
-#: src/application.vala:927
+#: src/application.vala:935
 #, c-format
 msgid "%s was extracted and will open faster."
 msgstr "%s a été extrait et s'ouvrira plus rapidement."
 
-#: src/application.vala:938
+#: src/application.vala:946
 msgid "Extraction failed"
 msgstr "Échec de l'extraction"
 
-#: src/application.vala:939
+#: src/application.vala:947
 #, c-format
 msgid "%s could not be extracted: %s"
 msgstr "%s n'a pas pu être extrait : %s"
 
-#: src/core/background_update_service.vala:261
-#: src/core/background_update_service.vala:418
+#: src/core/background_update_service.vala:263
+#: src/core/background_update_service.vala:420
 msgid "App updates available"
 msgstr "Mises à jour d'applications disponibles"
 
-#: src/core/background_update_service.vala:262
-#: src/core/background_update_service.vala:419
+#: src/core/background_update_service.vala:264
+#: src/core/background_update_service.vala:421
 #, c-format
 msgid "%d app update(s) available"
 msgstr "%d mise(s) à jour d'application disponible(s)"
 
-#: src/core/background_update_service.vala:312
+#: src/core/background_update_service.vala:314
 msgid "App updates failed"
 msgstr "Echec de mise à jour d'applications"
 
-#: src/core/background_update_service.vala:313
+#: src/core/background_update_service.vala:315
 #, c-format
 msgid "%d app update(s) failed"
 msgstr "%d mise(s) à jour d'applications échouée(s)"
 
 #. Build actions array: pairs of (action_key, label)
 #. "default" action is invoked when user clicks the notification body
-#: src/core/background_update_service.vala:334
+#: src/core/background_update_service.vala:336
 msgid "Open AppManager"
 msgstr "Ouvrir AppManager"
 
-#: src/core/installer.vala:655 src/windows/details_window.vala:1092
+#. Update the localized uninstall label using KeyFile for safety
+#. (avoids clobbering Name[xx]= in other groups via raw string replace)
+#: src/core/installer.vala:675 src/core/path_migration_service.vala:350
+#: src/windows/details_window.vala:1099
 msgid "Move to Trash"
 msgstr "Mettre à la corbeille"
 
@@ -308,7 +321,8 @@ msgstr "Le répertoire parent n'existe pas"
 
 #: src/core/path_migration_service.vala:77
 msgid "Cannot create directory: parent is not writable"
-msgstr "Création du répertoire impossible : écriture impossible dans le parent"
+msgstr ""
+"Création du répertoire impossible : écriture impossible dans le parent"
 
 #: src/core/path_migration_service.vala:80
 #, c-format
@@ -342,109 +356,121 @@ msgstr ""
 "Echec de la migration d'applications : \n"
 "%s"
 
-#: src/core/updater.vala:579 src/core/updater.vala:644
+#: src/core/updater.vala:577 src/core/updater.vala:642
 msgid "No update address configured"
 msgstr "Aucune adresse de mise à jour configurée"
 
-#: src/core/updater.vala:584 src/core/updater.vala:653
+#: src/core/updater.vala:582 src/core/updater.vala:651
 msgid "Update source not supported"
 msgstr "Source de mise à jour non prise en charge"
 
-#: src/core/updater.vala:600 src/core/updater.vala:671
+#: src/core/updater.vala:598 src/core/updater.vala:669
 msgid "Unable to read releases"
 msgstr "Impossible de lire les versions sorties (releases)"
 
-#: src/core/updater.vala:605 src/core/updater.vala:697
+#: src/core/updater.vala:603 src/core/updater.vala:695
 #, c-format
 msgid "No matching AppImage found for %s"
 msgstr "Aucun AppImage correspondant trouvé pour %s"
 
 #. Version comparison: if both have versions, compare them
-#. Remote version is same or older than current
-#: src/core/updater.vala:613 src/core/updater.vala:619
-#: src/core/updater.vala:681 src/core/updater.vala:689
-#: src/core/updater.vala:839 src/core/updater.vala:864
-#: src/core/updater.vala:1461 src/core/updater.vala:1489
-#: src/core/updater.vala:1501 src/core/updater.vala:1530
-#: src/core/updater.vala:1576 src/core/updater.vala:1587
-#: src/core/updater.vala:1611
+#: src/core/updater.vala:611 src/core/updater.vala:617
+#: src/core/updater.vala:679 src/core/updater.vala:687
+#: src/core/updater.vala:837 src/core/updater.vala:862
+#: src/core/updater.vala:1493 src/core/updater.vala:1509
+#: src/core/updater.vala:1594 src/core/updater.vala:1605
 msgid "Already up to date"
 msgstr "Déjà à jour"
 
 # c-format
-#: src/core/updater.vala:744 src/core/updater.vala:1677
-#: src/core/updater.vala:1764
+#: src/core/updater.vala:742 src/core/updater.vala:1668
+#: src/core/updater.vala:1755
 #, c-format
 msgid "Updated to %s"
 msgstr "Mis à jour vers %s"
 
 #. All candidates failed identity verification
-#: src/core/updater.vala:754 src/core/updater.vala:756
+#: src/core/updater.vala:752 src/core/updater.vala:754
 msgid "App identity mismatch"
 msgstr "Identité d'application incohérente"
 
-#: src/core/updater.vala:827 src/core/updater.vala:857
-#: src/core/updater.vala:1517
+#: src/core/updater.vala:825 src/core/updater.vala:855
 msgid "Server does not provide change tracking headers"
 msgstr "Le serveur ne fournit pas d'en-têtes de suivi de modifications"
 
-#: src/core/updater.vala:835 src/core/updater.vala:1526
-#: src/core/updater.vala:1605
+#: src/core/updater.vala:833
 msgid "Baseline recorded"
 msgstr "Empreinte de base enregistrée"
 
-#: src/core/updater.vala:897 src/core/updater.vala:1678
-#: src/core/updater.vala:1765
+#: src/core/updater.vala:895 src/core/updater.vala:1669
+#: src/core/updater.vala:1756
 msgid "Updated"
 msgstr "Mis à jour"
 
-#: src/core/updater.vala:1012 src/core/updater.vala:1020
+#: src/core/updater.vala:1010 src/core/updater.vala:1018
 msgid "Downloaded file is not a valid AppImage"
 msgstr "Le fichier téléchargé n'est pas un AppImage valide"
 
-#: src/core/updater.vala:1023
+#: src/core/updater.vala:1021
 #, c-format
 msgid "AppImage architecture '%s' is incompatible with this system"
 msgstr "L'architecture d'AppImage '%s' est incompatible avec cette machine"
 
 #. Match — verification passed
-#: src/core/updater.vala:1064
+#: src/core/updater.vala:1062
 #, c-format
 msgid "App identity mismatch: expected '%s' but got '%s'"
 msgstr "Incohérence d'identité de l'application : reçu '%s' au lieu de '%s'"
 
-#: src/core/updater.vala:1106
-msgid "GitHub authentication failed (401). Check your token in Preferences → GitHub."
-msgstr "L'authentification GitHub a échoué (401). Vérifiez votre jeton dans "
+#: src/core/updater.vala:1104
+msgid ""
+"GitHub authentication failed (401). Check your token in Preferences → "
+"GitHub."
+msgstr ""
+"L'authentification GitHub a échoué (401). Vérifiez votre jeton dans "
 "Préférences → GitHub."
 
+#: src/core/updater.vala:1109
+msgid ""
+"GitHub API rate limit exceeded. Add a token in Preferences → GitHub to "
+"increase your limit."
+msgstr ""
+"Limite GitHub API atteinte. Ajoutez un jeton dans Préférences → GitHub pour "
+"augmenter la limite."
+
 #: src/core/updater.vala:1111
-msgid "GitHub API rate limit exceeded. Add a token in Preferences → GitHub to increase your limit."
-msgstr "Limite GitHub API atteinte. Ajoutez un jeton dans Préférences → GitHub "
-"pour augmenter la limite."
+msgid ""
+"GitHub access forbidden (403). Your token may lack the required permissions."
+msgstr ""
+"Accès GitHub interdit (403). Votre jeton manque peut-être des permissions "
+"requises."
 
-#: src/core/updater.vala:1113
-msgid "GitHub access forbidden (403). Your token may lack the required permissions."
-msgstr "Accès GitHub interdit (403). Votre jeton manque peut-être des "
-"permissions requises."
-
-#: src/core/updater.vala:1436
+#: src/core/updater.vala:1449
 msgid "Unknown zsync source type"
 msgstr "Type de source zsync inconnu"
 
-#: src/core/updater.vala:1547
+#: src/core/updater.vala:1474 src/core/updater.vala:1582
+msgid "Malformed zsync file (no checksum)"
+msgstr "Fichier zsync malformé (pas de somme de contrôle)"
+
+#: src/core/updater.vala:1489
+msgid "Failed to compute local checksum"
+msgstr "Échec du calcul de la somme de contrôle locale"
+
+#: src/core/updater.vala:1559
 msgid "Unknown zsync source"
 msgstr "Source zsync inconnue"
 
-#: src/core/updater.vala:1718
+#: src/core/updater.vala:1709
 msgid "Cannot determine download URL from zsync URL"
-msgstr "Impossible de déterminer l'URL de téléchargement à partir de l'URL "
-"zsync"
+msgstr ""
+"Impossible de déterminer l'URL de téléchargement à partir de l'URL zsync"
 
 #: src/windows/details_window.vala:110
 #, c-format
 msgid "⚠️ '%s' is not in $PATH. App will not launch from the terminal"
-msgstr "⚠️ '%s' n'est pas dans $PATH. L'application ne se lancera pas depuis le "
+msgstr ""
+"⚠️ '%s' n'est pas dans $PATH. L'application ne se lancera pas depuis le "
 "terminal"
 
 #: src/windows/details_window.vala:236
@@ -459,205 +485,210 @@ msgstr "Portable"
 msgid "Extracted"
 msgstr "Extrait"
 
-#: src/windows/details_window.vala:256
+#: src/windows/details_window.vala:257
 msgid "App version"
 msgstr "Version"
 
 #. Terminal app card (only show if is_terminal)
-#: src/windows/details_window.vala:267
+#: src/windows/details_window.vala:268
 msgid "Terminal"
 msgstr "Terminal"
 
-#: src/windows/details_window.vala:275
+#: src/windows/details_window.vala:276
 msgid "This app supports efficient delta updates"
 msgstr "Cette application prend en charge les mises à jour delta efficaces"
 
-#: src/windows/details_window.vala:282
+#: src/windows/details_window.vala:283
 msgid "Hidden"
 msgstr "Masqué"
 
-#: src/windows/details_window.vala:292
+#: src/windows/details_window.vala:293
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/windows/details_window.vala:297
+#: src/windows/details_window.vala:298
 msgid "Command line arguments"
 msgstr "Arguments de ligne de commande"
 
-#: src/windows/details_window.vala:329
+#: src/windows/details_window.vala:330
 msgid "Update info"
 msgstr "Informations de mise à jour"
 
-#: src/windows/details_window.vala:335
+#: src/windows/details_window.vala:336
 msgid "How update links work"
 msgstr "Comment fonctionnent les liens de mise à jour"
 
-#: src/windows/details_window.vala:347
+#: src/windows/details_window.vala:348
 msgid "Pre-release Updates"
 msgstr "Mises-à-jour de pré-production"
 
-#: src/windows/details_window.vala:348
+#: src/windows/details_window.vala:349
 msgid "Include pre-release versions when checking for updates"
-msgstr "Inclure les mises-à-jour de pré-production lors de la recherche de "
-"mises-à-jour"
+msgstr ""
+"Inclure les mises-à-jour de pré-production lors de la recherche de mises-à-"
+"jour"
 
-#: src/windows/details_window.vala:363
+#: src/windows/details_window.vala:364
 msgid "Update link is managed by the embedded zsync update mechanism"
-msgstr "Le lien de mise à jour est géré par le mécanisme de mise à jour zsync "
+msgstr ""
+"Le lien de mise à jour est géré par le mécanisme de mise à jour zsync "
 "intégré"
 
-#: src/windows/details_window.vala:399
+#: src/windows/details_window.vala:400
 msgid "Update Link"
 msgstr "Lien de mise à jour"
 
-#: src/windows/details_window.vala:454
+#: src/windows/details_window.vala:455
 msgid "Web Page"
 msgstr "Page web"
 
-#: src/windows/details_window.vala:483
+#: src/windows/details_window.vala:484
 msgid "Open web page"
 msgstr "Ouvrir la page web"
 
-#: src/windows/details_window.vala:497
+#: src/windows/details_window.vala:498
 msgid "Advanced"
 msgstr "Avancé"
 
-#: src/windows/details_window.vala:524
+#: src/windows/details_window.vala:525
 msgid "Environment Variables"
 msgstr "Variables d'environnement"
 
-#: src/windows/details_window.vala:525
+#: src/windows/details_window.vala:526
 msgid "Set custom environment variables for this app"
-msgstr "Définir des variables d'environnement personnalisées pour cette "
-"application"
+msgstr ""
+"Définir des variables d'environnement personnalisées pour cette application"
 
-#: src/windows/details_window.vala:578
+#: src/windows/details_window.vala:579
 msgid "NAME"
 msgstr "NOM"
 
-#: src/windows/details_window.vala:592
+#: src/windows/details_window.vala:593
 msgid "value"
 msgstr "valeur"
 
-#: src/windows/details_window.vala:604
+#: src/windows/details_window.vala:605
 msgid "Remove variable"
 msgstr "Supprimer la variable"
 
-#: src/windows/details_window.vala:729
+#: src/windows/details_window.vala:730
 msgid "Keywords"
 msgstr "Mots-clés"
 
-#: src/windows/details_window.vala:739
+#: src/windows/details_window.vala:740
 msgid "Icon name"
 msgstr "Nom de l'icône"
 
-#: src/windows/details_window.vala:749
+#: src/windows/details_window.vala:750
 msgid "Startup WM Class"
 msgstr "Classe WM de démarrage"
 
-#: src/windows/details_window.vala:759
+#: src/windows/details_window.vala:760
 msgid "Version"
 msgstr "Version"
 
-#: src/windows/details_window.vala:771
+#: src/windows/details_window.vala:772
 msgid "Hide from app drawer"
 msgstr "Masquer dans le tiroir d'applications"
 
-#: src/windows/details_window.vala:772
+#: src/windows/details_window.vala:773
 msgid "Don't show in application menu"
 msgstr "Ne pas afficher dans le menu des applications"
 
-#: src/windows/details_window.vala:783
+#: src/windows/details_window.vala:784
 msgid "Add to $PATH"
 msgstr "Ajouter à $PATH"
 
-#: src/windows/details_window.vala:784
+#: src/windows/details_window.vala:785
 #, c-format
 msgid "Create a launcher in %s so you can run it from the terminal"
 msgstr "Créer un lanceur dans %s pour pouvoir l'exécuter depuis le terminal"
 
-#: src/windows/details_window.vala:845
+#: src/windows/details_window.vala:846
 msgid "Actions"
 msgstr "Actions"
 
 #. Extract button
-#: src/windows/details_window.vala:884
+#: src/windows/details_window.vala:885
 msgid "Extract AppImage"
 msgstr "Extraire l'AppImage"
 
-#: src/windows/details_window.vala:921
+#: src/windows/details_window.vala:922
 msgid "Restore default"
 msgstr "Restaurer par défaut"
 
-#: src/windows/details_window.vala:933 src/windows/main_window.vala:510
-#: src/windows/main_window.vala:584
+#: src/windows/details_window.vala:934 src/windows/main_window.vala:589
+#: src/windows/main_window.vala:663
 msgid "Updating..."
 msgstr "Mise à jour en cours..."
 
-#: src/windows/details_window.vala:935
+#: src/windows/details_window.vala:936
 msgid "Checking..."
 msgstr "Vérification..."
 
-#: src/windows/details_window.vala:962
+#: src/windows/details_window.vala:963
 msgid "Update Failed"
 msgstr "La mise à jour a échoué"
 
-#: src/windows/details_window.vala:969
+#: src/windows/details_window.vala:970
 msgid "Check Update"
 msgstr "Vérifier la mise à jour"
 
-#: src/windows/details_window.vala:1036
+#: src/windows/details_window.vala:1037
 msgid ""
 "Update info lets AppManager fetch new builds for you. Paste the download "
 "link and AppManager will do the rest."
 msgstr ""
 "Les informations de mise à jour permettent à AppManager de récupérer les "
-"nouvelles versions pour vous. Collez le lien de téléchargement et AppManager "
-"fera le reste."
+"nouvelles versions pour vous. Collez le lien de téléchargement et AppManager"
+" fera le reste."
 
-#: src/windows/details_window.vala:1037
+#: src/windows/details_window.vala:1038
 msgid ""
-"Currently GitHub and GitLab URL formats are fully supported. Direct download "
-"links also work if the server provides Last-Modified or Content-Length "
+"Currently GitHub and GitLab URL formats are fully supported. Direct download"
+" links also work if the server provides Last-Modified or Content-Length "
 "headers."
 msgstr ""
 "Actuellement, les formats d'URL GitHub et GitLab sont entièrement pris en "
 "charge. Les liens de téléchargement direct fonctionnent également si le "
 "serveur fournit les en-têtes Last-Modified ou Content-Length."
 
-#: src/windows/details_window.vala:1038
+#: src/windows/details_window.vala:1039
 msgid "Update links"
 msgstr "Liens de mise à jour"
 
-#: src/windows/details_window.vala:1039
+#: src/windows/details_window.vala:1040
 msgid "Got it"
 msgstr "Compris"
 
-#: src/windows/details_window.vala:1093
+#: src/windows/details_window.vala:1100
 msgid "Hold Shift to delete permanently"
 msgstr "Maintenez la touche Maj enfoncée pour supprimer définitivement"
 
-#: src/windows/details_window.vala:1100
+#: src/windows/details_window.vala:1107
 #, c-format
 msgid "<b>%s</b> will be permanently deleted. This action cannot be undone."
-msgstr "<b>%s</b> sera supprimé définitivement. Cette action ne peut être "
-"annulée."
+msgstr ""
+"<b>%s</b> sera supprimé définitivement. Cette action ne peut être annulée."
 
-#: src/windows/details_window.vala:1101
+#: src/windows/details_window.vala:1108
 msgid "Delete permanently?"
 msgstr "Supprimer définitivement ?"
 
-#: src/windows/details_window.vala:1118
-msgid "Extracting will unpack the application so it opens faster, but it will consume more disk space. This action cannot be reversed automatically."
-msgstr "L'extraction décompressera l'application pour qu'elle s'ouvre plus "
+#: src/windows/details_window.vala:1125
+msgid ""
+"Extracting will unpack the application so it opens faster, but it will "
+"consume more disk space. This action cannot be reversed automatically."
+msgstr ""
+"L'extraction décompressera l'application pour qu'elle s'ouvre plus "
 "rapidement, mais elle consommera plus d'espace disque. Cette action ne peut "
 "pas être annulée automatiquement."
 
-#: src/windows/details_window.vala:1119
+#: src/windows/details_window.vala:1126
 msgid "Extract application?"
 msgstr "Extraire l'application ?"
 
-#: src/windows/details_window.vala:1121
+#: src/windows/details_window.vala:1128
 msgid "Extract"
 msgstr "Extraire"
 
@@ -694,7 +725,8 @@ msgstr "Glissez-déposez pour installer dans %s"
 
 #: src/windows/drop_window.vala:242
 msgid "This is a terminal application and will be installed in portable mode."
-msgstr "Ceci est une application de type Terminal, elle sera installée en mode "
+msgstr ""
+"Ceci est une application de type Terminal, elle sera installée en mode "
 "portable."
 
 #: src/windows/drop_window.vala:320
@@ -729,306 +761,398 @@ msgstr "Vérifier l'authenticité de cet AppImage."
 msgid "Enter the SHA256 hash "
 msgstr "Entrez le hash SHA256 "
 
-#: src/windows/main_window.vala:60 src/windows/main_window.vala:176
+#: src/windows/main_window.vala:63 src/windows/main_window.vala:217
 #: data/com.github.AppManager.metainfo.xml:4
 msgid "AppManager"
 msgstr "AppManager"
 
-#: src/windows/main_window.vala:232
+#. GNOME-style hint overlay: title + subtitle + pill button, centered in
+#. the content area when only AppManager itself is installed.
+#: src/windows/main_window.vala:179
+msgid "No Apps Yet"
+msgstr "Aucune application"
+
+#: src/windows/main_window.vala:183
+msgid "Import your AppImages to manage and update them here"
+msgstr "Importez vos AppImages pour les gérer et les mettre à jour ici"
+
+#: src/windows/main_window.vala:198 src/windows/main_window.vala:371
+msgid "Import AppImages ..."
+msgstr "Importer des AppImages ..."
+
+#: src/windows/main_window.vala:276
 msgid "Get more ..."
 msgstr "En obtenir plus ..."
 
-#: src/windows/main_window.vala:244
+#: src/windows/main_window.vala:288
 msgid "Find more AppImages"
 msgstr "Trouver plus d'AppImages"
 
-#: src/windows/main_window.vala:245
+#: src/windows/main_window.vala:289
 msgid "Browse these sources to discover and download AppImages"
 msgstr "Parcourez ces sources pour découvrir et télécharger des AppImages"
 
-#: src/windows/main_window.vala:295 src/windows/main_window.vala:367
+#: src/windows/main_window.vala:315
+msgid "Import AppImages from folder ..."
+msgstr "Importer des AppImages depuis un dossier ..."
+
+#: src/windows/main_window.vala:353 src/windows/main_window.vala:446
 msgid "No AppImage apps installed"
 msgstr "Aucune application AppImage installée"
 
-#: src/windows/main_window.vala:300
+#: src/windows/main_window.vala:358
 msgid "Download AppImage and double click to install with AppManager"
-msgstr "Téléchargez un AppImage et double-cliquez pour l'installer avec "
-"AppManager"
+msgstr ""
+"Téléchargez un AppImage et double-cliquez pour l'installer avec AppManager"
 
-#: src/windows/main_window.vala:367
+#: src/windows/main_window.vala:446
 msgid "No results found"
 msgstr "Aucun résultat trouvé"
 
-#: src/windows/main_window.vala:446 src/windows/main_window.vala:972
+#: src/windows/main_window.vala:525 src/windows/main_window.vala:1051
 msgid "My Apps"
 msgstr "Mes applications"
 
-#: src/windows/main_window.vala:517 src/windows/main_window.vala:591
+#: src/windows/main_window.vala:596 src/windows/main_window.vala:670
 msgid "Update available"
 msgstr "Mise à jour disponible"
 
 #. App name label (same size as list view)
-#: src/windows/main_window.vala:606
+#: src/windows/main_window.vala:685
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: src/windows/main_window.vala:699
+#: src/windows/main_window.vala:778
 msgid "extracted"
 msgstr "extrait"
 
-#: src/windows/main_window.vala:756
+#: src/windows/main_window.vala:835
 msgid "Updated just now"
 msgstr "Mis à jour à l'instant"
 
-#: src/windows/main_window.vala:756
+#: src/windows/main_window.vala:835
 msgid "Installed just now"
 msgstr "Installé à l'instant"
 
-#: src/windows/main_window.vala:764
+#: src/windows/main_window.vala:843
 #, c-format
 msgid "Updated %d min ago"
 msgstr "Mis à jour il y a %d min"
 
-#: src/windows/main_window.vala:764
+#: src/windows/main_window.vala:843
 #, c-format
 msgid "Installed %d min ago"
 msgstr "Installé il y a %d min"
 
-#: src/windows/main_window.vala:772
+#: src/windows/main_window.vala:851
 #, c-format
 msgid "Updated %d hours ago"
 msgstr "Mis à jour il y a %d heures"
 
-#: src/windows/main_window.vala:772
+#: src/windows/main_window.vala:851
 #, c-format
 msgid "Installed %d hours ago"
 msgstr "Installé il y a %d heures"
 
-#: src/windows/main_window.vala:779
+#: src/windows/main_window.vala:858
 #, c-format
 msgid "Updated %d days ago"
 msgstr "Mis à jour il y a %d jours"
 
-#: src/windows/main_window.vala:779
+#: src/windows/main_window.vala:858
 #, c-format
 msgid "Installed %d days ago"
 msgstr "Installé il y a %d jours"
 
-#: src/windows/main_window.vala:797
+#: src/windows/main_window.vala:876
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: src/windows/main_window.vala:801 src/windows/preferences_window.vala:34
+#: src/windows/main_window.vala:880 src/windows/preferences_window.vala:34
 msgid "Preferences"
 msgstr "Préférences"
 
-#: src/windows/main_window.vala:802
+#: src/windows/main_window.vala:881
 msgid "Keyboard shortcuts"
 msgstr "Raccourcis clavier"
 
-#: src/windows/main_window.vala:803 src/windows/main_window.vala:1675
+#: src/windows/main_window.vala:882 src/windows/main_window.vala:1782
 msgid "About AppManager"
 msgstr "À propos d'AppManager"
 
-#: src/windows/main_window.vala:807
+#: src/windows/main_window.vala:886
 msgid "Quit"
 msgstr "Quitter"
 
-#: src/windows/main_window.vala:821
+#: src/windows/main_window.vala:900
 msgid "Support AppManager"
 msgstr "Soutenez AppManager"
 
-#: src/windows/main_window.vala:836
+#: src/windows/main_window.vala:915
 msgid "Buy Me a Coffee"
 msgstr "Offrez-Moi un Café"
 
-#: src/windows/main_window.vala:855
+#: src/windows/main_window.vala:934
 msgid "Become a sponsor on GitHub"
 msgstr "Devenez sponsor sur GitHub"
 
-#: src/windows/main_window.vala:860
+#: src/windows/main_window.vala:939
 msgid "Sponsor Me ♡"
 msgstr "Soutenez-Moi ♡"
 
-#: src/windows/main_window.vala:871
+#: src/windows/main_window.vala:950
 msgid "Star AppManager on GitHub"
 msgstr "Donnez une étoile à AppManager sur GitHub"
 
-#: src/windows/main_window.vala:876
+#: src/windows/main_window.vala:955
 msgid "Star AppManager"
 msgstr "Donnez une étoile à AppManager"
 
-#: src/windows/main_window.vala:887
+#: src/windows/main_window.vala:966
 msgid "View contributors on GitHub"
 msgstr "Voir les contributeurs sur GitHub"
 
-#: src/windows/main_window.vala:892 src/windows/main_window.vala:1694
+#: src/windows/main_window.vala:971 src/windows/main_window.vala:1801
 msgid "Contributors"
 msgstr "Contributeurs"
 
-#: src/windows/main_window.vala:915 src/windows/main_window.vala:1673
+#: src/windows/main_window.vala:994 src/windows/main_window.vala:1780
 msgid "Search"
 msgstr "Rechercher"
 
-#: src/windows/main_window.vala:921
+#: src/windows/main_window.vala:1000
 msgid "Support this project"
 msgstr "Soutenez ce projet"
 
-#: src/windows/main_window.vala:931
+#: src/windows/main_window.vala:1010
 msgid "More actions"
 msgstr "Plus d'actions"
 
-#: src/windows/main_window.vala:946
+#: src/windows/main_window.vala:1025
 msgid "Search apps..."
 msgstr "Rechercher des applications..."
 
 #. FUSE is not installed warning banner
-#: src/windows/main_window.vala:954
+#: src/windows/main_window.vala:1033
 msgid "FUSE is not installed. Some AppImages may fail to run"
-msgstr "FUSE n'est pas installé. Certains AppImages pourraient ne pas "
-"fonctionner"
+msgstr ""
+"FUSE n'est pas installé. Certains AppImages pourraient ne pas fonctionner"
 
-#: src/windows/main_window.vala:956
+#: src/windows/main_window.vala:1035
 msgid "Learn More"
 msgstr "En savoir plus"
 
-#: src/windows/main_window.vala:977
+#: src/windows/main_window.vala:1056
 msgid "Shift+click to launch app"
 msgstr "Touche Maj + clic pour lancer l'application"
 
-#: src/windows/main_window.vala:1014
+#: src/windows/main_window.vala:1093
 msgid "Switch to grid view"
 msgstr "Basculer à la vue vue en grille"
 
-#: src/windows/main_window.vala:1017
+#: src/windows/main_window.vala:1096
 msgid "Switch to list view"
 msgstr "Basculer à la vue en liste"
 
-#: src/windows/main_window.vala:1148 src/windows/main_window.vala:1219
+#: src/windows/main_window.vala:1227 src/windows/main_window.vala:1298
 msgid "Updates already running"
 msgstr "Les mises à jour sont déjà en cours"
 
-#: src/windows/main_window.vala:1196
+#: src/windows/main_window.vala:1275
 msgid "Cancel update"
 msgstr "Annuler la mise à jour"
 
-#: src/windows/main_window.vala:1227
+#: src/windows/main_window.vala:1306
 msgid "Cancelling..."
 msgstr "Annulation..."
 
-#: src/windows/main_window.vala:1253
+#: src/windows/main_window.vala:1332
 msgid "Update check cancelled"
 msgstr "Recherche des mises à jour annulée"
 
-#: src/windows/main_window.vala:1283
+#: src/windows/main_window.vala:1362
 #, c-format
 msgid "%d app(s) have updates"
 msgstr "%d application(s) ont des mises à jour"
 
-#: src/windows/main_window.vala:1286
+#: src/windows/main_window.vala:1365
 msgid "No updates available right now"
 msgstr "Aucune mise à jour disponible actuellement"
 
-#: src/windows/main_window.vala:1293
+#: src/windows/main_window.vala:1372
 msgid "Nothing queued for updating"
 msgstr "Aucune mise à jour en attente"
 
-#: src/windows/main_window.vala:1320
+#: src/windows/main_window.vala:1399
 msgid "Update cancelled"
 msgstr "Mise à jour annulée"
 
-#: src/windows/main_window.vala:1385 src/windows/main_window.vala:1405
+#: src/windows/main_window.vala:1464 src/windows/main_window.vala:1484
 msgid "Update failed"
 msgstr "La mise à jour a échoué"
 
-#: src/windows/main_window.vala:1458
+#: src/windows/main_window.vala:1537
 msgid "Checking updates"
 msgstr "Rechercher des mises à jour"
 
-#: src/windows/main_window.vala:1461
+#: src/windows/main_window.vala:1540
 msgid "Update Apps"
 msgstr "Mettre à jour les applications"
 
-#: src/windows/main_window.vala:1464
+#: src/windows/main_window.vala:1543
 msgid "Updating apps"
 msgstr "Mise à jour des applications"
 
-#: src/windows/main_window.vala:1467
+#: src/windows/main_window.vala:1546
 msgid "Check updates"
 msgstr "Rechercher des mises à jour"
 
-#: src/windows/main_window.vala:1491
+#: src/windows/main_window.vala:1570
 msgid "No installed apps to update"
 msgstr "Aucune application installée n'est à mettre à jour"
 
-#: src/windows/main_window.vala:1531
+#: src/windows/main_window.vala:1610
 #, c-format
 msgid "Updated %d app(s)"
 msgstr "%d application(s) mise(s) à jour"
 
-#: src/windows/main_window.vala:1534
+#: src/windows/main_window.vala:1613
 #, c-format
 msgid "%d update(s) failed"
 msgstr "%d mise(s) à jour échouée(s)"
 
-#: src/windows/main_window.vala:1542
+#: src/windows/main_window.vala:1621
 msgid "Add update addresses in Details to enable updates"
-msgstr "Ajoutez des adresses de mise à jour dans Détails pour activer les mises "
-"à jour"
+msgstr ""
+"Ajoutez des adresses de mise à jour dans Détails pour activer les mises à "
+"jour"
 
-#: src/windows/main_window.vala:1544
+#: src/windows/main_window.vala:1623
 msgid "All supported apps are already up to date"
 msgstr "Toutes les applications prises en charge sont déjà à jour"
 
-#: src/windows/main_window.vala:1548
+#: src/windows/main_window.vala:1627
 #, c-format
 msgid "%d app(s) use unsupported update links"
-msgstr "%d application(s) utilisent des liens de mise à jour non pris en charge"
+msgstr ""
+"%d application(s) utilisent des liens de mise à jour non pris en charge"
 
-#: src/windows/main_window.vala:1615
+#: src/windows/main_window.vala:1722
 #, c-format
 msgid "Update available for %s"
 msgstr "Mise à jour disponible pour %s"
 
-#: src/windows/main_window.vala:1661
+#: src/windows/main_window.vala:1768
 msgid "General"
 msgstr "Général"
 
-#: src/windows/main_window.vala:1665
+#: src/windows/main_window.vala:1772
 msgid "Navigation"
 msgstr "Navigation"
 
-#: src/windows/main_window.vala:1669
+#: src/windows/main_window.vala:1776
 msgid "Window"
 msgstr "Fenêtre"
 
-#: src/windows/main_window.vala:1671
+#: src/windows/main_window.vala:1778
 msgid "Check for updates"
 msgstr "Rechercher des mises à jour"
 
-#: src/windows/main_window.vala:1672
+#: src/windows/main_window.vala:1779
 msgid "Show main menu"
 msgstr "Afficher le menu principal"
 
-#: src/windows/main_window.vala:1674
+#: src/windows/main_window.vala:1781
 msgid "Show shortcuts"
 msgstr "Afficher les raccourcis"
 
-#: src/windows/main_window.vala:1676
+#: src/windows/main_window.vala:1783
 msgid "Close window"
 msgstr "Fermer la fenêtre"
 
-#: src/windows/main_window.vala:1677
+#: src/windows/main_window.vala:1784
 msgid "Quit AppManager"
 msgstr "Quitter AppManager"
 
-#: src/windows/main_window.vala:1678
+#: src/windows/main_window.vala:1785
 msgid "Toggle fullscreen"
 msgstr "Bascule plein écran"
 
-#: src/windows/main_window.vala:1695
+#: src/windows/main_window.vala:1802
 msgid "Credits"
 msgstr "Crédits"
+
+#: src/windows/main_window.vala:1886
+msgid "Select folder with AppImages"
+msgstr "Sélectionner un dossier contenant des AppImages"
+
+#: src/windows/main_window.vala:1904
+msgid "Import AppImages"
+msgstr "Importer des AppImages"
+
+#: src/windows/main_window.vala:1905
+#, c-format
+msgid "Install AppImages found in %s"
+msgstr "Installer les AppImages trouvées dans %s"
+
+#: src/windows/main_window.vala:1907
+msgid "Move AppImages"
+msgstr "Déplacer les AppImages"
+
+#: src/windows/main_window.vala:1914
+msgid "Import"
+msgstr "Importer"
+
+#: src/windows/main_window.vala:1944
+#, c-format
+msgid "Failed to read folder: %s"
+msgstr "Échec de la lecture du dossier : %s"
+
+#: src/windows/main_window.vala:1949
+msgid "No AppImage files found in folder"
+msgstr "Aucun fichier AppImage trouvé dans le dossier"
+
+#: src/windows/main_window.vala:1960
+msgid "Importing AppImages…"
+msgstr "Importation des AppImages…"
+
+#: src/windows/main_window.vala:1961
+#, c-format
+msgid "Installing %d AppImage(s)…"
+msgstr "Installation de %d AppImage(s)…"
+
+#: src/windows/main_window.vala:1974
+msgid "Starting…"
+msgstr "Démarrage…"
+
+#: src/windows/main_window.vala:1983
+msgid "Cancelling…"
+msgstr "Annulation…"
+
+#: src/windows/main_window.vala:2000
+#, c-format
+msgid "%d of %d: %s"
+msgstr "%d sur %d : %s"
+
+#: src/windows/main_window.vala:2058
+#, c-format
+msgid "Imported %d app(s)"
+msgstr "%d application(s) importée(s)"
+
+#: src/windows/main_window.vala:2061
+#, c-format
+msgid "Skipped %d already installed app(s)"
+msgstr "%d application(s) déjà installée(s) ignorée(s)"
+
+#: src/windows/main_window.vala:2064
+#, c-format
+msgid "%d app(s) failed to import"
+msgstr "Échec d'importation de %d application(s)"
+
+#: src/windows/main_window.vala:2067
+#, c-format
+msgid "Cancelled — %d app(s) not imported"
+msgstr "Annulé — %d application(s) non importée(s)"
 
 #. Installation directory group
 #: src/windows/preferences_window.vala:59
@@ -1037,7 +1161,8 @@ msgstr "Installation"
 
 #: src/windows/preferences_window.vala:60
 msgid "Configure where AppImages are installed (default: ~/Applications)"
-msgstr "Configurer l'emplacement d'installation des AppImages (par défaut : "
+msgstr ""
+"Configurer l'emplacement d'installation des AppImages (par défaut : "
 "~/Applications)"
 
 #: src/windows/preferences_window.vala:63
@@ -1062,8 +1187,8 @@ msgstr "Eviter la fenêtre glisser-déposer"
 
 #: src/windows/preferences_window.vala:108
 msgid "Show install dialog directly when opening AppImages"
-msgstr "Afficher la fenêtre d'installation directement à l'ouverture "
-"d'AppImages"
+msgstr ""
+"Afficher la fenêtre d'installation directement à l'ouverture d'AppImages"
 
 #. Automatic updates group
 #: src/windows/preferences_window.vala:117
@@ -1124,7 +1249,8 @@ msgstr "Générateur de miniatures AppImage"
 
 #: src/windows/preferences_window.vala:190
 msgid "Install appimage-thumbnailer to generate thumbnails for AppImages"
-msgstr "Installer appimage-thumbnailer pour générer des miniatures pour les "
+msgstr ""
+"Installer appimage-thumbnailer pour générer des miniatures pour les "
 "AppImages"
 
 #: src/windows/preferences_window.vala:199
@@ -1192,7 +1318,8 @@ msgstr "Créer un jeton sur GitHub"
 
 #: src/windows/preferences_window.vala:285
 msgid "Fine-grained token with read-only public repo access is sufficient"
-msgstr "Un jeton à granularité fine avec un accès en lecture seule aux dépôts "
+msgstr ""
+"Un jeton à granularité fine avec un accès en lecture seule aux dépôts "
 "publics est suffisant."
 
 #: src/windows/preferences_window.vala:342
@@ -1285,7 +1412,8 @@ msgstr "Arnis Kemlers"
 
 #: data/com.github.AppManager.metainfo.xml:9
 msgid "Drag-and-drop AppImage installer and management application"
-msgstr "Installateur d'AppImage par glisser-déposer et gestionnaire d'AppImages"
+msgstr ""
+"Installateur d'AppImage par glisser-déposer et gestionnaire d'AppImages"
 
 #: data/com.github.AppManager.metainfo.xml:35
 msgid ""
@@ -1295,5 +1423,5 @@ msgid ""
 msgstr ""
 "AppManager vous permet d'installer ou de désinstaller des AppImages par "
 "simple glisser-déposer, inspiré de macOS. Il gère l'intégration au bureau, "
-"l'extraction d'icônes, les bits exécutables et la mise-à-jour des applications."
-
+"l'extraction d'icônes, les bits exécutables et la mise-à-jour des "
+"applications."
