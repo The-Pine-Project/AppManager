@@ -38,6 +38,7 @@ namespace AppManager {
         private Gtk.SearchEntry? search_entry;
         private GLib.SimpleActionGroup? window_actions;
         private Gtk.MenuButton? main_menu_button;
+        private GLib.Menu? fullscreen_menu_section;
         private Adw.Banner? fuse_banner;
         private string current_search_query = "";
         private bool has_installations = true;
@@ -872,9 +873,11 @@ namespace AppManager {
         private GLib.MenuModel build_menu_model() {
             var menu = new GLib.Menu();
 
-            var fullscreen_section = new GLib.Menu();
-            fullscreen_section.append(_("Fullscreen"), "win.toggle_fullscreen");
-            menu.append_section(null, fullscreen_section);
+            fullscreen_menu_section = new GLib.Menu();
+            fullscreen_menu_section.append(
+                _fullscreen_active ? _("Leave Fullscreen") : _("Fullscreen"),
+                "win.toggle_fullscreen");
+            menu.append_section(null, fullscreen_menu_section);
 
             var middle_section = new GLib.Menu();
             middle_section.append(_("Preferences"), "app.show_preferences");
@@ -1173,8 +1176,19 @@ namespace AppManager {
             }
         }
 
+        private void update_fullscreen_menu_label() {
+            if (fullscreen_menu_section == null) {
+                return;
+            }
+            fullscreen_menu_section.remove(0);
+            fullscreen_menu_section.append(
+                _fullscreen_active ? _("Leave Fullscreen") : _("Fullscreen"),
+                "win.toggle_fullscreen");
+        }
+
         private void apply_fullscreen_state(bool entering) {
             _fullscreen_active = entering;
+            update_fullscreen_menu_label();
             if (entering) {
                 // Hide bottom sheet bar
                 bottom_sheet.open = false;
