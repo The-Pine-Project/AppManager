@@ -51,6 +51,16 @@
       <summary>Skip drag-and-drop installer window</summary>
       <description>When enabled, opening an AppImage shows a confirmation dialog directly instead of the drag-and-drop installer window.</description>
     </key>
+    <key name="portable-home-default" type="b">
+      <default>false</default>
+      <summary>Create a portable .home folder for new installations</summary>
+      <description>When enabled, AppManager creates a &lt;appname&gt;.home folder next to every newly installed AppImage so the app stores its home data alongside itself.</description>
+    </key>
+    <key name="portable-config-default" type="b">
+      <default>false</default>
+      <summary>Create a portable .config folder for new installations</summary>
+      <description>When enabled, AppManager creates a &lt;appname&gt;.config folder next to every newly installed AppImage so the app stores its config alongside itself.</description>
+    </key>
     <key name="app-list-view-mode" type="s">
       <default>'list'</default>
       <summary>App list view mode</summary>

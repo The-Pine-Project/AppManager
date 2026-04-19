@@ -34,6 +34,120 @@ namespace AppManager.Core {
         }
 
         /**
+         * Returns the path to the AppImage portable-home folder for this record
+         * (<installed_path>.home). Only meaningful for PORTABLE mode.
+         */
+        public static string get_portable_home_path(InstallationRecord record) {
+            return "%s.home".printf(record.installed_path ?? "");
+        }
+
+        /**
+         * Returns the path to the AppImage portable-config folder for this record
+         * (<installed_path>.config). Only meaningful for PORTABLE mode.
+         */
+        public static string get_portable_config_path(InstallationRecord record) {
+            return "%s.config".printf(record.installed_path ?? "");
+        }
+
+        private static bool portable_mode_applicable(InstallationRecord record) {
+            return record.mode == InstallMode.PORTABLE && record.installed_path != null && record.installed_path.strip() != "";
+        }
+
+        /**
+         * True when the .home folder exists next to the AppImage.
+         */
+        public static bool has_portable_home(InstallationRecord record) {
+            if (!portable_mode_applicable(record)) {
+                return false;
+            }
+            return File.new_for_path(get_portable_home_path(record)).query_exists();
+        }
+
+        /**
+         * True when the .config folder exists next to the AppImage.
+         */
+        public static bool has_portable_config(InstallationRecord record) {
+            if (!portable_mode_applicable(record)) {
+                return false;
+            }
+            return File.new_for_path(get_portable_config_path(record)).query_exists();
+        }
+
+        /**
+         * True when either portable folder exists. Convenience for flows that don't
+         * need to distinguish between .home and .config.
+         */
+        public static bool has_portable_folders(InstallationRecord record) {
+            return has_portable_home(record) || has_portable_config(record);
+        }
+
+        /**
+         * Creates the .home folder next to the AppImage. Safe to call if it already exists.
+         */
+        public void create_portable_home(InstallationRecord record) {
+            if (!portable_mode_applicable(record)) {
+                return;
+            }
+            DirUtils.create_with_parents(get_portable_home_path(record), 0755);
+        }
+
+        /**
+         * Creates the .config folder next to the AppImage. Safe to call if it already exists.
+         */
+        public void create_portable_config(InstallationRecord record) {
+            if (!portable_mode_applicable(record)) {
+                return;
+            }
+            DirUtils.create_with_parents(get_portable_config_path(record), 0755);
+        }
+
+        private void remove_portable_folder_at(string path, bool to_trash) {
+            var file = File.new_for_path(path);
+            if (!file.query_exists()) {
+                return;
+            }
+            try {
+                if (to_trash) {
+                    file.trash(null);
+                } else {
+                    Utils.FileUtils.remove_dir_recursive(path);
+                }
+            } catch (Error e) {
+                warning("Failed to remove portable folder %s: %s", path, e.message);
+            }
+        }
+
+        /**
+         * Removes only the .home folder next to the AppImage.
+         * When `to_trash` is true, it is moved to trash; otherwise deleted permanently.
+         */
+        public void remove_portable_home(InstallationRecord record, bool to_trash) {
+            if (record.installed_path == null || record.installed_path.strip() == "") {
+                return;
+            }
+            remove_portable_folder_at(get_portable_home_path(record), to_trash);
+        }
+
+        /**
+         * Removes only the .config folder next to the AppImage.
+         * When `to_trash` is true, it is moved to trash; otherwise deleted permanently.
+         */
+        public void remove_portable_config(InstallationRecord record, bool to_trash) {
+            if (record.installed_path == null || record.installed_path.strip() == "") {
+                return;
+            }
+            remove_portable_folder_at(get_portable_config_path(record), to_trash);
+        }
+
+        /**
+         * Removes both portable folders next to the AppImage.
+         */
+        public void remove_portable_folders(InstallationRecord record, bool to_trash) {
+            remove_portable_home(record, to_trash);
+            remove_portable_config(record, to_trash);
+        }
+
+        /**
          * Full install flow: checks architecture, detects existing installation,
          * and either upgrades or installs. Sets is_upgrade to true if an existing
          * installation was replaced.
@@ -91,13 +205,17 @@ namespace AppManager.Core {
             // the currently installed version stays untouched.
             validate_appimage(file_path);
 
+            // Preserve portable folders only when staying in PORTABLE mode (user data survives upgrades).
+            // When switching to EXTRACTED the folders serve no purpose and go along with the uninstall.
+            bool preserve_portable = (old_record.mode == InstallMode.PORTABLE && mode == InstallMode.PORTABLE);
+
             try {
-                uninstall(old_record);
+                uninstall(old_record, false, preserve_portable);
             } catch (Error e) {
                 // Trash may not be supported on some mounts (e.g. /opt).
                 // Fall back to permanent delete so the update can proceed.
                 if (e.message.has_prefix("TRASH_FAILED:")) {
-                    uninstall(old_record, true);
+                    uninstall(old_record, true, preserve_portable);
                 } else {
                     throw e;
                 }
@@ -177,6 +295,16 @@ namespace AppManager.Core {
             try {
                 if (mode == InstallMode.PORTABLE) {
                     install_portable(metadata, record, is_upgrade);
+                    // For fresh installs, apply the global portable-mode defaults (home/config independently).
+                    // Upgrades inherit existing portable folders (they stayed in place during reinstall).
+                    if (old_record == null) {
+                        if (settings.get_boolean("portable-home-default")) {
+                            create_portable_home(record);
+                        }
+                        if (settings.get_boolean("portable-config-default")) {
+                            create_portable_config(record);
+                        }
+                    }
                 } else {
                     install_extracted(metadata, record, is_upgrade);
                 }
@@ -553,11 +681,11 @@ namespace AppManager.Core {
                 Utils.FileUtils.remove_dir_recursive(temp_dir);
             }
         }
-        public void uninstall(InstallationRecord record, bool permanently = false) throws Error {
-            uninstall_sync(record, permanently);
+        public void uninstall(InstallationRecord record, bool permanently = false, bool preserve_portable = false) throws Error {
+            uninstall_sync(record, permanently, preserve_portable);
         }
 
-        private void uninstall_sync(InstallationRecord record, bool permanently) throws Error {
+        private void uninstall_sync(InstallationRecord record, bool permanently, bool preserve_portable = false) throws Error {
             try {
                 // Mark as in-flight and unregister FIRST to prevent reconcile race conditions
                 // This ensures the record is removed from registry before the file is deleted,
@@ -591,7 +719,13 @@ namespace AppManager.Core {
                 if (record.bin_symlink != null && File.new_for_path(record.bin_symlink).query_exists()) {
                     File.new_for_path(record.bin_symlink).delete(null);
                 }
-                
+
+                // Remove AppImage portable folders (.home/.config) unless the caller is
+                // upgrading a portable install and wants to keep the user data.
+                if (!preserve_portable) {
+                    remove_portable_folders(record, !permanently);
+                }
+
                 // Remove symbolic icon when uninstalling AppManager itself
                 if (record.original_startup_wm_class == Core.APPLICATION_ID) {
                     uninstall_symbolic_icon();

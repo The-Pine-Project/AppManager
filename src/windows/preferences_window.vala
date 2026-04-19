@@ -108,8 +108,20 @@ namespace AppManager {
             skip_drop_row.subtitle = _("Show install dialog directly when opening AppImages");
             settings.bind("skip-drop-window", skip_drop_row, "active", GLib.SettingsBindFlags.DEFAULT);
 
+            var portable_home_row = new Adw.SwitchRow();
+            portable_home_row.title = _("Portable .home by default");
+            portable_home_row.subtitle = _("Create a .home folder next to every newly installed AppImage");
+            settings.bind("portable-home-default", portable_home_row, "active", GLib.SettingsBindFlags.DEFAULT);
+
+            var portable_config_row = new Adw.SwitchRow();
+            portable_config_row.title = _("Portable .config by default");
+            portable_config_row.subtitle = _("Create a .config folder next to every newly installed AppImage");
+            settings.bind("portable-config-default", portable_config_row, "active", GLib.SettingsBindFlags.DEFAULT);
+
             install_group.add(install_dir_row);
             install_group.add(skip_drop_row);
+            install_group.add(portable_home_row);
+            install_group.add(portable_config_row);
             page.add(install_group);
 
             // Automatic updates group

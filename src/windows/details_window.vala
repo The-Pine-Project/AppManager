@@ -93,6 +93,11 @@ namespace AppManager {
             var update_group = build_update_info_group();
             var advanced_group = build_advanced_group();
             var env_vars_group = build_env_vars_group();
+            // Portable .home/.config toggles only apply to portable (non-extracted) AppImages.
+            if (record.mode == InstallMode.PORTABLE) {
+                props_group.add(build_portable_home_row());
+                props_group.add(build_portable_config_row());
+            }
             props_group.add(advanced_group);
             props_group.add(env_vars_group);
             
@@ -514,8 +519,82 @@ namespace AppManager {
             
             // Add to PATH toggle
             advanced_group.add_row(build_path_row());
-            
+
             return advanced_group;
+        }
+
+        private Adw.SwitchRow build_portable_home_row() {
+            return build_portable_folder_row(
+                _("Portable .home"),
+                _("Store the app's home directory in a .home folder next to the AppImage"),
+                _(".home"),
+                () => Installer.has_portable_home(record),
+                () => installer.create_portable_home(record),
+                () => installer.remove_portable_home(record, false)
+            );
+        }
+
+        private Adw.SwitchRow build_portable_config_row() {
+            return build_portable_folder_row(
+                _("Portable .config"),
+                _("Store the app's config in a .config folder next to the AppImage"),
+                _(".config"),
+                () => Installer.has_portable_config(record),
+                () => installer.create_portable_config(record),
+                () => installer.remove_portable_config(record, false)
+            );
+        }
+
+        private delegate bool PortableHasFunc();
+        private delegate void PortableCreateFunc();
+        private delegate void PortableRemoveFunc();
+
+        private Adw.SwitchRow build_portable_folder_row(
+            string title,
+            string subtitle,
+            string folder_label,
+            PortableHasFunc has_folder,
+            PortableCreateFunc create_folder,
+            PortableRemoveFunc remove_folder
+        ) {
+            var row = new Adw.SwitchRow();
+            row.title = title;
+            row.subtitle = subtitle;
+            row.active = has_folder();
+
+            row.notify["active"].connect(() => {
+                if (row.active) {
+                    if (!has_folder()) {
+                        create_folder();
+                    }
+                } else {
+                    if (has_folder()) {
+                        present_portable_folder_disable_confirm(row, folder_label, has_folder, remove_folder);
+                    }
+                }
+            });
+
+            return row;
+        }
+
+        private void present_portable_folder_disable_confirm(Adw.SwitchRow row, string folder_label, PortableHasFunc has_folder, PortableRemoveFunc remove_folder) {
+            var dialog = new Adw.AlertDialog(
+                _("Remove portable %s folder?").printf(folder_label),
+                _("The %s folder next to this AppImage will be permanently removed, including any data it contains.").printf(folder_label)
+            );
+            dialog.add_response("cancel", _("Cancel"));
+            dialog.add_response("remove", _("Remove Data"));
+            dialog.set_response_appearance("remove", Adw.ResponseAppearance.DESTRUCTIVE);
+            dialog.set_close_response("cancel");
+            dialog.set_default_response("cancel");
+            dialog.response.connect((response) => {
+                if (response == "remove") {
+                    remove_folder();
+                } else {
+                    row.active = has_folder();
+                }
+            });
+            dialog.present(this);
         }
 
         private const int MAX_ENV_VARS = 5;
@@ -1105,6 +1184,9 @@ namespace AppManager {
         private void present_permanent_delete_warning() {
             var app_name = record.name ?? Path.get_basename(record.installed_path);
             var body = _("<b>%s</b> will be permanently deleted. This action cannot be undone.").printf(GLib.Markup.escape_text(app_name));
+            if (Installer.has_portable_folders(record)) {
+                body += "\n\n" + _("Portable data in .home and .config will also be removed.");
+            }
             var dialog = new Adw.AlertDialog(_("Delete permanently?"), null);
             dialog.set_body_use_markup(true);
             dialog.set_body(body);
