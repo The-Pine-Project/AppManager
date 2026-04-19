@@ -605,14 +605,16 @@ namespace AppManager.Core {
 
                 var latest = release.version;
                 var current = record.version;
+                // Sanitize current version — treat unparseable values (e.g. "UNKNOWN") as null
+                var current_sanitized = VersionUtils.sanitize(current);
                 
-                // Version comparison: if both have versions, compare them
-                if (latest != null && current != null && compare_versions(latest, current) <= 0) {
+                // Version comparison: if both have valid versions, compare them
+                if (latest != null && current_sanitized != null && compare_versions(latest, current) <= 0) {
                     return new UpdateProbeResult(record, false, latest, UpdateSkipReason.ALREADY_CURRENT, _("Already up to date"));
                 }
                 
-                // Fallback: if version is missing, compare release tags
-                if ((latest == null || current == null) && release.tag_name != null) {
+                // Fallback: if either version is missing/unparseable, compare release tags
+                if ((latest == null || current_sanitized == null) && release.tag_name != null) {
                     if (record.last_release_tag == release.tag_name) {
                         return new UpdateProbeResult(record, false, release.tag_name, UpdateSkipReason.ALREADY_CURRENT, _("Already up to date"));
                     }
@@ -671,16 +673,18 @@ namespace AppManager.Core {
 
                 var latest = release.version;
                 var current = record.version;
+                // Sanitize current version — treat unparseable values (e.g. "UNKNOWN") as null
+                var current_sanitized = VersionUtils.sanitize(current);
                 
-                // Version comparison: if both have versions, compare them
-                if (latest != null && current != null && compare_versions(latest, current) <= 0) {
+                // Version comparison: if both have valid versions, compare them
+                if (latest != null && current_sanitized != null && compare_versions(latest, current) <= 0) {
                     record_skipped(record, UpdateSkipReason.ALREADY_CURRENT);
                     log_update_event(record, "SKIP", "already current");
                     return new UpdateResult(record, UpdateStatus.SKIPPED, _("Already up to date"), latest, UpdateSkipReason.ALREADY_CURRENT);
                 }
                 
-                // Fallback: if version is missing, compare release tags
-                if ((latest == null || current == null) && release.tag_name != null) {
+                // Fallback: if either version is missing/unparseable, compare release tags
+                if ((latest == null || current_sanitized == null) && release.tag_name != null) {
                     if (record.last_release_tag == release.tag_name) {
                         record_skipped(record, UpdateSkipReason.ALREADY_CURRENT);
                         log_update_event(record, "SKIP", "release tag unchanged");
@@ -726,8 +730,8 @@ namespace AppManager.Core {
                             if (release.tag_name != null) {
                                 new_record.last_release_tag = release.tag_name;
                             }
-                            // Store version from release API if installer didn't detect one
-                            if ((new_record.version == null || new_record.version.strip() == "") &&
+                            // Store version from release API if installer didn't detect a meaningful one
+                            if ((new_record.version == null || new_record.version.strip() == "" || VersionUtils.sanitize(new_record.version) == null) &&
                                 release.version != null && release.version.strip() != "") {
                                 new_record.version = release.version;
                             }
@@ -1692,7 +1696,19 @@ namespace AppManager.Core {
                 var zsync_info = fetch_zsync_file_info(zsync_url, cancellable);
                 if (zsync_info != null) {
                     if (zsync_info.url != null && zsync_info.url.strip() != "") {
-                        download_url = zsync_info.url;
+                        var header_url = zsync_info.url.strip();
+                        if (header_url.has_prefix("http://") || header_url.has_prefix("https://")) {
+                            download_url = header_url;
+                        } else {
+                            // Relative URL — resolve against the zsync URL
+                            var clean_zsync = zsync_url;
+                            var q = clean_zsync.index_of_char('?');
+                            if (q >= 0) clean_zsync = clean_zsync.substring(0, q);
+                            var last_slash = clean_zsync.last_index_of("/");
+                            if (last_slash >= 0) {
+                                download_url = clean_zsync.substring(0, last_slash + 1) + header_url;
+                            }
+                        }
                     }
                     // Get SHA-1 for storage after update
                     if (zsync_info.sha1 != null && zsync_info.sha1.strip() != "") {
