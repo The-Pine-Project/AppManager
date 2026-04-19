@@ -1342,7 +1342,6 @@ namespace AppManager.Core {
             public string? url { get; set; }
             public string? version { get; set; }
             public string? sha1 { get; set; }
-            public string? resolved_url { get; set; }
 
             public ZsyncFileInfo() {
                 Object();
@@ -1383,11 +1382,6 @@ namespace AppManager.Core {
 
                 var info = new ZsyncFileInfo();
 
-                var final_uri = message.get_uri();
-                if (final_uri != null) {
-                    info.resolved_url = final_uri.to_string();
-                }
-                
                 // Parse line by line until we hit a blank line or binary data
                 var lines = content.split("\n");
                 foreach (var line in lines) {
@@ -1619,22 +1613,28 @@ namespace AppManager.Core {
                 // Create temp directory for zsync output
                 var temp_dir = AppManager.Utils.FileUtils.create_temp_dir("appmgr-zsync-");
                 
+                string output_path;
                 try {
-                    // zsync2 does not follow HTTP redirects; if the .zsync URL
-                    // redirects (e.g. Inkscape's GitLab CI artifact link),
-                    // pass the resolved URL captured by libsoup during
-                    // fetch_zsync_file_info().
-                    string zsync_url_for_zsync = zsync_url;
-                    if (zsync_info != null && zsync_info.resolved_url != null &&
-                        zsync_info.resolved_url != zsync_url) {
-                        debug("update_zsync[%s]: following .zsync redirect %s -> %s",
-                              record.name ?? record.id, zsync_url, zsync_info.resolved_url);
-                        zsync_url_for_zsync = zsync_info.resolved_url;
+                    // Hand zsync2 the original .zsync URL and let it (libcurl) handle
+                    // any HTTP redirects. We previously substituted in a libsoup-
+                    // resolved URL, but that broke signed-URL hosts (GitHub's
+                    // release-assets endpoint, Azure Blob SAS) by stripping the SAS
+                    // query string during zsync2's relative-URL resolution.
+                    //
+                    // The original zsync_url and parsed zsync_info are passed so the
+                    // output filename is derived from a clean source (not from the
+                    // URL passed to zsync2, which can be a long signed string).
+                    try {
+                        output_path = run_zsync(zsync_bin, zsync_url, zsync_url, zsync_info, record, record.installed_path, temp_dir, cancellable);
+                    } catch (Error zerr) {
+                        // Delta update failed (network, redirect, signed URL, etc.).
+                        // Fall back to a full HTTP download so the user still gets
+                        // the update, just without the bandwidth savings.
+                        warning("zsync2 delta failed for %s (%s); falling back to full download", record.name, zerr.message);
+                        log_update_event(record, "FALLBACK", "zsync2 failed: %s".printf(zerr.message));
+                        return update_zsync_fallback(record, zsync_url, new_version, cancellable);
                     }
 
-                    // Run zsync2 with the existing AppImage as seed
-                    var output_path = run_zsync(zsync_bin, zsync_url_for_zsync, record.installed_path, temp_dir, cancellable);
-                    
                     // Upgrade using the downloaded file
                     var new_record = installer.upgrade(output_path, record);
                     
@@ -1768,30 +1768,56 @@ namespace AppManager.Core {
         /**
          * Execute zsync2 to perform delta download.
          * @param zsync_path Path to zsync2 binary
-         * @param zsync_url URL to the .zsync file
+         * @param zsync_arg URL or local-file path passed to zsync2 as the .zsync source
+         * @param original_zsync_url Original (pre-redirect) .zsync URL — used only to derive a clean output filename
+         * @param zsync_info Parsed zsync header (for canonical Filename)
+         * @param record Installation record (for fallback filename)
          * @param seed_path Path to existing AppImage to use as seed
          * @param output_dir Directory to write the output file
          * @param cancellable Optional cancellable
          * @return Path to the downloaded AppImage
          */
-        private string run_zsync(string zsync_path, string zsync_url, string seed_path, string output_dir, GLib.Cancellable? cancellable) throws Error {
-            // Determine output filename from zsync URL
-            var zsync_basename = Path.get_basename(zsync_url);
-            string output_name;
-            if (zsync_basename.has_suffix(".zsync")) {
-                output_name = zsync_basename.substring(0, zsync_basename.length - 6);
-            } else {
-                output_name = zsync_basename + ".AppImage";
+        private string run_zsync(string zsync_path, string zsync_arg, string original_zsync_url, ZsyncFileInfo? zsync_info, InstallationRecord record, string seed_path, string output_dir, GLib.Cancellable? cancellable) throws Error {
+            // Determine output filename. Prefer (in order):
+            //   1. Filename: field from the zsync header — canonical, redirect-proof
+            //   2. Basename of the original zsync URL (pre-redirect), with any query
+            //      string stripped
+            //   3. Synthetic fallback based on the record id
+            // Never derive from a redirect-resolved URL: signed endpoints (GitHub
+            // release assets, Azure blob SAS, etc.) embed multi-kilobyte query
+            // strings that exceed the filesystem's filename length limit.
+            string? output_name = null;
+            if (zsync_info != null && zsync_info.filename != null &&
+                zsync_info.filename.strip() != "") {
+                output_name = Path.get_basename(zsync_info.filename.strip());
+            }
+            if (output_name == null || output_name == "") {
+                var clean_url = original_zsync_url;
+                var q = clean_url.index_of_char('?');
+                if (q >= 0) {
+                    clean_url = clean_url.substring(0, q);
+                }
+                var basename = Path.get_basename(clean_url);
+                if (basename.has_suffix(".zsync")) {
+                    output_name = basename.substring(0, basename.length - 6);
+                } else {
+                    output_name = basename + ".AppImage";
+                }
+            }
+            // Defensive cap: if still too long for the filesystem, fall back to
+            // a safe synthetic name.
+            if (output_name.length > 200) {
+                output_name = "%s.AppImage".printf(record.id);
             }
             var output_path = Path.build_filename(output_dir, output_name);
 
             // Build zsync2 command
-            // zsync2 -i <seed> -o <output> <zsync_url>
+            // zsync2 -i <seed> -o <output> <zsync_arg>   (zsync_arg may be a URL or a local file path)
             string[] argv = {
                 zsync_path,
                 "-i", seed_path,
                 "-o", output_path,
-                zsync_url
+                zsync_arg
             };
 
             debug("Running zsync2: %s", string.joinv(" ", argv));
