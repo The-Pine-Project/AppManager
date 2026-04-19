@@ -1,19 +1,25 @@
-appimage-thumbnailer
-*.AppImage
-*.appimage
-*.AppImage.zsync
-*.appimage.zsync
-appimagetool
-squashfs-root/
-squashfs-*.img
+# Build output
+AppDir/
 build*/
 dist/
-AppDir/
+squashfs-root/
+squashfs-*.img
+
+# AppImage artifacts
+*.[Aa]pp[Ii]mage
+*.[Aa]pp[Ii]mage.zsync
+appimagetool
+
+# Editor and local caches
+.vscode/
 .directory
-.claude/
+.c[a-z]*/
+
+# Local notes and logs
 *ns.md
 *RE.md
 *DE.md
 *.log
-.vscode/
-samples
+
+# Scratch
+samples/
