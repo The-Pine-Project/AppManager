@@ -1,0 +1,35 @@
+pkgname=pineos-appmanager
+pkgver=0.2.3
+pkgrel=1
+pkgdesc="MacOS style AppImage installer (PineOS Edition, originally by kem-a)"
+arch=('x86_64')
+url="https://github.com/The-Pine-Project/AppManager"
+license=('GPL3')
+# These packages already provide the binaries causing the conflict
+depends=('gtk4' 'libadwaita' 'glib2' 'json-glib' 'libgee' 'libsoup3' 'squashfs-tools' 'zsync2' 'fuse2')
+makedepends=('git' 'meson' 'ninja' 'vala' 'cmake')
+source=("git+https://github.com/The-Pine-Project/AppManager.git")
+sha256sums=('SKIP')
+
+build() {
+    cd AppManager
+    arch-meson build
+    meson compile -C build
+}
+
+package() {
+    cd AppManager
+    meson install -C build --destdir "$pkgdir"
+
+    # --- FIX CONFLICTS ---
+    
+    # 1. Remove binaries owned by squashfs-tools and zsync2
+    # The build system likely copied these into the output folder.
+    rm -f "$pkgdir/usr/bin/unsquashfs"
+    rm -f "$pkgdir/usr/bin/zsync2"
+
+    # 2. Remove the compiled glib schema
+    # Arch Linux uses a "hook" to generate this file on the user's system.
+    # Packages must only provide the .xml files, never the .compiled file.
+    rm -f "$pkgdir/usr/share/glib-2.0/schemas/gschemas.compiled"
+}
