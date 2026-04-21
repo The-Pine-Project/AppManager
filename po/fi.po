@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-18 00:23+0300\n"
+"POT-Creation-Date: 2026-04-21 23:29+0300\n"
 "PO-Revision-Date: 2026-01-27 12:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
@@ -29,8 +29,8 @@ msgstr ""
 "puuttuvat (AppRun, .desktop tai kuvake)."
 
 #. Architecture mismatch banner
-#: src/application.vala:262 src/application.vala:274 src/application.vala:843
-#: src/application.vala:937 src/application.vala:949
+#: src/application.vala:262 src/application.vala:274 src/application.vala:836
+#: src/application.vala:930 src/application.vala:942
 #: src/windows/dialog_window.vala:95 src/windows/drop_window.vala:99
 #: src/windows/drop_window.vala:109
 msgid "Close"
@@ -73,12 +73,13 @@ msgstr "Asenna AppImage lisätäksesi sen sovelluksiisi."
 msgid "Install"
 msgstr "Asenna"
 
-#: src/application.vala:380 src/application.vala:411 src/application.vala:827
-#: src/windows/details_window.vala:1111 src/windows/details_window.vala:1127
-#: src/windows/drop_window.vala:248 src/windows/drop_window.vala:422
-#: src/windows/drop_window.vala:1001 src/windows/main_window.vala:1927
-#: src/windows/main_window.vala:1976 src/windows/preferences_window.vala:432
-#: src/windows/preferences_window.vala:466
+#: src/application.vala:380 src/application.vala:411 src/application.vala:820
+#: src/windows/details_window.vala:585 src/windows/details_window.vala:1193
+#: src/windows/details_window.vala:1209 src/windows/drop_window.vala:248
+#: src/windows/drop_window.vala:422 src/windows/drop_window.vala:1001
+#: src/windows/main_window.vala:1931 src/windows/main_window.vala:1980
+#: src/windows/preferences_window.vala:450
+#: src/windows/preferences_window.vala:484
 msgid "Cancel"
 msgstr "Peruuta"
 
@@ -102,7 +103,7 @@ msgstr "Tuntematon versio"
 msgid "Will update to version %s"
 msgstr "Päivitetään versioon %s"
 
-#: src/application.vala:410 src/windows/details_window.vala:956
+#: src/application.vala:410 src/windows/details_window.vala:1035
 #: src/windows/drop_window.vala:421
 msgid "Update"
 msgstr "Päivitä"
@@ -156,7 +157,7 @@ msgstr "Asennettu onnistuneesti"
 msgid "Version %s"
 msgstr "Versio %s"
 
-#: src/application.vala:555 src/windows/details_window.vala:179
+#: src/application.vala:555 src/windows/details_window.vala:184
 #: src/windows/drop_window.vala:563
 msgid "Open"
 msgstr "Avaa"
@@ -174,11 +175,11 @@ msgid "Dismiss"
 msgstr "Hylkää"
 
 #. Offer to delete permanently as fallback
-#: src/application.vala:824
+#: src/application.vala:817
 msgid "Cannot move to trash"
 msgstr "Siirrä roskakoriin"
 
-#: src/application.vala:825
+#: src/application.vala:818
 #, c-format
 msgid ""
 "%s could not be moved to the trash. Do you want to delete it permanently "
@@ -187,64 +188,64 @@ msgid ""
 "This action cannot be undone."
 msgstr ""
 
-#: src/application.vala:828 src/core/installer.vala:675
+#: src/application.vala:821 src/core/installer.vala:869
 #: src/core/path_migration_service.vala:350
-#: src/windows/details_window.vala:1095 src/windows/details_window.vala:1112
+#: src/windows/details_window.vala:1174 src/windows/details_window.vala:1194
 msgid "Delete Permanently"
 msgstr "Poista pysyvästi"
 
-#: src/application.vala:840
+#: src/application.vala:833
 msgid "Uninstall failed"
 msgstr "Poisto epäonnistui"
 
-#: src/application.vala:841
+#: src/application.vala:834
 #, c-format
 msgid "%s could not be removed: %s"
 msgstr "%s ei voitu poistaa: %s"
 
-#: src/application.vala:849
+#: src/application.vala:842
 msgid "Deleted permanently"
 msgstr "Poistettu pysyvästi"
 
-#: src/application.vala:851 src/application.vala:857
+#: src/application.vala:844 src/application.vala:850
 #, c-format
 msgid "%s moved to Trash"
 msgstr "Siirretty roskakoriin"
 
-#: src/application.vala:852
+#: src/application.vala:845
 msgid "Undo"
 msgstr "Kumoa"
 
-#: src/application.vala:884
+#: src/application.vala:877
 msgid "Undo failed"
 msgstr "Poisto epäonnistui"
 
-#: src/application.vala:887
+#: src/application.vala:880
 msgid "Restored"
 msgstr "Palauta oletus"
 
-#: src/application.vala:895
+#: src/application.vala:888
 msgid "Extraction is only available for portable installations."
 msgstr "Purkaminen on käytettävissä vain siirrettäville asennuksille."
 
-#: src/application.vala:931
+#: src/application.vala:924
 msgid "Extracted for faster launch"
 msgstr "Purettu nopeampaa käynnistystä varten"
 
-#: src/application.vala:934
+#: src/application.vala:927
 msgid "Extraction complete"
 msgstr "Purkaminen valmis"
 
-#: src/application.vala:935
+#: src/application.vala:928
 #, c-format
 msgid "%s was extracted and will open faster."
 msgstr "%s purettiin ja avautuu nyt nopeammin."
 
-#: src/application.vala:946
+#: src/application.vala:939
 msgid "Extraction failed"
 msgstr "Purkaminen epäonnistui"
 
-#: src/application.vala:947
+#: src/application.vala:940
 #, c-format
 msgid "%s could not be extracted: %s"
 msgstr "%s ei voitu purkaa: %s"
@@ -277,8 +278,8 @@ msgstr "Avaa AppManager"
 
 #. Update the localized uninstall label using KeyFile for safety
 #. (avoids clobbering Name[xx]= in other groups via raw string replace)
-#: src/core/installer.vala:675 src/core/path_migration_service.vala:350
-#: src/windows/details_window.vala:1099
+#: src/core/installer.vala:869 src/core/path_migration_service.vala:350
+#: src/windows/details_window.vala:1178
 msgid "Move to Trash"
 msgstr "Siirrä roskakoriin"
 
@@ -350,80 +351,81 @@ msgstr ""
 "Joidenkin sovellusten siirto epäonnistui:\n"
 "%s"
 
-#: src/core/updater.vala:577 src/core/updater.vala:642
+#: src/core/updater.vala:577 src/core/updater.vala:644
 msgid "No update address configured"
 msgstr "Päivitysosoitetta ei ole määritetty"
 
-#: src/core/updater.vala:582 src/core/updater.vala:651
+#: src/core/updater.vala:582 src/core/updater.vala:653
 msgid "Update source not supported"
 msgstr "Päivityslähde ei ole tuettu"
 
-#: src/core/updater.vala:598 src/core/updater.vala:669
+#: src/core/updater.vala:598 src/core/updater.vala:671
 msgid "Unable to read releases"
 msgstr "Julkaisuja ei voitu lukea"
 
-#: src/core/updater.vala:603 src/core/updater.vala:695
+#: src/core/updater.vala:603 src/core/updater.vala:699
 #, c-format
 msgid "No matching AppImage found for %s"
 msgstr "Vastaavaa AppImagea ei löytynyt kohteelle %s"
 
-#. Version comparison: if both have versions, compare them
-#: src/core/updater.vala:611 src/core/updater.vala:617
-#: src/core/updater.vala:679 src/core/updater.vala:687
-#: src/core/updater.vala:837 src/core/updater.vala:862
-#: src/core/updater.vala:1493 src/core/updater.vala:1509
-#: src/core/updater.vala:1594 src/core/updater.vala:1605
+#. Sanitize current version — treat unparseable values (e.g. "UNKNOWN") as null
+#. Version comparison: if both have valid versions, compare them
+#: src/core/updater.vala:613 src/core/updater.vala:619
+#: src/core/updater.vala:683 src/core/updater.vala:691
+#: src/core/updater.vala:841 src/core/updater.vala:866
+#: src/core/updater.vala:1491 src/core/updater.vala:1507
+#: src/core/updater.vala:1592 src/core/updater.vala:1603
 msgid "Already up to date"
 msgstr "Jo ajan tasalla"
 
-#: src/core/updater.vala:742 src/core/updater.vala:1668
-#: src/core/updater.vala:1755
+#: src/core/updater.vala:746 src/core/updater.vala:1672
+#: src/core/updater.vala:1771
 #, c-format
 msgid "Updated to %s"
 msgstr "Päivitetty %s"
 
 #. All candidates failed identity verification
-#: src/core/updater.vala:752 src/core/updater.vala:754
+#: src/core/updater.vala:756 src/core/updater.vala:758
 msgid "App identity mismatch"
 msgstr "Arkkitehtuuri ei täsmää"
 
-#: src/core/updater.vala:825 src/core/updater.vala:855
+#: src/core/updater.vala:829 src/core/updater.vala:859
 msgid "Server does not provide change tracking headers"
 msgstr "Palvelin ei tarjoa muutosten seurantaotsikoita"
 
-#: src/core/updater.vala:833
+#: src/core/updater.vala:837
 msgid "Baseline recorded"
 msgstr "Perustaso tallennettu"
 
-#: src/core/updater.vala:895 src/core/updater.vala:1669
-#: src/core/updater.vala:1756
+#: src/core/updater.vala:899 src/core/updater.vala:1673
+#: src/core/updater.vala:1772
 msgid "Updated"
 msgstr "Päivitetty"
 
-#: src/core/updater.vala:1010 src/core/updater.vala:1018
+#: src/core/updater.vala:1014 src/core/updater.vala:1022
 msgid "Downloaded file is not a valid AppImage"
 msgstr "Ladattu tiedosto ei ole kelvollinen AppImage"
 
-#: src/core/updater.vala:1021
+#: src/core/updater.vala:1025
 #, c-format
 msgid "AppImage architecture '%s' is incompatible with this system"
 msgstr ""
 "AppImage-arkkitehtuuri '%s' ei ole yhteensopiva tämän järjestelmän kanssa"
 
 #. Match — verification passed
-#: src/core/updater.vala:1062
+#: src/core/updater.vala:1066
 #, c-format
 msgid "App identity mismatch: expected '%s' but got '%s'"
 msgstr "Sovellustunniste ei täsmää: odotettiin '%s', saatiin '%s'"
 
-#: src/core/updater.vala:1104
+#: src/core/updater.vala:1108
 msgid ""
 "GitHub authentication failed (401). Check your token in Preferences → GitHub."
 msgstr ""
 "GitHub-todennus epäonnistui (401). Tarkista tunnuksesi kohdassa Asetukset → "
 "GitHub."
 
-#: src/core/updater.vala:1109
+#: src/core/updater.vala:1113
 msgid ""
 "GitHub API rate limit exceeded. Add a token in Preferences → GitHub to "
 "increase your limit."
@@ -431,195 +433,238 @@ msgstr ""
 "GitHub API:n nopeusraja ylitetty. Lisää token kohdassa Asetukset → GitHub "
 "lisätäksesi rajaasi."
 
-#: src/core/updater.vala:1111
+#: src/core/updater.vala:1115
 msgid ""
 "GitHub access forbidden (403). Your token may lack the required permissions."
 msgstr ""
 "GitHub-käyttö kielletty (403). Tunnukseltasi ei ehkä ole vaadittuja "
 "käyttöoikeuksia."
 
-#: src/core/updater.vala:1449
+#: src/core/updater.vala:1447
 msgid "Unknown zsync source type"
 msgstr "Tuntematon zsync-lähdetyyppi"
 
-#: src/core/updater.vala:1474 src/core/updater.vala:1582
+#: src/core/updater.vala:1472 src/core/updater.vala:1580
 msgid "Malformed zsync file (no checksum)"
 msgstr "Virheellinen zsync-tiedosto (ei tarkistussummaa)"
 
-#: src/core/updater.vala:1489
+#: src/core/updater.vala:1487
 msgid "Failed to compute local checksum"
 msgstr "Paikallisen tarkistussumman laskenta epäonnistui"
 
-#: src/core/updater.vala:1559
+#: src/core/updater.vala:1557
 msgid "Unknown zsync source"
 msgstr "Tuntematon zsync-lähde"
 
-#: src/core/updater.vala:1709
+#: src/core/updater.vala:1725
 msgid "Cannot determine download URL from zsync URL"
 msgstr "Lataus-URL-osoitetta ei voi määrittää zsync-URL-osoitteesta"
 
-#: src/windows/details_window.vala:110
+#: src/windows/details_window.vala:115
 #, c-format
 msgid "⚠️ '%s' is not in $PATH. App will not launch from the terminal"
 msgstr "⚠️ '%s' ei ole $PATH-muuttujassa. Sovellus ei käynnisty päätteestä"
 
-#: src/windows/details_window.vala:236
+#: src/windows/details_window.vala:241
 msgid "Show in Files"
 msgstr "Näytä tiedostoissa"
 
-#: src/windows/details_window.vala:238
+#: src/windows/details_window.vala:243
 msgid "Portable"
 msgstr "Siirrettävä"
 
-#: src/windows/details_window.vala:238
+#: src/windows/details_window.vala:243
 msgid "Extracted"
 msgstr "Purettu"
 
-#: src/windows/details_window.vala:257
+#: src/windows/details_window.vala:262
 msgid "App version"
 msgstr "Versio"
 
 #. Terminal app card (only show if is_terminal)
-#: src/windows/details_window.vala:268
+#: src/windows/details_window.vala:273
 msgid "Terminal"
 msgstr "Pääte"
 
-#: src/windows/details_window.vala:276
+#: src/windows/details_window.vala:281
 msgid "This app supports efficient delta updates"
 msgstr "Tämä sovellus tukee tehokkaita delta-päivityksiä"
 
-#: src/windows/details_window.vala:283
+#: src/windows/details_window.vala:288
 msgid "Hidden"
 msgstr "Piilotettu"
 
-#: src/windows/details_window.vala:293
+#: src/windows/details_window.vala:298
 msgid "Properties"
 msgstr "Ominaisuudet"
 
-#: src/windows/details_window.vala:298
+#: src/windows/details_window.vala:303
 msgid "Command line arguments"
 msgstr "Komentoriviargumentit"
 
-#: src/windows/details_window.vala:330
+#: src/windows/details_window.vala:335
 msgid "Update info"
 msgstr "Päivitystiedot"
 
-#: src/windows/details_window.vala:336
+#: src/windows/details_window.vala:341
 msgid "How update links work"
 msgstr "Miten päivityslinkit toimivat"
 
-#: src/windows/details_window.vala:348
+#: src/windows/details_window.vala:353
 msgid "Pre-release Updates"
 msgstr "Esijulkaisuversiot"
 
-#: src/windows/details_window.vala:349
+#: src/windows/details_window.vala:354
 msgid "Include pre-release versions when checking for updates"
 msgstr "Sisällytä esijulkaisuversiot päivityksiä tarkistettaessa"
 
-#: src/windows/details_window.vala:364
+#: src/windows/details_window.vala:369
 msgid "Update link is managed by the embedded zsync update mechanism"
 msgstr "Päivityslinkkiä hallinnoi upotettu zsync-päivitysmekanismi"
 
-#: src/windows/details_window.vala:400
+#: src/windows/details_window.vala:405
 msgid "Update Link"
 msgstr "Päivityslinkki"
 
-#: src/windows/details_window.vala:455
+#: src/windows/details_window.vala:460
 msgid "Web Page"
 msgstr "Verkkosivu"
 
-#: src/windows/details_window.vala:484
+#: src/windows/details_window.vala:489
 msgid "Open web page"
 msgstr "Avaa verkkosivu"
 
-#: src/windows/details_window.vala:498
+#: src/windows/details_window.vala:503
 msgid "Advanced"
 msgstr "Lisäasetukset"
 
-#: src/windows/details_window.vala:525
+#: src/windows/details_window.vala:528
+#, fuzzy
+msgid "Portable .home folder"
+msgstr "Siirrettävä"
+
+#: src/windows/details_window.vala:529
+msgid "Store the app's home directory in a .home folder next to the AppImage"
+msgstr ""
+
+#: src/windows/details_window.vala:530
+msgid ".home"
+msgstr ""
+
+#: src/windows/details_window.vala:539
+#, fuzzy
+msgid "Portable .config folder"
+msgstr "Siirrettävä"
+
+#: src/windows/details_window.vala:540
+msgid "Store the app's config in a .config folder next to the AppImage"
+msgstr ""
+
+#: src/windows/details_window.vala:541
+msgid ".config"
+msgstr ""
+
+#: src/windows/details_window.vala:582
+#, c-format
+msgid "Remove portable %s folder?"
+msgstr ""
+
+#: src/windows/details_window.vala:583
+#, c-format
+msgid ""
+"The %s folder next to this AppImage will be permanently removed, including "
+"any data it contains."
+msgstr ""
+
+#: src/windows/details_window.vala:586
+#, fuzzy
+msgid "Remove Data"
+msgstr "Poista muuttuja"
+
+#: src/windows/details_window.vala:604
 msgid "Environment Variables"
 msgstr "Ympäristömuuttujat"
 
-#: src/windows/details_window.vala:526
+#: src/windows/details_window.vala:605
 msgid "Set custom environment variables for this app"
 msgstr "Aseta mukautetut ympäristömuuttujat tälle sovellukselle"
 
-#: src/windows/details_window.vala:579
+#: src/windows/details_window.vala:658
 msgid "NAME"
 msgstr "NIMI"
 
-#: src/windows/details_window.vala:593
+#: src/windows/details_window.vala:672
 msgid "value"
 msgstr "arvo"
 
-#: src/windows/details_window.vala:605
+#: src/windows/details_window.vala:684
 msgid "Remove variable"
 msgstr "Poista muuttuja"
 
-#: src/windows/details_window.vala:730
+#: src/windows/details_window.vala:809
 msgid "Keywords"
 msgstr "Avainsanat"
 
-#: src/windows/details_window.vala:740
+#: src/windows/details_window.vala:819
 msgid "Icon name"
 msgstr "Kuvakkeen nimi"
 
-#: src/windows/details_window.vala:750
+#: src/windows/details_window.vala:829
 msgid "Startup WM Class"
 msgstr "Käynnistyksen WM-luokka"
 
-#: src/windows/details_window.vala:760
+#: src/windows/details_window.vala:839
 msgid "Version"
 msgstr "Versio"
 
-#: src/windows/details_window.vala:772
+#: src/windows/details_window.vala:851
 msgid "Hide from app drawer"
 msgstr "Piilota sovellusvalikosta"
 
-#: src/windows/details_window.vala:773
+#: src/windows/details_window.vala:852
 msgid "Don't show in application menu"
 msgstr "Älä näytä sovellusvalikossa"
 
-#: src/windows/details_window.vala:784
+#: src/windows/details_window.vala:863
 msgid "Add to $PATH"
 msgstr "Lisää $PATH-muuttujaan"
 
-#: src/windows/details_window.vala:785
+#: src/windows/details_window.vala:864
 #, c-format
 msgid "Create a launcher in %s so you can run it from the terminal"
 msgstr "Luo käynnistin %s-kansioon, jotta voit käynnistää sen päätteestä"
 
-#: src/windows/details_window.vala:846
+#: src/windows/details_window.vala:925
 msgid "Actions"
 msgstr "Toiminnot"
 
 #. Extract button
-#: src/windows/details_window.vala:885
+#: src/windows/details_window.vala:964
 msgid "Extract AppImage"
 msgstr "Pura AppImage"
 
-#: src/windows/details_window.vala:922
+#: src/windows/details_window.vala:1001
 msgid "Restore default"
 msgstr "Palauta oletus"
 
-#: src/windows/details_window.vala:934 src/windows/main_window.vala:590
-#: src/windows/main_window.vala:664
+#: src/windows/details_window.vala:1013 src/windows/main_window.vala:593
+#: src/windows/main_window.vala:667
 msgid "Updating..."
 msgstr "Päivitetään..."
 
-#: src/windows/details_window.vala:936
+#: src/windows/details_window.vala:1015
 msgid "Checking..."
 msgstr "Tarkistetaan..."
 
-#: src/windows/details_window.vala:963
+#: src/windows/details_window.vala:1042
 msgid "Update Failed"
 msgstr "Päivitys saatavilla"
 
-#: src/windows/details_window.vala:970
+#: src/windows/details_window.vala:1049
 msgid "Check Update"
 msgstr "Tarkista päivitys"
 
-#: src/windows/details_window.vala:1037
+#: src/windows/details_window.vala:1116
 msgid ""
 "Update info lets AppManager fetch new builds for you. Paste the download "
 "link and AppManager will do the rest."
@@ -627,7 +672,7 @@ msgstr ""
 "Päivitystiedot mahdollistavat AppManagerin hakea uusia versioita puolestasi. "
 "Liitä latauslinkki ja AppManager hoitaa loput."
 
-#: src/windows/details_window.vala:1038
+#: src/windows/details_window.vala:1117
 msgid ""
 "Currently GitHub and GitLab URL formats are fully supported. Direct download "
 "links also work if the server provides Last-Modified or Content-Length "
@@ -637,28 +682,32 @@ msgstr ""
 "latauslinkit toimivat myös, jos palvelin tarjoaa Last-Modified- tai Content-"
 "Length-otsikot."
 
-#: src/windows/details_window.vala:1039
+#: src/windows/details_window.vala:1118
 msgid "Update links"
 msgstr "Päivityslinkit"
 
-#: src/windows/details_window.vala:1040
+#: src/windows/details_window.vala:1119
 msgid "Got it"
 msgstr "Selvä"
 
-#: src/windows/details_window.vala:1100
+#: src/windows/details_window.vala:1179
 msgid "Hold Shift to delete permanently"
 msgstr "Pidä Shift pohjassa poistaaksesi pysyvästi"
 
-#: src/windows/details_window.vala:1107
+#: src/windows/details_window.vala:1186
 #, c-format
 msgid "<b>%s</b> will be permanently deleted. This action cannot be undone."
 msgstr "<b>%s</b> poistetaan pysyvästi. Tätä toimintoa ei voi kumota."
 
-#: src/windows/details_window.vala:1108
+#: src/windows/details_window.vala:1188
+msgid "Portable data in .home and .config will also be removed."
+msgstr ""
+
+#: src/windows/details_window.vala:1190
 msgid "Delete permanently?"
 msgstr "Poistetaanko pysyvästi?"
 
-#: src/windows/details_window.vala:1125
+#: src/windows/details_window.vala:1207
 msgid ""
 "Extracting will unpack the application so it opens faster, but it will "
 "consume more disk space. This action cannot be reversed automatically."
@@ -666,11 +715,11 @@ msgstr ""
 "Purkaminen purkaa sovelluksen, jotta se avautuu nopeammin, mutta se vie "
 "enemmän levytilaa. Tätä toimintoa ei voi automaattisesti peruuttaa."
 
-#: src/windows/details_window.vala:1126
+#: src/windows/details_window.vala:1208
 msgid "Extract application?"
 msgstr "Puretaanko sovellus?"
 
-#: src/windows/details_window.vala:1128
+#: src/windows/details_window.vala:1210
 msgid "Extract"
 msgstr "Pura"
 
@@ -741,394 +790,414 @@ msgstr "Vahvista tämän AppImagen aitous."
 msgid "Enter the SHA256 hash "
 msgstr "Syötä SHA256-tiiviste "
 
-#: src/windows/main_window.vala:64 src/windows/main_window.vala:218
+#: src/windows/main_window.vala:64 src/windows/main_window.vala:221
 #: data/com.github.AppManager.metainfo.xml:4
 msgid "AppManager"
 msgstr "AppManager"
 
 #. GNOME-style hint overlay: title + subtitle + pill button, centered in
 #. the content area when only AppManager itself is installed.
-#: src/windows/main_window.vala:180
+#: src/windows/main_window.vala:183
 msgid "No Apps Yet"
 msgstr "Ei vielä sovelluksia"
 
-#: src/windows/main_window.vala:184
+#: src/windows/main_window.vala:187
 msgid "Import your AppImages to manage and update them here"
 msgstr "Tuo AppImage-tiedostosi hallitaksesi ja päivittääksesi niitä täällä"
 
-#: src/windows/main_window.vala:199 src/windows/main_window.vala:372
+#: src/windows/main_window.vala:202 src/windows/main_window.vala:375
 msgid "Import AppImages ..."
 msgstr "Tuo AppImage-tiedostoja ..."
 
-#: src/windows/main_window.vala:277
+#: src/windows/main_window.vala:280
 msgid "Get more ..."
 msgstr "Hanki lisää ..."
 
-#: src/windows/main_window.vala:289
+#: src/windows/main_window.vala:292
 msgid "Find more AppImages"
 msgstr "Etsi lisää AppImageja"
 
-#: src/windows/main_window.vala:290
+#: src/windows/main_window.vala:293
 msgid "Browse these sources to discover and download AppImages"
 msgstr "Selaa näitä lähteitä löytääksesi ja ladataksesi AppImageja"
 
-#: src/windows/main_window.vala:316
+#: src/windows/main_window.vala:319
 msgid "Import AppImages from folder ..."
 msgstr "Tuo AppImage-tiedostoja kansiosta ..."
 
-#: src/windows/main_window.vala:354 src/windows/main_window.vala:447
+#: src/windows/main_window.vala:357 src/windows/main_window.vala:450
 msgid "No AppImage apps installed"
 msgstr "Ei asennettuja AppImage-sovelluksia"
 
-#: src/windows/main_window.vala:359
+#: src/windows/main_window.vala:362
 msgid "Download AppImage and double click to install with AppManager"
 msgstr "Lataa AppImage ja kaksoisnapsauta asentaaksesi AppManagerilla"
 
-#: src/windows/main_window.vala:447
+#: src/windows/main_window.vala:450
 msgid "No results found"
 msgstr "Tuloksia ei löytynyt"
 
-#: src/windows/main_window.vala:526 src/windows/main_window.vala:1054
+#: src/windows/main_window.vala:529 src/windows/main_window.vala:1058
 msgid "My Apps"
 msgstr "Omat sovellukset"
 
-#: src/windows/main_window.vala:597 src/windows/main_window.vala:671
+#: src/windows/main_window.vala:600 src/windows/main_window.vala:674
 msgid "Update available"
 msgstr "Päivitys saatavilla"
 
 #. App name label (same size as list view)
-#: src/windows/main_window.vala:686
+#: src/windows/main_window.vala:689
 msgid "Unknown"
 msgstr "Tuntematon"
 
-#: src/windows/main_window.vala:779
+#: src/windows/main_window.vala:782
 msgid "extracted"
 msgstr "purettu"
 
-#: src/windows/main_window.vala:836
+#: src/windows/main_window.vala:840
+#, fuzzy
+msgid "Imported just now"
+msgstr "Päivitetty juuri"
+
+#: src/windows/main_window.vala:840
 msgid "Updated just now"
 msgstr "Päivitetty juuri"
 
-#: src/windows/main_window.vala:836
+#: src/windows/main_window.vala:840
 msgid "Installed just now"
 msgstr "Asennettu juuri"
 
-#: src/windows/main_window.vala:844
+#: src/windows/main_window.vala:848
+#, fuzzy, c-format
+msgid "Imported %d min ago"
+msgstr "Päivitetty %d min sitten"
+
+#: src/windows/main_window.vala:848
 #, c-format
 msgid "Updated %d min ago"
 msgstr "Päivitetty %d min sitten"
 
-#: src/windows/main_window.vala:844
+#: src/windows/main_window.vala:848
 #, c-format
 msgid "Installed %d min ago"
 msgstr "Asennettu %d min sitten"
 
-#: src/windows/main_window.vala:852
+#: src/windows/main_window.vala:856
+#, fuzzy, c-format
+msgid "Imported %d hours ago"
+msgstr "Päivitetty %d tuntia sitten"
+
+#: src/windows/main_window.vala:856
 #, c-format
 msgid "Updated %d hours ago"
 msgstr "Päivitetty %d tuntia sitten"
 
-#: src/windows/main_window.vala:852
+#: src/windows/main_window.vala:856
 #, c-format
 msgid "Installed %d hours ago"
 msgstr "Asennettu %d tuntia sitten"
 
-#: src/windows/main_window.vala:859
+#: src/windows/main_window.vala:863
+#, fuzzy, c-format
+msgid "Imported %d days ago"
+msgstr "Päivitetty %d päivää sitten"
+
+#: src/windows/main_window.vala:863
 #, c-format
 msgid "Updated %d days ago"
 msgstr "Päivitetty %d päivää sitten"
 
-#: src/windows/main_window.vala:859
+#: src/windows/main_window.vala:863
 #, c-format
 msgid "Installed %d days ago"
 msgstr "Asennettu %d päivää sitten"
 
-#: src/windows/main_window.vala:878 src/windows/main_window.vala:1185
+#: src/windows/main_window.vala:882 src/windows/main_window.vala:1189
 msgid "Leave Fullscreen"
 msgstr "Poistu koko näytöstä"
 
-#: src/windows/main_window.vala:878 src/windows/main_window.vala:1185
+#: src/windows/main_window.vala:882 src/windows/main_window.vala:1189
 msgid "Fullscreen"
 msgstr "Koko näyttö"
 
-#: src/windows/main_window.vala:883 src/windows/preferences_window.vala:34
+#: src/windows/main_window.vala:887 src/windows/preferences_window.vala:34
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: src/windows/main_window.vala:884
+#: src/windows/main_window.vala:888
 msgid "Keyboard shortcuts"
 msgstr "Pikanäppäimet"
 
-#: src/windows/main_window.vala:885 src/windows/main_window.vala:1796
+#: src/windows/main_window.vala:889 src/windows/main_window.vala:1800
 msgid "About AppManager"
 msgstr "Tietoja AppManagerista"
 
-#: src/windows/main_window.vala:889
+#: src/windows/main_window.vala:893
 msgid "Quit"
 msgstr "Lopeta"
 
-#: src/windows/main_window.vala:903
+#: src/windows/main_window.vala:907
 msgid "Support AppManager"
 msgstr "Tue AppManageria"
 
-#: src/windows/main_window.vala:918
+#: src/windows/main_window.vala:922
 msgid "Buy Me a Coffee"
 msgstr "Osta minulle kahvia"
 
-#: src/windows/main_window.vala:937
+#: src/windows/main_window.vala:941
 msgid "Become a sponsor on GitHub"
 msgstr "Ryhdy sponsoriksi GitHubissa"
 
-#: src/windows/main_window.vala:942
+#: src/windows/main_window.vala:946
 msgid "Sponsor Me ♡"
 msgstr "Sponsoroi minua ♡"
 
-#: src/windows/main_window.vala:953
+#: src/windows/main_window.vala:957
 msgid "Star AppManager on GitHub"
 msgstr "Star AppManager GitHubissa"
 
-#: src/windows/main_window.vala:958
+#: src/windows/main_window.vala:962
 msgid "Star AppManager"
 msgstr "Tähti AppManager"
 
-#: src/windows/main_window.vala:969
+#: src/windows/main_window.vala:973
 msgid "View contributors on GitHub"
 msgstr "Katso kirjoittajat GitHubissa"
 
-#: src/windows/main_window.vala:974 src/windows/main_window.vala:1815
+#: src/windows/main_window.vala:978 src/windows/main_window.vala:1819
 msgid "Contributors"
 msgstr "Osallistujat"
 
-#: src/windows/main_window.vala:997 src/windows/main_window.vala:1794
+#: src/windows/main_window.vala:1001 src/windows/main_window.vala:1798
 msgid "Search"
 msgstr "Haku"
 
-#: src/windows/main_window.vala:1003
+#: src/windows/main_window.vala:1007
 msgid "Support this project"
 msgstr "Tue tätä projektia"
 
-#: src/windows/main_window.vala:1013
+#: src/windows/main_window.vala:1017
 msgid "More actions"
 msgstr "Lisää toimintoja"
 
-#: src/windows/main_window.vala:1028
+#: src/windows/main_window.vala:1032
 msgid "Search apps..."
 msgstr "Etsi sovelluksia..."
 
 #. FUSE is not installed warning banner
-#: src/windows/main_window.vala:1036
+#: src/windows/main_window.vala:1040
 msgid "FUSE is not installed. Some AppImages may fail to run"
 msgstr "FUSE ei ole asennettu. Jotkin AppImaget eivät ehkä toimi"
 
-#: src/windows/main_window.vala:1038
+#: src/windows/main_window.vala:1042
 msgid "Learn More"
 msgstr "Lue lisää"
 
-#: src/windows/main_window.vala:1059
+#: src/windows/main_window.vala:1063
 msgid "Shift+click to launch app"
 msgstr "Shift+klikkaa käynnistääksesi sovelluksen"
 
-#: src/windows/main_window.vala:1096
+#: src/windows/main_window.vala:1100
 msgid "Switch to grid view"
 msgstr "Vaihda ruudukkonäkymään"
 
-#: src/windows/main_window.vala:1099
+#: src/windows/main_window.vala:1103
 msgid "Switch to list view"
 msgstr "Vaihda luettelonäkymään"
 
-#: src/windows/main_window.vala:1241 src/windows/main_window.vala:1312
+#: src/windows/main_window.vala:1245 src/windows/main_window.vala:1316
 msgid "Updates already running"
 msgstr "Päivitykset jo käynnissä"
 
-#: src/windows/main_window.vala:1289
+#: src/windows/main_window.vala:1293
 msgid "Cancel update"
 msgstr "Peruuta päivitys"
 
-#: src/windows/main_window.vala:1320
+#: src/windows/main_window.vala:1324
 msgid "Cancelling..."
 msgstr "Peruutetaan..."
 
-#: src/windows/main_window.vala:1346
+#: src/windows/main_window.vala:1350
 msgid "Update check cancelled"
 msgstr "Päivitystarkistus peruutettu"
 
-#: src/windows/main_window.vala:1376
+#: src/windows/main_window.vala:1380
 #, c-format
 msgid "%d app(s) have updates"
 msgstr "%d sovelluksella on päivityksiä"
 
-#: src/windows/main_window.vala:1379
+#: src/windows/main_window.vala:1383
 msgid "No updates available right now"
 msgstr "Ei päivityksiä saatavilla juuri nyt"
 
-#: src/windows/main_window.vala:1386
+#: src/windows/main_window.vala:1390
 msgid "Nothing queued for updating"
 msgstr "Ei mitään jonossa päivitettäväksi"
 
-#: src/windows/main_window.vala:1413
+#: src/windows/main_window.vala:1417
 msgid "Update cancelled"
 msgstr "Päivitys peruutettu"
 
-#: src/windows/main_window.vala:1478 src/windows/main_window.vala:1498
+#: src/windows/main_window.vala:1482 src/windows/main_window.vala:1502
 msgid "Update failed"
 msgstr "Päivitys saatavilla"
 
-#: src/windows/main_window.vala:1551
+#: src/windows/main_window.vala:1555
 msgid "Checking updates"
 msgstr "Tarkistetaan päivityksiä"
 
-#: src/windows/main_window.vala:1554
+#: src/windows/main_window.vala:1558
 msgid "Update Apps"
 msgstr "Päivitä sovellukset"
 
-#: src/windows/main_window.vala:1557
+#: src/windows/main_window.vala:1561
 msgid "Updating apps"
 msgstr "Päivitetään sovelluksia"
 
-#: src/windows/main_window.vala:1560
+#: src/windows/main_window.vala:1564
 msgid "Check updates"
 msgstr "Tarkista päivitykset"
 
-#: src/windows/main_window.vala:1584
+#: src/windows/main_window.vala:1588
 msgid "No installed apps to update"
 msgstr "Ei asennettuja sovelluksia päivitettäväksi"
 
-#: src/windows/main_window.vala:1624
+#: src/windows/main_window.vala:1628
 #, c-format
 msgid "Updated %d app(s)"
 msgstr "Päivitettiin %d sovellusta"
 
-#: src/windows/main_window.vala:1627
+#: src/windows/main_window.vala:1631
 #, c-format
 msgid "%d update(s) failed"
 msgstr "%d päivitystä epäonnistui"
 
-#: src/windows/main_window.vala:1635
+#: src/windows/main_window.vala:1639
 msgid "Add update addresses in Details to enable updates"
 msgstr "Lisää päivitysosoitteet Tiedot-osioon ottaaksesi päivitykset käyttöön"
 
-#: src/windows/main_window.vala:1637
+#: src/windows/main_window.vala:1641
 msgid "All supported apps are already up to date"
 msgstr "Kaikki tuetut sovellukset ovat jo ajan tasalla"
 
-#: src/windows/main_window.vala:1641
+#: src/windows/main_window.vala:1645
 #, c-format
 msgid "%d app(s) use unsupported update links"
 msgstr "%d sovellusta käyttää ei-tuettuja päivityslinkkejä"
 
-#: src/windows/main_window.vala:1736
+#: src/windows/main_window.vala:1740
 #, c-format
 msgid "Update available for %s"
 msgstr "Päivitys saatavilla sovellukselle %s"
 
-#: src/windows/main_window.vala:1782
+#: src/windows/main_window.vala:1786
 msgid "General"
 msgstr "Yleiset"
 
-#: src/windows/main_window.vala:1786
+#: src/windows/main_window.vala:1790
 msgid "Navigation"
 msgstr "Navigointi"
 
-#: src/windows/main_window.vala:1790
+#: src/windows/main_window.vala:1794
 msgid "Window"
 msgstr "Ikkuna"
 
-#: src/windows/main_window.vala:1792
+#: src/windows/main_window.vala:1796
 msgid "Check for updates"
 msgstr "Tarkista päivitykset"
 
-#: src/windows/main_window.vala:1793
+#: src/windows/main_window.vala:1797
 msgid "Show main menu"
 msgstr "Näytä päävalikko"
 
-#: src/windows/main_window.vala:1795
+#: src/windows/main_window.vala:1799
 msgid "Show shortcuts"
 msgstr "Näytä pikanäppäimet"
 
-#: src/windows/main_window.vala:1797
+#: src/windows/main_window.vala:1801
 msgid "Close window"
 msgstr "Sulje ikkuna"
 
-#: src/windows/main_window.vala:1798
+#: src/windows/main_window.vala:1802
 msgid "Quit AppManager"
 msgstr "Lopeta AppManager"
 
-#: src/windows/main_window.vala:1799
+#: src/windows/main_window.vala:1803
 msgid "Toggle fullscreen"
 msgstr "Vaihda koko näyttö"
 
-#: src/windows/main_window.vala:1816
+#: src/windows/main_window.vala:1820
 msgid "Credits"
 msgstr "Tekijät"
 
-#: src/windows/main_window.vala:1900
+#: src/windows/main_window.vala:1904
 msgid "Select folder with AppImages"
 msgstr "Valitse kansio, jossa on AppImage-tiedostoja"
 
-#: src/windows/main_window.vala:1918
+#: src/windows/main_window.vala:1922
 msgid "Import AppImages"
 msgstr "Tuo AppImage-tiedostoja"
 
-#: src/windows/main_window.vala:1919
+#: src/windows/main_window.vala:1923
 #, c-format
 msgid "Install AppImages found in %s"
 msgstr "Asenna kansiosta %s löytyneet AppImage-tiedostot"
 
-#: src/windows/main_window.vala:1921
+#: src/windows/main_window.vala:1925
 msgid "Move AppImages"
 msgstr "Siirrä AppImage-tiedostoja"
 
-#: src/windows/main_window.vala:1928
+#: src/windows/main_window.vala:1932
 msgid "Import"
 msgstr "Tuo"
 
-#: src/windows/main_window.vala:1958
+#: src/windows/main_window.vala:1962
 #, c-format
 msgid "Failed to read folder: %s"
 msgstr "Kansion lukeminen epäonnistui: %s"
 
-#: src/windows/main_window.vala:1963
+#: src/windows/main_window.vala:1967
 msgid "No AppImage files found in folder"
 msgstr "Kansiosta ei löytynyt AppImage-tiedostoja"
 
-#: src/windows/main_window.vala:1974
+#: src/windows/main_window.vala:1978
 msgid "Importing AppImages…"
 msgstr "Tuodaan AppImage-tiedostoja…"
 
-#: src/windows/main_window.vala:1975
+#: src/windows/main_window.vala:1979
 #, c-format
 msgid "Installing %d AppImage(s)…"
 msgstr "Asennetaan %d AppImage-tiedostoa…"
 
-#: src/windows/main_window.vala:1988
+#: src/windows/main_window.vala:1992
 msgid "Starting…"
 msgstr "Käynnistetään…"
 
-#: src/windows/main_window.vala:1997
+#: src/windows/main_window.vala:2001
 msgid "Cancelling…"
 msgstr "Perutaan…"
 
-#: src/windows/main_window.vala:2014
+#: src/windows/main_window.vala:2018
 #, c-format
 msgid "%d of %d: %s"
 msgstr "%d / %d: %s"
 
-#: src/windows/main_window.vala:2072
+#: src/windows/main_window.vala:2077
 #, c-format
 msgid "Imported %d app(s)"
 msgstr "%d sovellus(ta) tuotu"
 
-#: src/windows/main_window.vala:2075
-#, c-format
-msgid "Skipped %d already installed app(s)"
+#: src/windows/main_window.vala:2080
+#, fuzzy, c-format
+msgid "Skipped %d incompatible architecture app(s)"
 msgstr "Ohitettiin %d jo asennettu(a) sovellus(ta)"
 
-#: src/windows/main_window.vala:2078
+#: src/windows/main_window.vala:2083
 #, c-format
 msgid "%d app(s) failed to import"
 msgstr "%d sovelluksen tuonti epäonnistui"
 
-#: src/windows/main_window.vala:2081
+#: src/windows/main_window.vala:2086
 #, c-format
 msgid "Cancelled — %d app(s) not imported"
 msgstr "Peruttu — %d sovellus(ta) ei tuotu"
@@ -1166,152 +1235,178 @@ msgstr "Ohita vedä ja pudota -ikkuna"
 msgid "Show install dialog directly when opening AppImages"
 msgstr "Näytä asennusikkuna suoraan avattaessa AppImages"
 
-#. Automatic updates group
+#: src/windows/preferences_window.vala:112
+msgid "Portable .home by default"
+msgstr ""
+
+#: src/windows/preferences_window.vala:113
+msgid "Create a .home folder next to every newly installed AppImage"
+msgstr ""
+
 #: src/windows/preferences_window.vala:117
+msgid "Portable .config by default"
+msgstr ""
+
+#: src/windows/preferences_window.vala:118
+msgid "Create a .config folder next to every newly installed AppImage"
+msgstr ""
+
+#: src/windows/preferences_window.vala:122
+msgid "Keep file extension name"
+msgstr ""
+
+#: src/windows/preferences_window.vala:123
+msgid ""
+"Replace spaces with underscores in installed filenames and keep "
+"the .AppImage extension"
+msgstr ""
+
+#. Automatic updates group
+#: src/windows/preferences_window.vala:135
 msgid "Automatic updates"
 msgstr "Automaattiset päivitykset"
 
-#: src/windows/preferences_window.vala:118
+#: src/windows/preferences_window.vala:136
 msgid "Configure automatic update checking"
 msgstr "Määritä automaattinen päivitystarkistus"
 
-#: src/windows/preferences_window.vala:124
+#: src/windows/preferences_window.vala:142
 msgid "Open update log"
 msgstr "Avaa päivitysloki"
 
 #. Background update check expander row
-#: src/windows/preferences_window.vala:138
+#: src/windows/preferences_window.vala:156
 msgid "Background update check"
 msgstr "Taustapäivitystarkistus"
 
-#: src/windows/preferences_window.vala:139
+#: src/windows/preferences_window.vala:157
 msgid "Will notify when new app updates are available"
 msgstr "Ilmoittaa kun uusia sovelluspäivityksiä on saatavilla"
 
 #. Auto update apps toggle (inside expander)
-#: src/windows/preferences_window.vala:150
+#: src/windows/preferences_window.vala:168
 msgid "Auto update apps"
 msgstr "Päivitä sovellukset automaattisesti"
 
-#: src/windows/preferences_window.vala:151
+#: src/windows/preferences_window.vala:169
 msgid "Will update apps automatically in background"
 msgstr "Päivittää sovellukset automaattisesti taustalla"
 
 #. Check interval (inside expander)
-#: src/windows/preferences_window.vala:157
+#: src/windows/preferences_window.vala:175
 msgid "Check interval"
 msgstr "Tarkistusväli"
 
-#: src/windows/preferences_window.vala:159
+#: src/windows/preferences_window.vala:177
 msgid "Daily"
 msgstr "Päivittäin"
 
-#: src/windows/preferences_window.vala:160
+#: src/windows/preferences_window.vala:178
 msgid "Weekly"
 msgstr "Viikoittain"
 
-#: src/windows/preferences_window.vala:161
+#: src/windows/preferences_window.vala:179
 msgid "Monthly"
 msgstr "Kuukausittain"
 
 #. Thumbnails group
-#: src/windows/preferences_window.vala:186
+#: src/windows/preferences_window.vala:204
 msgid "Thumbnails"
 msgstr "Pienoiskuvat"
 
-#: src/windows/preferences_window.vala:189
+#: src/windows/preferences_window.vala:207
 msgid "AppImage Thumbnailer"
 msgstr "AppImage-pienoiskuvageneraattori"
 
-#: src/windows/preferences_window.vala:190
+#: src/windows/preferences_window.vala:208
 msgid "Install appimage-thumbnailer to generate thumbnails for AppImages"
 msgstr "Asenna appimage-thumbnailer luodaksesi pienoiskuvia AppImageille"
 
-#: src/windows/preferences_window.vala:199
+#: src/windows/preferences_window.vala:217
 msgid "Hide Nautilus thumbnail background"
 msgstr "Piilota Nautiluksen pienoiskuvan tausta"
 
-#: src/windows/preferences_window.vala:200
+#: src/windows/preferences_window.vala:218
 msgid "Remove the alpha checkerboard behind thumbnails and icons"
 msgstr "Poista alfa-ruudukko pienoiskuvien ja kuvakkeiden takaa"
 
 #. GitHub authentication group
-#: src/windows/preferences_window.vala:211
+#: src/windows/preferences_window.vala:229
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/windows/preferences_window.vala:212
+#: src/windows/preferences_window.vala:230
 msgid ""
 "Authenticate with GitHub to raise the API rate limit from 60 to 5,000 "
 "requests per hour"
 msgstr ""
 "Todenna GitHubilla nostaaksesi API-nopeusrajaa 60:stä 5 000 pyyntöön tunnissa"
 
-#: src/windows/preferences_window.vala:215
+#: src/windows/preferences_window.vala:233
 msgid "Personal access token"
 msgstr "Henkilökohtainen pääsytunnus"
 
-#: src/windows/preferences_window.vala:226
+#: src/windows/preferences_window.vala:244
 msgid "Apply token"
 msgstr "Käytä tunnus"
 
-#: src/windows/preferences_window.vala:229
-#: src/windows/preferences_window.vala:248
+#: src/windows/preferences_window.vala:247
+#: src/windows/preferences_window.vala:266
 msgid "GitHub token saved"
 msgstr "GitHub-tunnus tallennettu"
 
-#: src/windows/preferences_window.vala:235
+#: src/windows/preferences_window.vala:253
 msgid "Clear token"
 msgstr "Tyhjennä tunnus"
 
-#: src/windows/preferences_window.vala:239
+#: src/windows/preferences_window.vala:257
 msgid "GitHub token cleared"
 msgstr "GitHub-tunnus tyhjennettiin"
 
 #. Test token row
-#: src/windows/preferences_window.vala:255
+#: src/windows/preferences_window.vala:273
 msgid "Test token"
 msgstr "Testimerkki"
 
-#: src/windows/preferences_window.vala:256
+#: src/windows/preferences_window.vala:274
 msgid "Verify your token works and check rate limit status"
 msgstr "Varmista, että tunnuksesi toimii ja tarkista nopeusrajoituksen tila"
 
-#: src/windows/preferences_window.vala:260
+#: src/windows/preferences_window.vala:278
 msgid "Test"
 msgstr "Testata"
 
-#: src/windows/preferences_window.vala:269
+#: src/windows/preferences_window.vala:287
 msgid "Testing…"
 msgstr "Testaus…"
 
-#: src/windows/preferences_window.vala:284
+#: src/windows/preferences_window.vala:302
 msgid "Create a token on GitHub"
 msgstr "Luo tunnus GitHubissa"
 
-#: src/windows/preferences_window.vala:285
+#: src/windows/preferences_window.vala:303
 msgid "Fine-grained token with read-only public repo access is sufficient"
 msgstr ""
 "Hienorakeinen tunnus, jossa on vain luku -käyttöoikeus, julkinen repo-oikeus "
 "riittää"
 
-#: src/windows/preferences_window.vala:342
+#: src/windows/preferences_window.vala:360
 msgid "Select Installation Directory"
 msgstr "Valitse Asennushakemisto"
 
-#: src/windows/preferences_window.vala:409
+#: src/windows/preferences_window.vala:427
 msgid "Invalid Path"
 msgstr "Virheellinen polku"
 
-#: src/windows/preferences_window.vala:419
+#: src/windows/preferences_window.vala:437
 msgid "Installation directory updated"
 msgstr "Asennushakemisto päivitetty"
 
-#: src/windows/preferences_window.vala:429
+#: src/windows/preferences_window.vala:447
 msgid "Move Installed Apps?"
 msgstr "Siirretäänkö asennetut sovellukset?"
 
-#: src/windows/preferences_window.vala:430
+#: src/windows/preferences_window.vala:448
 #, c-format
 msgid ""
 "This will move %d installed app(s) to the new location. This may take a "
@@ -1320,60 +1415,60 @@ msgstr ""
 "Tämä siirtää %d asennettua sovellusta uuteen sijaintiin. Tämä voi kestää "
 "jonkin aikaa sovelluksiesi koosta riippuen."
 
-#: src/windows/preferences_window.vala:433
+#: src/windows/preferences_window.vala:451
 msgid "Move Apps"
 msgstr "Siirrä sovelluksia"
 
 #. Kill background daemon if running - it may interfere with migration
 #. by monitoring folders and triggering reconciliation
 #. Create progress dialog
-#: src/windows/preferences_window.vala:465
+#: src/windows/preferences_window.vala:483
 msgid "Moving Apps…"
 msgstr "Siirretään sovelluksia…"
 
-#: src/windows/preferences_window.vala:465
+#: src/windows/preferences_window.vala:483
 msgid "Please wait while your apps are being moved."
 msgstr "Odota, kun sovelluksiasi siirretään."
 
-#: src/windows/preferences_window.vala:502
+#: src/windows/preferences_window.vala:520
 msgid "Apps moved successfully"
 msgstr "Sovellusten siirtäminen onnistui"
 
-#: src/windows/preferences_window.vala:504
+#: src/windows/preferences_window.vala:522
 msgid "Migration Failed"
 msgstr "Siirto epäonnistui"
 
-#: src/windows/preferences_window.vala:504
+#: src/windows/preferences_window.vala:522
 msgid "Unknown error occurred"
 msgstr "Tapahtui tuntematon virhe"
 
-#: src/windows/preferences_window.vala:522
+#: src/windows/preferences_window.vala:540
 msgid "OK"
 msgstr "OK"
 
-#: src/windows/preferences_window.vala:560
+#: src/windows/preferences_window.vala:578
 msgid "Authentication failed — token is invalid or expired"
 msgstr "Todennus epäonnistui – tunnus on virheellinen tai vanhentunut"
 
-#: src/windows/preferences_window.vala:562
+#: src/windows/preferences_window.vala:580
 msgid "Access forbidden — token lacks required permissions"
 msgstr "Pääsy kielletty – tunnuksella ei ole vaadittuja käyttöoikeuksia"
 
-#: src/windows/preferences_window.vala:568
+#: src/windows/preferences_window.vala:586
 #, c-format
 msgid "Token is valid — %s / %s requests remaining"
 msgstr "Tunnus on voimassa – %s / %s pyyntöä jäljellä"
 
-#: src/windows/preferences_window.vala:570
+#: src/windows/preferences_window.vala:588
 msgid "Token is valid"
 msgstr "Tunnus on voimassa"
 
-#: src/windows/preferences_window.vala:573
+#: src/windows/preferences_window.vala:591
 #, c-format
 msgid "Unexpected response (%u)"
 msgstr "Odottamaton vastaus (%u)"
 
-#: src/windows/preferences_window.vala:576
+#: src/windows/preferences_window.vala:594
 #, c-format
 msgid "Connection error: %s"
 msgstr "Yhteysvirhe: %s"

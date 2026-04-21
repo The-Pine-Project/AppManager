@@ -525,7 +525,7 @@ namespace AppManager {
 
         private Adw.SwitchRow build_portable_home_row() {
             return build_portable_folder_row(
-                _("Portable .home"),
+                _("Portable .home folder"),
                 _("Store the app's home directory in a .home folder next to the AppImage"),
                 _(".home"),
                 () => Installer.has_portable_home(record),
@@ -536,7 +536,7 @@ namespace AppManager {
 
         private Adw.SwitchRow build_portable_config_row() {
             return build_portable_folder_row(
-                _("Portable .config"),
+                _("Portable .config folder"),
                 _("Store the app's config in a .config folder next to the AppImage"),
                 _(".config"),
                 () => Installer.has_portable_config(record),
