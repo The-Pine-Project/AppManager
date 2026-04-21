@@ -334,5 +334,42 @@ namespace AppManager.Utils {
             }
             return token;
         }
+
+        /**
+         * Produces a PORTABLE-mode AppImage filename with whitespace replaced by
+         * underscores (collapsing consecutive runs) and a guaranteed .AppImage
+         * suffix. Other characters are preserved to keep the original name
+         * recognizable (e.g. "ONLYOFFICE Desktop Editors" → "ONLYOFFICE_Desktop_Editors.AppImage").
+         */
+        public static string sanitize_appimage_filename(string name) {
+            var builder = new StringBuilder();
+            bool last_was_separator = false;
+            for (int i = 0; i < name.length; i++) {
+                char ch = name[i];
+                if (ch == '\0') {
+                    break;
+                }
+                if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
+                    if (!last_was_separator && builder.len > 0) {
+                        builder.append_c('_');
+                    }
+                    last_was_separator = true;
+                } else {
+                    builder.append_c(ch);
+                    last_was_separator = false;
+                }
+            }
+            var result = builder.str;
+            while (result.has_suffix("_")) {
+                result = result.substring(0, result.length - 1);
+            }
+            if (result == "") {
+                return result;
+            }
+            if (!result.has_suffix(".AppImage")) {
+                result += ".AppImage";
+            }
+            return result;
+        }
     }
 }
