@@ -1105,63 +1105,18 @@ namespace AppManager {
         }
 
         private bool is_fuse_installed() {
-            if (GLib.Environment.find_program_in_path("fusermount") != null ||
-                GLib.Environment.find_program_in_path("fusermount3") != null) {
-                return true;
+            // Classic AppImage type-2 runtimes need the fusermount helper
+            // and link against libfuse.so.2. Require both so the banner
+            // shows on systems that only have FUSE 3 or are missing one half.
+            bool has_fusermount2 = GLib.Environment.find_program_in_path("fusermount") != null;
+
+            var module = GLib.Module.open("libfuse.so.2", GLib.ModuleFlags.LAZY);
+            bool has_libfuse2 = module != null;
+            if (module != null) {
+                module.close();
             }
 
-            // AppImages typically require libfuse.so.2 (FUSE 2.x)
-            // Check common library paths for the actual library file
-            string[] lib_paths = {
-                "/usr/lib/libfuse.so.2",
-                "/usr/lib64/libfuse.so.2",
-                "/lib/libfuse.so.2",
-                "/lib64/libfuse.so.2",
-                "/usr/lib/x86_64-linux-gnu/libfuse.so.2",
-                "/usr/lib/aarch64-linux-gnu/libfuse.so.2",
-                "/usr/lib/i386-linux-gnu/libfuse.so.2",
-                "/lib/x86_64-linux-gnu/libfuse.so.2",
-                "/lib/aarch64-linux-gnu/libfuse.so.2",
-                "/lib/i386-linux-gnu/libfuse.so.2",
-                // Nix/NixOS paths
-                "/run/current-system/sw/lib/libfuse.so.2"
-            };
-
-            foreach (var path in lib_paths) {
-                if (GLib.FileUtils.test(path, FileTest.EXISTS)) {
-                    return true;
-                }
-            }
-
-            string[] nix_patterns = {
-                "/nix/store/*-fuse-*/lib/libfuse.so.2",
-                "/nix/store/*-libfuse-*/lib/libfuse.so.2"
-            };
-
-            foreach (var pattern in nix_patterns) {
-                try {
-                    var glob_path = pattern.split("*")[0];
-                    var glob_suffix = pattern.split("*")[1];
-                    var dir = GLib.File.new_for_path(glob_path);
-                    if (!dir.query_exists()) continue;
-                    
-                    var enumerator = dir.enumerate_children("standard::name", 0);
-                    FileInfo? file = null;
-                    while ((file = enumerator.next_file()) != null) {
-                        var name = file.get_name();
-                        if (name.contains("fuse") && name.contains(glob_suffix)) {
-                            var child = dir.get_child(name);
-                            var libfuse_path = child.get_path() + "/lib/libfuse.so.2";
-                            if (GLib.FileUtils.test(libfuse_path, FileTest.EXISTS)) {
-                                return true;
-                            }
-                        }
-                    }
-                } catch (Error e) {
-                    // Ignore errors for non-existent paths
-                }
-            }
-            return false;
+            return has_fusermount2 && has_libfuse2;
         }
 
         private void on_search_changed() {

@@ -31,7 +31,7 @@ It also doesn't require FUSE to run, thanks to the [uruntime](https://github.com
 ## Requirements
 
 - `valac`, `meson`, `ninja`
-- Libraries: `libadwaita-1` (>= 1.6), `gtk4`, `gio-2.0`, `glib-2.0`, `json-glib-1.0`, `gee-0.8`, `libsoup-3.0`
+- Libraries: `libadwaita-1` (>= 1.6), `gtk4`, `gio-2.0`, `glib-2.0`, `gmodule-2.0`, `json-glib-1.0`, `gee-0.8`, `libsoup-3.0`
 - Runtime tools: `unsquashfs`, `dwarfsextract`
 
 ## Install
@@ -41,16 +41,19 @@ Simply [download](https://github.com/kem-a/AppManager/releases) latest app versi
 ## Nix / NixOS
 
 ### Run without installation
+
 ```bash
 nix run "github:kem-a/AppManager"
 ```
 
 ### Install permanently
+
 ```bash
 nix profile install "github:kem-a/AppManager"
 ```
 
 ### NixOS / Home Manager
+
 ```nix
 inputs.app-manager.url = "github:kem-a/AppManager";
 # then add to packages:
