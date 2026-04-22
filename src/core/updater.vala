@@ -118,10 +118,16 @@ namespace AppManager.Core {
 
         public ArrayList<UpdateProbeResult> probe_updates(GLib.Cancellable? cancellable = null) {
             var records = registry.list();
-            if (records.length == 0) {
+            var filtered = new Gee.ArrayList<InstallationRecord>();
+            for (int i = 0; i < records.length; i++) {
+                if (records[i].updates_enabled) {
+                    filtered.add(records[i]);
+                }
+            }
+            if (filtered.size == 0) {
                 return new ArrayList<UpdateProbeResult>();
             }
-            return probe_updates_parallel(records, cancellable);
+            return probe_updates_parallel(filtered.to_array(), cancellable);
         }
 
         public UpdateProbeResult probe_single(InstallationRecord record, GLib.Cancellable? cancellable = null) {
@@ -130,10 +136,16 @@ namespace AppManager.Core {
 
         public ArrayList<UpdateResult> update_all(GLib.Cancellable? cancellable = null) {
             var records = registry.list();
-            if (records.length == 0) {
+            var filtered = new Gee.ArrayList<InstallationRecord>();
+            for (int i = 0; i < records.length; i++) {
+                if (records[i].updates_enabled) {
+                    filtered.add(records[i]);
+                }
+            }
+            if (filtered.size == 0) {
                 return new ArrayList<UpdateResult>();
             }
-            return update_records_parallel(records, cancellable);
+            return update_records_parallel(filtered.to_array(), cancellable);
         }
 
         public UpdateResult update_single(InstallationRecord record, GLib.Cancellable? cancellable = null) {

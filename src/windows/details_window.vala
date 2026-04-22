@@ -90,19 +90,20 @@ namespace AppManager {
             detail_page.add(build_cards_group());
             
             var props_group = build_properties_group();
-            var update_group = build_update_info_group();
-            var advanced_group = build_advanced_group();
-            var env_vars_group = build_env_vars_group();
+            // update_group will be handled inside build_app_updates_page()
+            var advanced_row = build_advanced_action_row();
             // Portable .home/.config toggles only apply to portable (non-extracted) AppImages.
             if (record.mode == InstallMode.PORTABLE) {
                 props_group.add(build_portable_home_row());
                 props_group.add(build_portable_config_row());
             }
-            props_group.add(advanced_group);
-            props_group.add(env_vars_group);
+            props_group.add(advanced_row);
             
             detail_page.add(props_group);
-            detail_page.add(update_group);
+            
+            var update_group_replacement = new Adw.PreferencesGroup();
+            update_group_replacement.add(build_update_info_action_row());
+            detail_page.add(update_group_replacement);
             detail_page.add(build_actions_group());
             
             // Assemble final layout
@@ -289,6 +290,26 @@ namespace AppManager {
                 cards_box.append(hidden_card);
             }
 
+            // Web page badge — clickable, shown only when a URL is set
+            var web_url = record.get_effective_web_page() ?? "";
+            if (web_url.strip() != "") {
+                var web_badge = new Gtk.Button();
+                web_badge.add_css_class("card");
+                web_badge.set_valign(Gtk.Align.CENTER);
+                web_badge.set_tooltip_text(web_url.strip());
+                var web_label = new Gtk.Label(_("Web"));
+                web_label.add_css_class("caption");
+                web_label.set_margin_start(8);
+                web_label.set_margin_end(8);
+                web_label.set_margin_top(6);
+                web_label.set_margin_bottom(6);
+                web_badge.set_child(web_label);
+                web_badge.clicked.connect(() => {
+                    UiUtils.open_url(web_url.strip());
+                });
+                cards_box.append(web_badge);
+            }
+
             cards_group.add(cards_box);
             return cards_group;
         }
@@ -330,19 +351,67 @@ namespace AppManager {
             return props_group;
         }
 
+        private Adw.ActionRow build_update_info_action_row() {
+            var row = new Adw.ActionRow();
+            row.title = _("App Updates");
+            row.subtitle = _("Edit app update details");
+            
+            var status_label = new Gtk.Label(record.updates_enabled ? _("On") : _("Off"));
+            status_label.add_css_class("dim-label");
+            row.add_suffix(status_label);
+            
+            var icon = new Gtk.Image.from_icon_name("go-next-symbolic");
+            row.add_suffix(icon);
+            row.activatable = true;
+            row.activated.connect(() => {
+                var page = build_app_updates_page(row, status_label);
+                var main_win = (MainWindow) this.get_root();
+                main_win.push_page(page);
+            });
+            return row;
+        }
+
+        private Adw.NavigationPage build_app_updates_page(Adw.ActionRow parent_row, Gtk.Label status_label) {
+            var prefs_page = new Adw.PreferencesPage();
+
+            // Description group — aligned with rows via PreferencesGroup title + description
+            var body_text = _("Update info lets AppManager fetch new builds for you. Paste the download link and AppManager will do the rest.");
+            body_text += "\n\n" + _("Currently GitHub and GitLab URL formats are fully supported. Direct download links also work if the server provides Last-Modified or Content-Length headers.");
+            var info_group = new Adw.PreferencesGroup();
+            info_group.title = _("Update links");
+            info_group.description = body_text;
+            prefs_page.add(info_group);
+
+            // Enable / disable updates toggle
+            var toggle_group = new Adw.PreferencesGroup();
+            var enable_updates_row = new Adw.SwitchRow();
+            enable_updates_row.title = _("Enable app updates");
+            enable_updates_row.active = record.updates_enabled;
+            toggle_group.add(enable_updates_row);
+            prefs_page.add(toggle_group);
+
+            // Update link / web page rows
+            var update_group = build_update_info_group();
+            prefs_page.add(update_group);
+
+            // Sync logic
+            update_group.sensitive = record.updates_enabled;
+            enable_updates_row.notify["active"].connect(() => {
+                record.updates_enabled = enable_updates_row.active;
+                update_group.sensitive = enable_updates_row.active;
+                registry.update(record);
+                status_label.set_label(record.updates_enabled ? _("On") : _("Off"));
+            });
+
+            var toolbar = new Adw.ToolbarView();
+            toolbar.add_top_bar(new Adw.HeaderBar());
+            toolbar.set_content(prefs_page);
+
+            return new Adw.NavigationPage(toolbar, _("App Updates"));
+        }
         private Adw.PreferencesGroup build_update_info_group() {
             var update_group = new Adw.PreferencesGroup();
-            update_group.title = _("Update info");
-            
-            var update_info_button = new Gtk.Button.from_icon_name("dialog-information-symbolic");
-            update_info_button.add_css_class("circular");
-            update_info_button.add_css_class("flat");
-            update_info_button.set_valign(Gtk.Align.CENTER);
-            update_info_button.tooltip_text = _("How update links work");
-            update_info_button.clicked.connect(() => {
-                show_update_info_help();
-            });
-            update_group.set_header_suffix(update_info_button);
+            update_group.title = _("Update details");
             
             var has_zsync = record.zsync_update_info != null && record.zsync_update_info.strip() != "";
             
@@ -487,40 +556,62 @@ namespace AppManager {
             open_web_button.add_css_class("flat");
             open_web_button.set_valign(Gtk.Align.CENTER);
             open_web_button.tooltip_text = _("Open web page");
+            open_web_button.set_visible(webpage_row.text.strip().length > 0);
             open_web_button.clicked.connect(() => {
                 var url = webpage_row.text.strip();
                 if (url.length > 0) {
                     UiUtils.open_url(url);
                 }
             });
+            webpage_row.changed.connect(() => {
+                open_web_button.set_visible(webpage_row.text.strip().length > 0);
+            });
             webpage_row.add_suffix(open_web_button);
             
             return webpage_row;
+        }        private Adw.ActionRow build_advanced_action_row() {
+            var row = new Adw.ActionRow();
+            row.title = _("Advanced Settings");
+            row.subtitle = _("Change app icon, Startup WM Class, Keywords, $PATH or environment variables");
+            var icon = new Gtk.Image.from_icon_name("go-next-symbolic");
+            row.add_suffix(icon);
+            row.activatable = true;
+            row.activated.connect(() => {
+                var page = build_advanced_settings_page();
+                var main_win = (MainWindow) this.get_root();
+                main_win.push_page(page);
+            });
+            return row;
         }
 
-        private Adw.ExpanderRow build_advanced_group() {
-            var advanced_group = new Adw.ExpanderRow();
-            advanced_group.title = _("Advanced");
+        private Adw.NavigationPage build_advanced_settings_page() {
+            var prefs_page = new Adw.PreferencesPage();
+            
+            var advanced_group = new Adw.PreferencesGroup();
+            advanced_group.title = _("App Settings");
+            advanced_group.add(build_keywords_row());
+            advanced_group.add(build_icon_row());
+            advanced_group.add(build_wmclass_row());
+            advanced_group.add(build_version_row());
+            advanced_group.add(build_nodisplay_row());
+            advanced_group.add(build_path_row());
+            
+            prefs_page.add(advanced_group);
+            prefs_page.add(build_env_vars_group());
+            
+            var toolbar = new Adw.ToolbarView();
+            toolbar.add_top_bar(new Adw.HeaderBar());
+            toolbar.set_content(prefs_page);
 
-            // Keywords
-            advanced_group.add_row(build_keywords_row());
-            
-            // Icon name
-            advanced_group.add_row(build_icon_row());
-            
-            // StartupWMClass
-            advanced_group.add_row(build_wmclass_row());
-            
-            // Version
-            advanced_group.add_row(build_version_row());
-            
-            // NoDisplay toggle
-            advanced_group.add_row(build_nodisplay_row());
-            
-            // Add to PATH toggle
-            advanced_group.add_row(build_path_row());
-
-            return advanced_group;
+            var nav_page = new Adw.NavigationPage(toolbar, _("Advanced Settings"));
+            nav_page.shown.connect(() => {
+                GLib.Idle.add(() => {
+                    var win = nav_page.get_root() as Gtk.Window;
+                    if (win != null) win.set_focus(null);
+                    return GLib.Source.REMOVE;
+                });
+            });
+            return nav_page;
         }
 
         private Adw.SwitchRow build_portable_home_row() {
@@ -599,10 +690,10 @@ namespace AppManager {
 
         private const int MAX_ENV_VARS = 5;
 
-        private Adw.ExpanderRow build_env_vars_group() {
-            var env_expander = new Adw.ExpanderRow();
+        private Adw.PreferencesGroup build_env_vars_group() {
+            var env_expander = new Adw.PreferencesGroup();
             env_expander.title = _("Environment Variables");
-            env_expander.subtitle = _("Set custom environment variables for this app");
+            env_expander.description = _("Set custom environment variables for this app");
 
             // Load existing env vars
             var env_vars = record.custom_env_vars ?? new string[0];
@@ -723,7 +814,7 @@ namespace AppManager {
                 }
                 var row = create_env_var_row(name_part, value_part, add_button);
                 env_rows.add(row);
-                env_expander.add_row(row);
+                env_expander.add(row);
             }
 
             // Update add button sensitivity
@@ -737,8 +828,8 @@ namespace AppManager {
                 env_rows.add(row);
                 // Remove add_row, add new row, re-add add_row to keep button at bottom
                 env_expander.remove(add_row);
-                env_expander.add_row(row);
-                env_expander.add_row(add_row);
+                env_expander.add(row);
+                env_expander.add(add_row);
                 // Disable add button if at limit
                 if (env_rows.size >= MAX_ENV_VARS) {
                     add_button.sensitive = false;
@@ -751,7 +842,7 @@ namespace AppManager {
             add_box.append(add_button);
             add_row.set_child(add_box);
             
-            env_expander.add_row(add_row);
+            env_expander.add(add_row);
             
             return env_expander;
         }
@@ -1110,15 +1201,6 @@ namespace AppManager {
             }
             
             return total_size;
-        }
-
-        private void show_update_info_help() {
-            var body = _("Update info lets AppManager fetch new builds for you. Paste the download link and AppManager will do the rest.");
-            body += "\n\n" + _("Currently GitHub and GitLab URL formats are fully supported. Direct download links also work if the server provides Last-Modified or Content-Length headers.");
-            var dialog = new Adw.AlertDialog(_("Update links"), body);
-            dialog.add_response("close", _("Got it"));
-            dialog.set_close_response("close");
-            dialog.present(this);
         }
 
         private HashTable<string, string> load_desktop_file_properties(string desktop_file_path) {

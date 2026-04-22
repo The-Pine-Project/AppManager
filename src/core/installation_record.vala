@@ -56,6 +56,7 @@ namespace AppManager.Core {
         
         // Whether to include pre-release versions when checking for updates (GitHub only)
         public bool prerelease_enabled { get; set; default = false; }
+        public bool updates_enabled { get; set; default = true; }
 
         public InstallationRecord(string id, string name, InstallMode mode) {
             Object(id: id, name: name, mode: mode, installed_at: (int64)GLib.get_real_time());
@@ -97,7 +98,9 @@ namespace AppManager.Core {
          * Returns true if this record has any custom values worth preserving.
          */
         public bool has_custom_values() {
-            return custom_commandline_args != null ||
+            return !updates_enabled ||
+                   prerelease_enabled ||
+                   custom_commandline_args != null ||
                    custom_keywords != null ||
                    custom_icon_name != null ||
                    custom_startup_wm_class != null ||
@@ -175,6 +178,8 @@ namespace AppManager.Core {
             // Pre-release channel preference
             builder.set_member_name("prerelease_enabled");
             builder.add_boolean_value(prerelease_enabled);
+            builder.set_member_name("updates_enabled");
+            builder.add_boolean_value(updates_enabled);
             
             builder.end_object();
             return builder.get_root();
@@ -184,6 +189,12 @@ namespace AppManager.Core {
          * Helper: writes all custom values to JSON builder.
          */
         private void serialize_custom_values(Json.Builder builder) {
+            builder.set_member_name("updates_enabled");
+            builder.add_boolean_value(updates_enabled);
+            
+            builder.set_member_name("prerelease_enabled");
+            builder.add_boolean_value(prerelease_enabled);
+
             if (custom_commandline_args != null) {
                 builder.set_member_name("custom_commandline_args");
                 builder.add_string_value(custom_commandline_args);
@@ -264,6 +275,9 @@ namespace AppManager.Core {
             if (obj.has_member("prerelease_enabled")) {
                 record.prerelease_enabled = obj.get_boolean_member("prerelease_enabled");
             }
+            if (obj.has_member("updates_enabled")) {
+                record.updates_enabled = obj.get_boolean_member("updates_enabled");
+            }
             
             // Zsync update info (if app supports zsync delta updates)
             if (obj.has_member("zsync_update_info")) {
@@ -337,6 +351,12 @@ namespace AppManager.Core {
          * Only sets values that are currently null (doesn't overwrite existing custom values).
          */
         public void apply_history(Json.Object obj) {
+            if (obj.has_member("updates_enabled")) {
+                updates_enabled = obj.get_boolean_member("updates_enabled");
+            }
+            if (obj.has_member("prerelease_enabled")) {
+                prerelease_enabled = obj.get_boolean_member("prerelease_enabled");
+            }
             if (custom_commandline_args == null && obj.has_member("custom_commandline_args")) {
                 custom_commandline_args = obj.get_string_member("custom_commandline_args");
             }

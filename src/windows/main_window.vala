@@ -58,6 +58,10 @@ namespace AppManager {
         private bool import_in_progress = false;
         private bool import_cancel_requested = false;
 
+        public void push_page(Adw.NavigationPage page) {
+            navigation_view.push(page);
+        }
+
         public MainWindow(Application app, InstallationRegistry registry, Installer installer, Settings settings) {
             Object(application: app);
             debug("MainWindow: constructor called");
