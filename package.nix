@@ -1,14 +1,13 @@
 { lib
 , stdenv
-, fetchFromGitHub
 , meson
 , ninja
 , pkg-config
 , vala
-, cmake
 , desktop-file-utils
 , wrapGAppsHook4
 , gobject-introspection
+, makeWrapper
 , gtk4
 , libadwaita
 , glib
@@ -16,28 +15,27 @@
 , libgee
 , libsoup_3
 , zstd
+, squashfsTools
+, squashfuse
+, dwarfs
+, zsync
 }:
 
 stdenv.mkDerivation(finalAttrs: {
   pname = "app-manager";
-  version = "3.5.2";
+  version = "3.5.3";
 
-  src = fetchFromGitHub {
-    owner = "kem-a";
-    repo = "AppManager";
-    rev = "410888a592bc0fc91eaa3c15b47eb5c0cbfd6321";
-    hash = "sha256-tC4kQLjlU/TzejFDAPn3WuaVV6LoFiGh4sSaEbibxFA=";
-  };
+  src = ./.;
 
   nativeBuildInputs = [
     meson
     ninja
     pkg-config
     vala
-    cmake
     desktop-file-utils
     gobject-introspection
     wrapGAppsHook4
+    makeWrapper
   ];
 
   buildInputs = [
@@ -56,11 +54,27 @@ stdenv.mkDerivation(finalAttrs: {
     "-Dbundle_unsquashfs=false"
   ];
 
+  dontWrapGApps = true;
+
+  postFixup = let
+    binPath = lib.makeBinPath [
+      squashfsTools
+      squashfuse
+      dwarfs
+      zsync
+    ];
+  in ''
+    wrapProgram $out/bin/app-manager \
+      "''${gappsWrapperArgs[@]}" \
+      --prefix PATH : "${binPath}:/run/wrappers/bin"
+  '';
+
   meta = {
     description = "MacOS-style AppImage installer and manager for Linux";
     homepage = "https://github.com/kem-a/AppManager";
     license = lib.licenses.gpl3Plus;
     maintainers = [ ];
     platforms = lib.platforms.linux;
+    mainProgram = "app-manager";
   };
 })
