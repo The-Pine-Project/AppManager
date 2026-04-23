@@ -551,6 +551,12 @@ namespace AppManager.Core {
                     if (app_name == "") {
                         app_name = slug;
                     }
+                    if (settings.get_boolean("sanitize-filenames-default")) {
+                        var sanitized = Utils.FileUtils.sanitize_appimage_filename(app_name);
+                        if (sanitized != "") {
+                            app_name = sanitized;
+                        }
+                    }
                     renamed_path = move_portable_to_applications(record.installed_path, app_name);
                 }
                 if (renamed_path != record.installed_path) {

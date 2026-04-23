@@ -118,10 +118,16 @@ namespace AppManager {
             portable_config_row.subtitle = _("Create a .config folder next to every newly installed AppImage");
             settings.bind("portable-config-default", portable_config_row, "active", GLib.SettingsBindFlags.DEFAULT);
 
+            var sanitize_filenames_row = new Adw.SwitchRow();
+            sanitize_filenames_row.title = _("Keep file extension name");
+            sanitize_filenames_row.subtitle = _("Replace spaces with underscores in installed filenames and keep the .AppImage extension");
+            settings.bind("sanitize-filenames-default", sanitize_filenames_row, "active", GLib.SettingsBindFlags.DEFAULT);
+
             install_group.add(install_dir_row);
             install_group.add(skip_drop_row);
             install_group.add(portable_home_row);
             install_group.add(portable_config_row);
+            install_group.add(sanitize_filenames_row);
             page.add(install_group);
 
             // Automatic updates group

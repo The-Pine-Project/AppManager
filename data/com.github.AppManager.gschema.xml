@@ -61,6 +61,11 @@
       <summary>Create a portable .config folder for new installations</summary>
       <description>When enabled, AppManager creates a &lt;appname&gt;.config folder next to every newly installed AppImage so the app stores its config alongside itself.</description>
     </key>
+    <key name="sanitize-filenames-default" type="b">
+      <default>false</default>
+      <summary>Keep the .AppImage extension on installed filenames</summary>
+      <description>When enabled, AppManager preserves the .AppImage suffix on installed filenames and replaces spaces with underscores. Applies to new installations and upgrades.</description>
+    </key>
     <key name="app-list-view-mode" type="s">
       <default>'list'</default>
       <summary>App list view mode</summary>

@@ -58,6 +58,10 @@ namespace AppManager {
         private bool import_in_progress = false;
         private bool import_cancel_requested = false;
 
+        public void push_page(Adw.NavigationPage page) {
+            navigation_view.push(page);
+        }
+
         public MainWindow(Application app, InstallationRegistry registry, Installer installer, Settings settings) {
             Object(application: app);
             debug("MainWindow: constructor called");
@@ -1105,27 +1109,18 @@ namespace AppManager {
         }
 
         private bool is_fuse_installed() {
-            // AppImages typically require libfuse.so.2 (FUSE 2.x)
-            // Check common library paths for the actual library file
-            string[] lib_paths = {
-                "/usr/lib/libfuse.so.2",
-                "/usr/lib64/libfuse.so.2",
-                "/lib/libfuse.so.2",
-                "/lib64/libfuse.so.2",
-                "/usr/lib/x86_64-linux-gnu/libfuse.so.2",
-                "/usr/lib/aarch64-linux-gnu/libfuse.so.2",
-                "/usr/lib/i386-linux-gnu/libfuse.so.2",
-                "/lib/x86_64-linux-gnu/libfuse.so.2",
-                "/lib/aarch64-linux-gnu/libfuse.so.2",
-                "/lib/i386-linux-gnu/libfuse.so.2"
-            };
+            // Classic AppImage type-2 runtimes need the fusermount helper
+            // and link against libfuse.so.2. Require both so the banner
+            // shows on systems that only have FUSE 3 or are missing one half.
+            bool has_fusermount2 = GLib.Environment.find_program_in_path("fusermount") != null;
 
-            foreach (var path in lib_paths) {
-                if (GLib.FileUtils.test(path, FileTest.EXISTS)) {
-                    return true;
-                }
+            var module = GLib.Module.open("libfuse.so.2", GLib.ModuleFlags.LAZY);
+            bool has_libfuse2 = module != null;
+            if (module != null) {
+                module.close();
             }
-            return false;
+
+            return has_fusermount2 && has_libfuse2;
         }
 
         private void on_search_changed() {

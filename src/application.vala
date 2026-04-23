@@ -17,14 +17,18 @@ namespace AppManager {
         private static bool opt_version = false;
         private static bool opt_help = false;
         private static bool opt_background_update = false;
+        private static bool opt_update_all = false;
+        private static bool opt_update_check = false;
         private static string? opt_install = null;
         private static string? opt_uninstall = null;
         private static string? opt_is_installed = null;
-        
+
         private const OptionEntry[] options = {
             { "help", 'h', 0, OptionArg.NONE, ref opt_help, "Show help options", null },
             { "version", 0, 0, OptionArg.NONE, ref opt_version, "Display version number", null },
             { "background-update", 0, 0, OptionArg.NONE, ref opt_background_update, "Run background update check", null },
+            { "update-all", 0, 0, OptionArg.NONE, ref opt_update_all, "Update all installed apps and exit", null },
+            { "update-check", 0, 0, OptionArg.NONE, ref opt_update_check, "List available updates and exit", null },
             { "install", 0, OptionFlags.HIDDEN, OptionArg.FILENAME, ref opt_install, null, "PATH" },
             { "uninstall", 0, OptionFlags.HIDDEN, OptionArg.STRING, ref opt_uninstall, null, "PATH" },
             { "is-installed", 0, 0, OptionArg.FILENAME, ref opt_is_installed, "Check if an AppImage is installed", "PATH" },
@@ -44,6 +48,7 @@ namespace AppManager {
             set_option_context_description("""Commands:
   install PATH                Install an AppImage from PATH
   uninstall PATH              Uninstall an AppImage (by path or checksum)
+  update PATH                 Update an installed AppImage (by path or checksum)
 """);
         }
 
@@ -55,11 +60,14 @@ namespace AppManager {
 Commands:
   install PATH                Install an AppImage from PATH
   uninstall PATH              Uninstall an AppImage (by path or checksum)
+  update PATH                 Update an installed AppImage (by path or checksum)
 
 Options:
   -h, --help                  Show help options
   --version                   Display version number
   --background-update         Run background update check
+  --update-all                Update all installed apps and exit
+  --update-check              List available updates and exit
   --is-installed PATH         Check if an AppImage is installed
 
 Examples:
@@ -67,6 +75,9 @@ Examples:
   app-manager app.AppImage                Open installer for app.AppImage
   app-manager install app.AppImage        Install app.AppImage
   app-manager uninstall app.AppImage      Uninstall app.AppImage
+  app-manager update app.AppImage         Update app.AppImage
+  app-manager --update-all                Update all installed apps
+  app-manager --update-check              List available updates
   app-manager --is-installed app.AppImage Check installation status
   app-manager --background-update         Run background update check
 
@@ -90,7 +101,66 @@ Examples:
                 bg_service.run_daemon();
                 return 0;
             }
-            
+
+            if (opt_update_check) {
+                var updater = new Updater(registry, installer);
+                var probes = updater.probe_updates(null);
+                if (probes.size == 0) {
+                    print("No installed apps\n");
+                    return 0;
+                }
+                int available = 0;
+                foreach (var p in probes) {
+                    if (!p.has_update) continue;
+                    available++;
+                    var name = p.record.name ?? p.record.id;
+                    var current = p.record.version ?? "?";
+                    var latest = p.available_version ?? "?";
+                    print("%s: %s -> %s\n", name, current, latest);
+                }
+                if (available == 0) {
+                    print("All apps up to date\n");
+                }
+                return 0;
+            }
+
+            if (opt_update_all) {
+                var updater = new Updater(registry, installer);
+                updater.record_checking.connect((record) => {
+                    print("Checking %s\n", record.name ?? record.id);
+                });
+                updater.record_downloading.connect((record) => {
+                    print("Downloading %s\n", record.name ?? record.id);
+                });
+
+                var results = updater.update_all(null);
+                if (results.size == 0) {
+                    print("No installed apps to update\n");
+                    return 0;
+                }
+
+                int updated = 0, skipped = 0, failed = 0;
+                foreach (var r in results) {
+                    var name = r.record.name ?? r.record.id;
+                    switch (r.status) {
+                        case UpdateStatus.UPDATED:
+                            updated++;
+                            print("Updated %s: %s\n", name, r.message);
+                            break;
+                        case UpdateStatus.SKIPPED:
+                            skipped++;
+                            print("Skipped %s: %s\n", name, r.message);
+                            break;
+                        case UpdateStatus.FAILED:
+                            failed++;
+                            printerr("Failed %s: %s\n", name, r.message);
+                            break;
+                    }
+                }
+                print("Summary: %d updated, %d skipped, %d failed\n", updated, skipped, failed);
+                return failed > 0 ? 6 : 0;
+            }
+
             return -1;  // Continue processing
         }
 
@@ -664,6 +734,7 @@ Examples:
             var opts = command_line.get_options_dict();
             string? cmd_install = null;
             string? cmd_uninstall = null;
+            string? cmd_update = null;
             string? cmd_is_installed = null;
 
             if (opts.contains("install")) {
@@ -681,12 +752,21 @@ Examples:
             // Handle non-option arguments (file paths)
             var args = command_line.get_arguments();
 
-            // Support subcommand-style: app-manager install PATH / app-manager uninstall PATH
+            // Support subcommand-style: app-manager install PATH / uninstall PATH / update PATH
             // (--install/--uninstall flags are handled by GLib option parser as hidden options)
-            if (args.length > 2 && cmd_install == null && args[1] == "install") {
-                cmd_install = args[2];
-            } else if (args.length > 2 && cmd_uninstall == null && args[1] == "uninstall") {
-                cmd_uninstall = args[2];
+            if (args.length > 1 && (args[1] == "install" || args[1] == "uninstall" || args[1] == "update")) {
+                if (args.length < 3) {
+                    command_line.printerr("Error: '%s' requires a PATH argument\n", args[1]);
+                    command_line.set_exit_status(7);
+                    return 7;
+                }
+                if (args[1] == "install" && cmd_install == null) {
+                    cmd_install = args[2];
+                } else if (args[1] == "uninstall" && cmd_uninstall == null) {
+                    cmd_uninstall = args[2];
+                } else if (args[1] == "update" && cmd_update == null) {
+                    cmd_update = args[2];
+                }
             }
             debug("command_line: got %u args", args.length);
             for (int _k = 0; _k < args.length; _k++)
@@ -695,10 +775,11 @@ Examples:
                 var arg = args[i];
                 // Skip already-processed option arguments and subcommands
                 if (arg == "--install" || arg == "--uninstall" || arg == "--is-installed" ||
-                    arg == "--background-update" || arg == "--help" || arg == "-h" || arg == "--version" ||
-                    arg == "install" || arg == "uninstall") {
+                    arg == "--background-update" || arg == "--update-all" || arg == "--update-check" ||
+                    arg == "--help" || arg == "-h" || arg == "--version" ||
+                    arg == "install" || arg == "uninstall" || arg == "update") {
                     if (arg == "--install" || arg == "--uninstall" || arg == "--is-installed" ||
-                        arg == "install" || arg == "uninstall") {
+                        arg == "install" || arg == "uninstall" || arg == "update") {
                         i++; // Skip the value
                     }
                     continue;
@@ -734,6 +815,7 @@ Examples:
                     } else {
                         command_line.printerr("Install failed: %s\n", e.message);
                     }
+                    command_line.set_exit_status(2);
                     return 2;
                 }
             }
@@ -743,6 +825,7 @@ Examples:
                     var record = locate_record(cmd_uninstall);
                     if (record == null) {
                         command_line.printerr("No installation matches %s\n", cmd_uninstall);
+                        command_line.set_exit_status(3);
                         return 3;
                     }
                     
@@ -760,7 +843,33 @@ Examples:
                     return 0;
                 } catch (Error e) {
                     command_line.printerr("Uninstall failed: %s\n", e.message);
+                    command_line.set_exit_status(4);
                     return 4;
+                }
+            }
+
+            if (cmd_update != null) {
+                var record = locate_record(cmd_update);
+                if (record == null) {
+                    command_line.printerr("No installation matches %s\n", cmd_update);
+                    command_line.set_exit_status(3);
+                    return 3;
+                }
+                var updater = new Updater(registry, installer);
+                var result = updater.update_single(record, null);
+                var name = result.record.name ?? result.record.id;
+                switch (result.status) {
+                    case UpdateStatus.UPDATED:
+                        command_line.print("Updated %s: %s\n", name, result.message);
+                        return 0;
+                    case UpdateStatus.SKIPPED:
+                        command_line.print("Skipped %s: %s\n", name, result.message);
+                        return 0;
+                    case UpdateStatus.FAILED:
+                    default:
+                        command_line.printerr("Failed %s: %s\n", name, result.message);
+                        command_line.set_exit_status(6);
+                        return 6;
                 }
             }
 
@@ -769,9 +878,11 @@ Examples:
                     var checksum = Utils.FileUtils.compute_checksum(cmd_is_installed);
                     var installed = registry.is_installed_checksum(checksum);
                     command_line.print(installed ? "installed\n" : "missing\n");
+                    if (!installed) command_line.set_exit_status(1);
                     return installed ? 0 : 1;
                 } catch (Error e) {
                     command_line.printerr("Query failed: %s\n", e.message);
+                    command_line.set_exit_status(5);
                     return 5;
                 }
             }

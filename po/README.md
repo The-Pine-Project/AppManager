@@ -9,28 +9,28 @@
 
 | Language | Code | Status |
 | -------- | ---- | ------ |
-| Arabic | ar | 99.7% (298/299) |
-| German | de | 99.7% (298/299) |
-| Greek | el | 99.7% (298/299) |
-| Spanish | es | 99.7% (298/299) |
-| Estonian | et | 99.7% (298/299) |
-| Finnish | fi | 99.7% (298/299) |
-| French | fr | 100% (299/299) |
-| Irish | ga | 100% (299/299) |
-| Italian | it | 99.7% (298/299) |
-| Japanese | ja | 99.7% (298/299) |
-| Kazakh | kk | 99.7% (298/299) |
-| Korean | ko | 99.7% (298/299) |
-| Lithuanian | lt | 99.7% (298/299) |
-| Latvian | lv | 100% (299/299) |
-| Norwegian Bokmål | nb | 99.7% (298/299) |
-| Dutch | nl | 99.7% (298/299) |
-| Polish | pl | 99.7% (298/299) |
-| Portuguese (Brazil) | pt_BR | 99.7% (298/299) |
-| Swedish | sv | 99.7% (298/299) |
-| Ukrainian | uk | 99.7% (298/299) |
-| Vietnamese | vi | 99.7% (298/299) |
-| Chinese (Simplified) | zh_CN | 99.7% (298/299) |
+| Arabic | ar | 93.1% (298/320) |
+| German | de | 93.1% (298/320) |
+| Greek | el | 93.1% (298/320) |
+| Spanish | es | 93.1% (298/320) |
+| Estonian | et | 93.1% (298/320) |
+| Finnish | fi | 93.1% (298/320) |
+| French | fr | 93.4% (299/320) |
+| Irish | ga | 93.4% (299/320) |
+| Italian | it | 93.1% (298/320) |
+| Japanese | ja | 93.1% (298/320) |
+| Kazakh | kk | 93.1% (298/320) |
+| Korean | ko | 93.1% (298/320) |
+| Lithuanian | lt | 93.1% (298/320) |
+| Latvian | lv | 96.6% (309/320) |
+| Norwegian Bokmål | nb | 93.1% (298/320) |
+| Dutch | nl | 93.1% (298/320) |
+| Polish | pl | 93.1% (298/320) |
+| Portuguese (Brazil) | pt_BR | 93.1% (298/320) |
+| Swedish | sv | 93.1% (298/320) |
+| Ukrainian | uk | 93.1% (298/320) |
+| Vietnamese | vi | 93.1% (298/320) |
+| Chinese (Simplified) | zh_CN | 93.1% (298/320) |
 
 ## Note
 

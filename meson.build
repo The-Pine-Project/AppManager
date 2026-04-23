@@ -1,5 +1,5 @@
 project('app-manager', ['vala', 'c'],
-  version: '3.5.3',
+  version: '3.6.0',
   meson_version: '>=0.64.0'
 )
 
@@ -9,6 +9,7 @@ adw_dep = dependency('libadwaita-1', version: '>=1.6')
 gio_dep = dependency('gio-2.0')
 gio_unix_dep = dependency('gio-unix-2.0')
 glib_dep = dependency('glib-2.0')
+gmodule_dep = dependency('gmodule-2.0')
 gtk_dep = dependency('gtk4')
 json_glib_dep = dependency('json-glib-1.0')
 gee_dep = dependency('gee-0.8')
