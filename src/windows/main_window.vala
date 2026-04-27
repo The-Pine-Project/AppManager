@@ -2102,12 +2102,12 @@ namespace AppManager {
             if (failed_update_keys.has_key(key)) {
                 details_window.set_update_failed(failed_update_keys.get(key));
             }
-            details_window.uninstall_requested.connect((r, permanently) => {
+            details_window.uninstall_requested.connect((r, permanently, preserve_portable) => {
                 navigation_view.pop();
                 if (active_details_window == details_window) {
                     active_details_window = null;
                 }
-                app_ref.uninstall_record(r, this, permanently);
+                app_ref.uninstall_record(r, this, permanently, preserve_portable);
             });
             details_window.update_requested.connect((r) => {
                 trigger_single_update(r);

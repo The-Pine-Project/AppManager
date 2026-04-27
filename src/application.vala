@@ -830,10 +830,10 @@ Examples:
                     }
                     
                     try {
-                        installer.uninstall(record);
+                        installer.uninstall(record, false, true);
                     } catch (Error e) {
                         if (e.message.has_prefix("TRASH_FAILED:")) {
-                            installer.uninstall(record, true);
+                            installer.uninstall(record, true, true);
                         } else {
                             throw e;
                         }
@@ -891,11 +891,11 @@ Examples:
             return 0;
         }
 
-        public void uninstall_record(InstallationRecord record, Gtk.Window? parent_window, bool permanently = false) {
-            uninstall_record_async.begin(record, parent_window, permanently);
+        public void uninstall_record(InstallationRecord record, Gtk.Window? parent_window, bool permanently = false, bool preserve_portable = false) {
+            uninstall_record_async.begin(record, parent_window, permanently, preserve_portable);
         }
 
-        private async void uninstall_record_async(InstallationRecord record, Gtk.Window? parent_window, bool permanently) {
+        private async void uninstall_record_async(InstallationRecord record, Gtk.Window? parent_window, bool permanently, bool preserve_portable) {
             SourceFunc callback = uninstall_record_async.callback;
             Error? error = null;
             bool trash_failed = false;
@@ -905,7 +905,7 @@ Examples:
 
             new Thread<void>("appmgr-uninstall", () => {
                 try {
-                    installer.uninstall(record, permanently);
+                    installer.uninstall(record, permanently, preserve_portable);
                     // After successful trash, find the file in trash for undo support
                     if (!permanently) {
                         trash_path = Utils.FileUtils.find_in_trash(installed_path);
@@ -935,7 +935,7 @@ Examples:
                 dialog.set_default_response("cancel");
                 dialog.response.connect((response) => {
                     if (response == "delete") {
-                        uninstall_record(record, parent_window, true);
+                        uninstall_record(record, parent_window, true, preserve_portable);
                     }
                 });
                 dialog.present(parent_window ?? main_window);
@@ -974,7 +974,12 @@ Examples:
 
             new Thread<void>("appmgr-restore", () => {
                 try {
-                    installer.install(trash_path);
+                    var restored = installer.install(trash_path);
+                    var restored_path = restored.installed_path;
+                    if (restored_path != null && restored_path.strip() != "") {
+                        restore_trashed_portable_folder("%s.home".printf(restored_path));
+                        restore_trashed_portable_folder("%s.config".printf(restored_path));
+                    }
                 } catch (Error e) {
                     error = e;
                 }
@@ -990,6 +995,18 @@ Examples:
                 } else {
                     ((MainWindow)parent_window).add_toast(_("Restored"));
                 }
+            }
+        }
+
+        private void restore_trashed_portable_folder(string original_path) {
+            var trash_path = Utils.FileUtils.find_in_trash(original_path);
+            if (trash_path == null) {
+                return;
+            }
+            try {
+                File.new_for_path(trash_path).move(File.new_for_path(original_path), FileCopyFlags.NOFOLLOW_SYMLINKS);
+            } catch (Error e) {
+                warning("Failed to restore portable folder %s -> %s: %s", trash_path, original_path, e.message);
             }
         }
 
