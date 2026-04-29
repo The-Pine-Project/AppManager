@@ -284,6 +284,8 @@ namespace AppManager.Core {
                 record.custom_startup_wm_class = old_record.custom_startup_wm_class;
                 record.custom_update_link = old_record.custom_update_link;
                 record.custom_web_page = old_record.custom_web_page;
+                record.custom_no_display = old_record.custom_no_display;
+                record.custom_add_to_path = old_record.custom_add_to_path;
                 record.prerelease_enabled = old_record.prerelease_enabled;
                 // Note: original_* values will be updated from the new AppImage's .desktop
             }
@@ -682,7 +684,13 @@ namespace AppManager.Core {
                 if (record.original_startup_wm_class == Core.APPLICATION_ID) {
                     symlink_name = "app-manager";
                 }
-                record.bin_symlink = create_bin_symlink(exec_path, symlink_name);
+                // Default is to create a bin symlink. Terminal apps always do.
+                // Otherwise the user can opt out via custom_add_to_path = "false".
+                if (record.is_terminal || record.custom_add_to_path != "false") {
+                    record.bin_symlink = create_bin_symlink(exec_path, symlink_name);
+                } else {
+                    record.bin_symlink = null;
+                }
             } finally {
                 Utils.FileUtils.remove_dir_recursive(temp_dir);
             }
@@ -823,10 +831,14 @@ namespace AppManager.Core {
             // Update Keywords
             entry.keywords = (effective_keywords != null && effective_keywords.strip() != "") ? effective_keywords : null;
             
-            // Update NoDisplay
+            // Update NoDisplay: terminal apps are always hidden; otherwise honor user override
+            // (custom_no_display) or fall back to whatever the bundled .desktop ships with.
             if (is_terminal) {
                 entry.no_display = true;
+            } else if (record.custom_no_display != null) {
+                entry.no_display = (record.custom_no_display == "true");
             }
+            // else: leave entry.no_display as loaded from the bundled .desktop file
             
             // Update X-AppImage fields
             entry.appimage_homepage = (effective_web_page != null && effective_web_page.strip() != "") ? effective_web_page : null;

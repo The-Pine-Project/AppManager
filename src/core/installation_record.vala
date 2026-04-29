@@ -42,7 +42,7 @@ namespace AppManager.Core {
         public string? original_web_page { get; set; }
         public string? entry_exec { get; set; }
         public bool is_terminal { get; set; default = false; }
-        
+
         // Custom values set by user (null means use original, CLEARED_VALUE means user cleared it, other means user set custom value)
         public string? custom_commandline_args { get; set; }
         public string? custom_keywords { get; set; }
@@ -50,6 +50,12 @@ namespace AppManager.Core {
         public string? custom_startup_wm_class { get; set; }
         public string? custom_update_link { get; set; }
         public string? custom_web_page { get; set; }
+        // Boolean toggle overrides. Only set when the user deviates from the default,
+        // so they survive updates. Stored as "true"/"false"; null means "use default".
+        // - custom_no_display: default comes from the bundled .desktop file at install/update.
+        // - custom_add_to_path: default is true (every app gets a bin symlink).
+        public string? custom_no_display { get; set; }
+        public string? custom_add_to_path { get; set; }
         
         // Environment variables as array of "NAME=VALUE" strings (max 5)
         public string[]? custom_env_vars { get; set; }
@@ -106,6 +112,8 @@ namespace AppManager.Core {
                    custom_startup_wm_class != null ||
                    custom_update_link != null ||
                    custom_web_page != null ||
+                   custom_no_display != null ||
+                   custom_add_to_path != null ||
                    (custom_env_vars != null && custom_env_vars.length > 0);
         }
 
@@ -218,6 +226,14 @@ namespace AppManager.Core {
             if (custom_web_page != null) {
                 builder.set_member_name("custom_web_page");
                 builder.add_string_value(custom_web_page);
+            }
+            if (custom_no_display != null) {
+                builder.set_member_name("custom_no_display");
+                builder.add_string_value(custom_no_display);
+            }
+            if (custom_add_to_path != null) {
+                builder.set_member_name("custom_add_to_path");
+                builder.add_string_value(custom_add_to_path);
             }
             if (custom_env_vars != null && custom_env_vars.length > 0) {
                 builder.set_member_name("custom_env_vars");
@@ -334,6 +350,12 @@ namespace AppManager.Core {
             if (obj.has_member("custom_web_page")) {
                 record.custom_web_page = obj.get_string_member("custom_web_page");
             }
+            if (obj.has_member("custom_no_display")) {
+                record.custom_no_display = obj.get_string_member("custom_no_display");
+            }
+            if (obj.has_member("custom_add_to_path")) {
+                record.custom_add_to_path = obj.get_string_member("custom_add_to_path");
+            }
             if (obj.has_member("custom_env_vars")) {
                 var env_array = obj.get_array_member("custom_env_vars");
                 var env_list = new string[env_array.get_length()];
@@ -374,6 +396,12 @@ namespace AppManager.Core {
             }
             if (custom_web_page == null && obj.has_member("custom_web_page")) {
                 custom_web_page = obj.get_string_member("custom_web_page");
+            }
+            if (custom_no_display == null && obj.has_member("custom_no_display")) {
+                custom_no_display = obj.get_string_member("custom_no_display");
+            }
+            if (custom_add_to_path == null && obj.has_member("custom_add_to_path")) {
+                custom_add_to_path = obj.get_string_member("custom_add_to_path");
             }
             if (custom_env_vars == null && obj.has_member("custom_env_vars")) {
                 var env_array = obj.get_array_member("custom_env_vars");

@@ -944,6 +944,8 @@ namespace AppManager {
             var nodisplay_current = desktop_props.get("NoDisplay") ?? "false";
             nodisplay_row.active = (nodisplay_current.down() == "true");
             nodisplay_row.notify["active"].connect(() => {
+                record.custom_no_display = nodisplay_row.active ? "true" : "false";
+                registry.update(record);
                 installer.set_desktop_entry_property(record.desktop_file, "NoDisplay", nodisplay_row.active ? "true" : "false");
             });
             return nodisplay_row;
@@ -995,12 +997,17 @@ namespace AppManager {
                 if (path_row.active) {
                     if (installer.ensure_bin_symlink_for_record(record, exec_path, symlink_name)) {
                         symlink_exists = true;
+                        // Back to default — don't persist the redundant "true" override.
+                        record.custom_add_to_path = null;
+                        registry.update(record, false);
                     } else {
                         path_row.active = false;
                     }
                 } else {
                     if (installer.remove_bin_symlink_for_record(record)) {
                         symlink_exists = false;
+                        record.custom_add_to_path = "false";
+                        registry.update(record, false);
                     } else {
                         path_row.active = true;
                     }
