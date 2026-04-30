@@ -24,7 +24,7 @@ namespace AppManager {
         private HashTable<string, string> desktop_props;
         private Gtk.Widget? header_icon = null;
         
-        public signal void uninstall_requested(InstallationRecord record, bool permanently);
+        public signal void uninstall_requested(InstallationRecord record, bool permanently, bool preserve_portable);
         public signal void update_requested(InstallationRecord record);
         public signal void check_update_requested(InstallationRecord record);
         public signal void extract_requested(InstallationRecord record);
@@ -944,6 +944,8 @@ namespace AppManager {
             var nodisplay_current = desktop_props.get("NoDisplay") ?? "false";
             nodisplay_row.active = (nodisplay_current.down() == "true");
             nodisplay_row.notify["active"].connect(() => {
+                record.custom_no_display = nodisplay_row.active ? "true" : "false";
+                registry.update(record);
                 installer.set_desktop_entry_property(record.desktop_file, "NoDisplay", nodisplay_row.active ? "true" : "false");
             });
             return nodisplay_row;
@@ -995,12 +997,17 @@ namespace AppManager {
                 if (path_row.active) {
                     if (installer.ensure_bin_symlink_for_record(record, exec_path, symlink_name)) {
                         symlink_exists = true;
+                        // Back to default — don't persist the redundant "true" override.
+                        record.custom_add_to_path = null;
+                        registry.update(record, false);
                     } else {
                         path_row.active = false;
                     }
                 } else {
                     if (installer.remove_bin_symlink_for_record(record)) {
                         symlink_exists = false;
+                        record.custom_add_to_path = "false";
+                        registry.update(record, false);
                     } else {
                         path_row.active = true;
                     }
@@ -1073,10 +1080,13 @@ namespace AppManager {
             update_delete_button_label();
             delete_button.add_css_class("destructive-action");
             delete_button.clicked.connect(() => {
-                if (shift_held || record.mode == InstallMode.EXTRACTED || !is_path_trashable()) {
+                bool will_be_permanent = shift_held || record.mode == InstallMode.EXTRACTED || !is_path_trashable();
+                if (Installer.has_portable_folders(record)) {
+                    present_portable_delete_dialog(will_be_permanent);
+                } else if (will_be_permanent) {
                     present_permanent_delete_warning();
                 } else {
-                    uninstall_requested(record, false);
+                    uninstall_requested(record, false, false);
                 }
             });
             
@@ -1266,9 +1276,6 @@ namespace AppManager {
         private void present_permanent_delete_warning() {
             var app_name = record.name ?? Path.get_basename(record.installed_path);
             var body = _("<b>%s</b> will be permanently deleted. This action cannot be undone.").printf(GLib.Markup.escape_text(app_name));
-            if (Installer.has_portable_folders(record)) {
-                body += "\n\n" + _("Portable data in .home and .config will also be removed.");
-            }
             var dialog = new Adw.AlertDialog(_("Delete permanently?"), null);
             dialog.set_body_use_markup(true);
             dialog.set_body(body);
@@ -1279,7 +1286,75 @@ namespace AppManager {
             dialog.set_default_response("cancel");
             dialog.response.connect((response) => {
                 if (response == "delete") {
-                    uninstall_requested(record, true);
+                    uninstall_requested(record, true, false);
+                }
+            });
+            dialog.present(this);
+        }
+
+        private void present_portable_delete_dialog(bool permanently) {
+            var app_name = record.name ?? Path.get_basename(record.installed_path);
+
+            string title;
+            string confirm_label;
+            string body;
+            string delete_row_title;
+            string delete_row_subtitle;
+            if (permanently) {
+                title = _("Delete permanently?");
+                confirm_label = _("Delete Permanently");
+                body = _("<b>%s</b> will be permanently deleted. This action cannot be undone.").printf(GLib.Markup.escape_text(app_name));
+                delete_row_title = _("Delete All Data");
+                delete_row_subtitle = _("Permanently erase user data to save space");
+            } else {
+                title = _("Move to Trash?");
+                confirm_label = _("Move to Trash");
+                body = _("<b>%s</b> will be moved to the Trash.").printf(GLib.Markup.escape_text(app_name));
+                delete_row_title = _("Trash All Data");
+                delete_row_subtitle = _("Move user data to Trash along with the app");
+            }
+
+            var dialog = new Adw.AlertDialog(title, null);
+            dialog.set_body_use_markup(true);
+            dialog.set_body(body);
+
+            var keep_radio = new Gtk.CheckButton();
+            keep_radio.set_valign(Gtk.Align.CENTER);
+            keep_radio.set_active(true);
+
+            var delete_radio = new Gtk.CheckButton();
+            delete_radio.set_group(keep_radio);
+            delete_radio.set_valign(Gtk.Align.CENTER);
+
+            var keep_row = new Adw.ActionRow();
+            keep_row.set_title(_("Keep User Data"));
+            keep_row.set_subtitle(_("Allow restoring personal settings &amp; content"));
+            keep_row.add_prefix(keep_radio);
+            keep_row.set_activatable_widget(keep_radio);
+
+            var delete_row = new Adw.ActionRow();
+            delete_row.set_title(delete_row_title);
+            delete_row.set_subtitle(delete_row_subtitle);
+            delete_row.add_prefix(delete_radio);
+            delete_row.set_activatable_widget(delete_radio);
+
+            var list = new Gtk.ListBox();
+            list.set_selection_mode(Gtk.SelectionMode.NONE);
+            list.add_css_class("boxed-list");
+            list.append(keep_row);
+            list.append(delete_row);
+
+            dialog.set_extra_child(list);
+
+            dialog.add_response("cancel", _("Cancel"));
+            dialog.add_response("delete", confirm_label);
+            dialog.set_response_appearance("delete", Adw.ResponseAppearance.DESTRUCTIVE);
+            dialog.set_close_response("cancel");
+            dialog.set_default_response("cancel");
+            dialog.response.connect((response) => {
+                if (response == "delete") {
+                    bool preserve = keep_radio.get_active();
+                    uninstall_requested(record, permanently, preserve);
                 }
             });
             dialog.present(this);
